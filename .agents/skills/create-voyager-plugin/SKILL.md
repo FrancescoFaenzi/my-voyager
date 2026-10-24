@@ -68,7 +68,10 @@ A native feature becomes a packaged official plugin that keeps its old setting a
 - `engine`'s minimum is at least the `sinceEngine` of every primitive the
   plugin invokes. For an unreleased primitive or added optional param, use
   `sinceEngine: 'next'` in its contract/baseline and `"engine": ">=next"` in
-  the catalog manifest. Never hand-bump `PLUGIN_ENGINE_VERSION`: it records
+  the catalog manifest. A plugin that works only with an unreleased fix to a
+  released primitive also declares `">=next"`: merging to `main` publishes the
+  catalog before the fix ships, and the `sinceEngine` check cannot see fixes.
+  Never hand-bump `PLUGIN_ENGINE_VERSION`: it records
   the released engine, and `bun run bump` stamps all `next` entries at release.
   Contributor checks and catalog publishing resolve the shared next version
   (released + one minor, patch zero); published snapshots contain only concrete
