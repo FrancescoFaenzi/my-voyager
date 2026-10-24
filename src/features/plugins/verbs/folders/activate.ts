@@ -217,7 +217,13 @@ export function startSiteFolders(
         const own = new PluginScope();
         const rows = new SidebarHideFiled(own, site.hideFiled, site.sidebar, key);
         own.effect(
-          () => store.subscribe(() => rows.update(store.filedIds())),
+          () =>
+            store.subscribe(() => {
+              rows.update(store.filedIds());
+              // Marked here, not only on the next frame: a tab opened in the background
+              // draws none, so its filed rows stayed shown once the folders loaded.
+              rows.sync(site.sidebar.find());
+            }),
           `${key}:hide-filed-sync`,
         );
         // Filed chats are known once the data loaded, editable or not (another tab may hold
