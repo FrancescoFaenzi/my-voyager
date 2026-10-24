@@ -2,7 +2,7 @@ import type { PrimitiveContract } from '../contractTypes';
 
 export const contract: PrimitiveContract = {
   name: 'siteCheck',
-  sinceEngine: 'next',
+  sinceEngine: '1.10.0',
   // Reads every key the site defines and every selector the page's plugins use; none is required.
   semantic: [],
   params: {},

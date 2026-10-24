@@ -2,7 +2,7 @@ import type { PrimitiveContract } from '../contractTypes';
 
 export const contract: PrimitiveContract = {
   name: 'folders',
-  sinceEngine: 'next',
+  sinceEngine: '1.10.0',
   semantic: [],
   sections: { folders: 1 },
   settings: { hideFiledChats: 'boolean' },

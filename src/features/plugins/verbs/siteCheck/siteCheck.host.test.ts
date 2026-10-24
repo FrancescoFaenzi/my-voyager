@@ -23,7 +23,7 @@ function manifest(id: string, domOps: PluginManifest['contributes']['domOps']): 
     author: 'a',
     category: 'other',
     license: 'MIT',
-    engine: '>=next',
+    engine: '>=1.10.0',
     tier: 'declarative',
     matches: ['https://chat.deepseek.com/*'],
     contributes: { domOps },

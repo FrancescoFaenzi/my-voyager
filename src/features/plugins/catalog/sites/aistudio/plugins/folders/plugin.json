@@ -101,7 +101,7 @@
   "category": "productivity",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/voyager-crew/voyager/tree/main/src/features/plugins/catalog/sites/aistudio/plugins/folders",
-  "engine": ">=next",
+  "engine": ">=1.10.0",
   "tier": "declarative",
   "matches": ["https://aistudio.google.com/*", "https://aistudio.google.cn/*"],
   "requires": {

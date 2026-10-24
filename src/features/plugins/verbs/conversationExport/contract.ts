@@ -2,7 +2,7 @@ import type { PrimitiveContract } from '../contractTypes';
 
 export const contract: PrimitiveContract = {
   name: 'conversationExport',
-  sinceEngine: 'next',
+  sinceEngine: '1.10.0',
   semantic: ['userTurn', 'assistantTurn', 'scrollContainer'],
   params: {},
   description:
