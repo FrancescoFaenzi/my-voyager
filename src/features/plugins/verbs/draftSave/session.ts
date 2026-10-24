@@ -44,6 +44,8 @@ export const DRAFT_SAVE_DEBOUNCE_MS = 1000;
 export const SEND_INTENT_TIMEOUT_MS = 2000;
 /** Hosts clear a sent prompt with an editor transaction that fires no `input` event. */
 const SEND_CHECK_INTERVAL_MS = 250;
+/** How long after a key or cut in the composer its own DOM changes count as the person's edit. */
+const KEY_EDIT_WATCH_MS = 1000;
 
 interface SendIntent {
   readonly key: string;
@@ -172,6 +174,30 @@ export function startSiteDraftSave(scope: PluginScope, policy: DraftPolicy, doc:
     if (!field) return;
     // Catalog hosts fire their own input while mounting the composer; only a person's outdates a restore.
     if (!writingDraft && (detection.kind === 'gemini' || isUserEvent(event))) touch();
+    recordComposer(field);
+  };
+
+  /** Lexical (Kimi) applies Backspace, cut and undo itself and cancels the key: no `input` follows. */
+  let stopEditWatch: Dispose | null = null;
+  const watchKeyEdit = (event: Event): void => {
+    const field = ownComposer(event.target);
+    if (scope.isDisposed || !field || !isUserEvent(event)) return;
+    void stopEditWatch?.();
+    const observer = new MutationObserver(() => {
+      if (scope.isDisposed || writingDraft || !field.isConnected) return;
+      touch();
+      recordComposer(field);
+    });
+    observer.observe(field, { childList: true, characterData: true, subtree: true });
+    const stopTimer = scope.timer(() => void stopEditWatch?.(), KEY_EDIT_WATCH_MS);
+    stopEditWatch = () => {
+      observer.disconnect();
+      void stopTimer();
+      stopEditWatch = null;
+    };
+  };
+
+  const recordComposer = (field: HTMLElement): void => {
     geminiSend?.checkSent();
     // The route watcher polls; the live route at the input event names the draft's conversation.
     const key = keyHere();
@@ -231,6 +257,9 @@ export function startSiteDraftSave(scope: PluginScope, policy: DraftPolicy, doc:
     }, 'draft-save:gemini-send');
   }
   scope.on(doc, 'input', onInput, { capture: true });
+  scope.on(doc, 'keydown', watchKeyEdit, { capture: true });
+  scope.on(doc, 'cut', watchKeyEdit, { capture: true });
+  scope.effect(() => () => void stopEditWatch?.(), 'draft-save:key-edit');
   if (detection.kind === 'catalog') {
     scope.on(
       doc,
