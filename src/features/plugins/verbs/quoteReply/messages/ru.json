@@ -6,5 +6,9 @@
   "quoteReplyComposerMissing": {
     "message": "Не удалось найти поле ввода сообщения.",
     "description": "Toast when the quote action cannot find an available message composer"
+  },
+  "quoteReplyInsertFailed": {
+    "message": "Не удалось добавить цитату в поле сообщения. Выделение сохранено.",
+    "description": "Toast when the message composer did not accept the quote; the selection stays so the person can retry or copy it"
   }
 }

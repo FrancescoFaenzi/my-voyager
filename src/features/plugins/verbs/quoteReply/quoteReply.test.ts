@@ -471,4 +471,23 @@ describe('quoteReply primitive', () => {
     select(document.getElementById('after')!);
     expect(button()).not.toBeNull();
   });
+
+  // Rich editors only: a textarea always takes the value.
+  it.each(sites.slice(0, 2))(
+    'keeps the selection and Quote on $name and says so when the composer refuses the quote',
+    (site) => {
+      const { field, sends } = fixture(site, 'Existing draft');
+      activate(site.adapter);
+      select(document.getElementById('selected')!);
+      vi.mocked(document.execCommand).mockReturnValue(false);
+
+      quoteButton().click();
+
+      expect(readComposer(field)).toBe('Existing draft');
+      expect(toastDriver.messages()).toEqual([expect.stringMatching(/quote/i)]);
+      expect(document.getSelection()!.toString()).toBe('FirstSecond');
+      expect(button()).not.toBeNull();
+      expect(sends).not.toHaveBeenCalled();
+    },
+  );
 });

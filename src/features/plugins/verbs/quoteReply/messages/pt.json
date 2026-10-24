@@ -6,5 +6,9 @@
   "quoteReplyComposerMissing": {
     "message": "Não foi possível encontrar o campo de mensagem.",
     "description": "Toast when the quote action cannot find an available message composer"
+  },
+  "quoteReplyInsertFailed": {
+    "message": "Não foi possível adicionar a citação ao campo de mensagem. Sua seleção continua lá.",
+    "description": "Toast when the message composer did not accept the quote; the selection stays so the person can retry or copy it"
   }
 }

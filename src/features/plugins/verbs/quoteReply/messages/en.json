@@ -6,5 +6,9 @@
   "quoteReplyComposerMissing": {
     "message": "Could not find the message composer.",
     "description": "Toast when the quote action cannot find an available message composer"
+  },
+  "quoteReplyInsertFailed": {
+    "message": "Could not add the quote to the message composer. Your selection is still there.",
+    "description": "Toast when the message composer did not accept the quote; the selection stays so the person can retry or copy it"
   }
 }

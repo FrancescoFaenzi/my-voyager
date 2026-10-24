@@ -172,7 +172,20 @@ export const quoteReplyPrimitive: Primitive<QuoteReplyParams> = {
             return;
           }
           const prefix = readComposer(composer).length ? '\n\n' : '';
-          insertIntoComposer(composer, `${prefix}${formatQuotedText(saved.text)}\n`, 'append');
+          const quote = `${prefix}${formatQuotedText(saved.text)}\n`;
+          if (!insertIntoComposer(composer, quote, 'append')) {
+            // A composer that refused the quote must not look like success: keep the selection to retry.
+            const selection = doc.getSelection();
+            selection?.removeAllRanges();
+            selection?.addRange(saved.range);
+            toaster.show({
+              message: getTranslationSync('quoteReplyInsertFailed'),
+              tone: 'error',
+              durationMs: null,
+              channel: 'quote-reply',
+            });
+            return;
+          }
           hide();
         },
         options,
