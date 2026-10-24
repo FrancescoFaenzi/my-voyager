@@ -16,6 +16,7 @@
 ### Fixes
 
 - **:gemini: Recent Gems back in the sidebar**: now that Gemini keeps Gems under **More**, Recent Gems appear in their own **Gems** section of the sidebar.
+- **:chatgpt: Export without signing in**: ChatGPT conversations opened while signed out (`/uc/` links) now show the Export button and export normally.
 - **:aistudio: AI Studio folder layout**: the Folders heading lines up with the nav's section headings, and prompts are indented under their folder.
 - **:aistudio: AI Studio settings apply at once**: the popup's **Hide archived conversations** now controls AI Studio itself, and turning folders on or off no longer needs a reload.
 - **:chatgpt: Dragging chats into folders**: dragging a chat in ChatGPT's sidebar no longer drops halfway.

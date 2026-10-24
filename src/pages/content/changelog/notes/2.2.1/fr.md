@@ -16,6 +16,7 @@
 ### Corrections
 
 - **:gemini: Les Gems récents reviennent dans la barre latérale** : depuis que Gemini a rangé les Gems dans un menu, les Gems récents s'affichent dans leur propre section **Gems** de la barre latérale.
+- **:chatgpt: Exporter sans être connecté** : les conversations ChatGPT ouvertes sans connexion (liens `/uc/`) affichent maintenant le bouton Exporter et s'exportent normalement.
 - **:aistudio: Mise en page des dossiers AI Studio** : le titre Dossiers s'aligne sur les titres de section de la navigation, et les prompts sont indentés sous leur dossier.
 - **:aistudio: Réglages AI Studio appliqués tout de suite** : **Masquer les discussions archivées** dans le popup agit désormais sur AI Studio lui-même, et activer ou désactiver les dossiers ne demande plus de rechargement.
 - **:chatgpt: Glisser des conversations dans un dossier** : glisser une conversation dans la barre latérale de ChatGPT ne s'interrompt plus en route.

@@ -16,6 +16,7 @@
 ### Correções
 
 - **:gemini: Gems recentes de volta à barra lateral**: agora que o Gemini guarda os Gems dentro de um menu, os Gems recentes aparecem na própria seção **Gems** da barra lateral.
+- **:chatgpt: Exportar sem entrar na conta**: conversas do ChatGPT abertas sem login (links `/uc/`) agora mostram o botão Exportar e são exportadas normalmente.
 - **:aistudio: Layout das pastas no AI Studio**: o título Pastas se alinha aos títulos de seção da navegação, e os prompts ficam recuados sob a pasta.
 - **:aistudio: Ajustes do AI Studio na hora**: **Ocultar conversas arquivadas** no popup agora controla o próprio AI Studio, e ligar ou desligar as pastas não exige mais recarregar.
 - **:chatgpt: Arrastar chats para pastas**: arrastar um chat na barra lateral do ChatGPT não é mais interrompido no meio.
