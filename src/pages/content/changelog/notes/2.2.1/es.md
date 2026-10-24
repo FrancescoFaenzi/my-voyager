@@ -11,6 +11,7 @@
 - **Comprobación del sitio** _(desactivado por defecto)_: cuando Voyager falla en un sitio, activa **Comprobación del sitio** en los complementos para ver cuántos de los elementos de la página de los que depende Voyager se encontraron y elegir la parte que parece rota; el informe no incluye contenido de los chats y está listo para copiarlo o adjuntarlo a una incidencia.
 - **Exportación de :claude: Claude y :deepseek: DeepSeek** _(desactivado por defecto)_: activa **Exportar conversaciones** en los complementos para guardar una conversación entera en un archivo; las conversaciones largas se leen de principio a fin, y Voyager te avisa si no pudo leerlas completas.
 - **Voyager en el móvil**: en Firefox para Android, las cronologías, la exportación de Gemini y ChatGPT y los efectos visuales funcionan como siempre; los demás complementos y los ajustes de carpetas indican **Aún no está disponible en el móvil** y conservan tu elección para el ordenador; la sincronización con Google Drive no está disponible en el móvil.
+- **:chatgpt: Tareas del puente local en paralelo** _(desactivado por defecto)_: activa **Ejecutar tareas en paralelo** en la tarjeta del puente local de la ventana emergente y varias tareas de Voyager CLI se ejecutan a la vez, cada una en su propia pestaña de ChatGPT, en lugar de esperar detrás de una respuesta larga; requiere una CLI de voyager posterior a la 0.4.0.
 
 ### Correcciones
 

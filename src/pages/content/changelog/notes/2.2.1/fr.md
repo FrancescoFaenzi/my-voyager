@@ -11,6 +11,7 @@
 - **Vérification du site** _(désactivé par défaut)_ : quand Voyager ne fonctionne plus sur un site, activez **Vérification du site** dans les extensions pour voir combien des éléments de la page dont Voyager dépend ont été trouvés, et sélectionnez la partie qui semble cassée ; le rapport ne contient aucun contenu de conversation et peut être copié ou joint à un ticket.
 - **Export :claude: Claude et :deepseek: DeepSeek** _(désactivé par défaut)_ : activez **Export de conversations** dans les extensions pour enregistrer une conversation entière dans un fichier ; les longues conversations sont lues du début à la fin, et Voyager vous prévient s'il n'a pas pu tout lire.
 - **Voyager sur mobile** : sur Firefox pour Android, les chronologies, l'export Gemini et ChatGPT et les effets visuels fonctionnent comme d'habitude ; les autres extensions et les réglages des dossiers indiquent **Pas encore disponible sur mobile** et gardent votre choix pour l'ordinateur ; la synchronisation Google Drive n'est pas disponible sur mobile.
+- **:chatgpt: Tâches du pont local en parallèle** _(désactivé par défaut)_ : activez **Exécuter les tâches en parallèle** dans la carte Pont local du popup et plusieurs tâches Voyager CLI tournent en même temps, chacune dans son propre onglet ChatGPT, au lieu d'attendre derrière une longue réponse ; nécessite une CLI voyager plus récente que la 0.4.0.
 
 ### Corrections
 

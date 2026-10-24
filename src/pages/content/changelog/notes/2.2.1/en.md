@@ -11,6 +11,7 @@
 - **Site check** _(off by default)_: when Voyager breaks on a site, turn on **Site check** under Plugins to see how many of the page elements Voyager relies on were found, and pick the part that looks broken; the report has no chat content, ready to copy or attach to an issue.
 - **:claude: Claude and :deepseek: DeepSeek export** _(off by default)_: turn on **Conversation export** under Plugins to save a whole conversation to a file; long conversations are read from start to finish, and Voyager tells you when it couldn't read them all.
 - **Voyager on phones**: on Firefox for Android, the timelines, Gemini and ChatGPT export and the visual effects work as usual; other plugins and the folder settings say **Not available on phones yet** and keep your choice for your computer; Google Drive sync isn't available on phones.
+- **:chatgpt: Parallel Local Bridge jobs** _(off by default)_: turn on **Run jobs in parallel** in the popup's Local Bridge card and several Voyager CLI jobs run at once, each in its own ChatGPT tab, instead of waiting behind one long reply; needs a voyager CLI newer than 0.4.0.
 
 ### Fixes
 
