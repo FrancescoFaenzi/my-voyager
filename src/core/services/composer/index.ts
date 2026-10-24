@@ -1,5 +1,6 @@
 import type { SiteAdapter } from '@/features/plugins/types';
 
+import { insertLexicalText, isLexicalComposer } from './lexical';
 import { insertQuillText, replaceQuillText } from './quill';
 import { setTextFieldValue } from './textField';
 
@@ -149,10 +150,15 @@ function insertTextField(
   setTextFieldValue(field, next, start + text.length);
 }
 
-function insertContentEditable(field: HTMLElement, text: string, mode: ComposerInsertMode): void {
+/** Returns true when the host editor took the edit itself and renders it later (Lexical). */
+function insertContentEditable(
+  field: HTMLElement,
+  text: string,
+  mode: ComposerInsertMode,
+): boolean {
   const doc = field.ownerDocument;
   const selection = doc.getSelection();
-  if (!selection) return;
+  if (!selection) return false;
   const current = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
   const useCurrent =
     mode === 'insertAtCursor' && current && field.contains(current.commonAncestorContainer);
@@ -164,6 +170,8 @@ function insertContentEditable(field: HTMLElement, text: string, mode: ComposerI
   field.focus();
   selection.removeAllRanges();
   selection.addRange(range);
+  // Lexical drops a native insert that opens new blocks, so a quote below a draft vanished.
+  if (text.length > 0 && isLexicalComposer(field) && insertLexicalText(field, text)) return true;
   try {
     // ProseMirror needs a native editing transaction; DOM/beforeinput fallbacks lose host state.
     if (mode === 'replace' && text.length === 0) doc.execCommand('delete', false);
@@ -171,6 +179,7 @@ function insertContentEditable(field: HTMLElement, text: string, mode: ComposerI
   } catch {
     // Unavailable editing commands leave the host document unchanged.
   }
+  return false;
 }
 
 /** Edit only: no keyboard events, send-button clicks or form submission. */
@@ -186,8 +195,8 @@ export function insertIntoComposer(
   } else if (isQuillComposer(field)) {
     if (mode === 'replace') replaceQuillText(field, text);
     else insertQuillText(field, text, mode);
-  } else {
-    insertContentEditable(field, text, mode);
+  } else if (insertContentEditable(field, text, mode)) {
+    return true;
   }
   return readComposer(field) !== before;
 }
