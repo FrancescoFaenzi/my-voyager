@@ -66,6 +66,8 @@ const locale: LocaleSpecificConfig<DefaultTheme.Config> & { label: string; link?
           { text: 'ChatGPT 로컬 브리지', link: '/ko/guide/local-bridge' },
           { text: '직접 플러그인 만들기', link: '/ko/guide/write-a-plugin' },
           { text: '플러그인 기여 가이드', link: '/ko/guide/plugin-contribution' },
+          { text: '새 플랫폼 추가하기', link: '/ko/guide/adding-a-platform' },
+          { text: 'DOM 작업 범위', link: '/ko/guide/dom-operation-boundaries' },
         ],
       },
       {

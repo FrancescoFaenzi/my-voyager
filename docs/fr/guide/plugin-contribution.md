@@ -55,24 +55,7 @@ Un site ne déclare que les clés qu'il peut réellement fournir. Les plugins r�
 
 `conversationIdPattern` est un champ distinct de `site.json`, pas un sélecteur : une expression régulière sur le chemin de l'URL dont le premier groupe capturant est l'identifiant de conversation, par exemple `^/chat/([^/?#]+)`.
 
-## Ajouter une nouvelle plateforme
-
-Ajouter un nouveau site de discussion repose sur deux couches distinctes :
-
-1. L'**adaptateur de site**, `catalog/sites/<site>/site.json`, apprend à Voyager à reconnaître le site et à trouver ses messages utilisateur, ses réponses de l'assistant, son champ de saisie, sa barre latérale et ses marqueurs de thème.
-2. Un **plugin** sous `catalog/sites/<site>/plugins/<id>/` résout un problème précis pour l'utilisateur sur ce site, comme la largeur de lecture ou une correction de rendu.
-
-Un `site.json` contient `id` (identique au nom de son dossier), `label`, `matches`, `selectors`, `theme`, `brandColor`, `capabilities`, ainsi que les champs facultatifs `conversationIdPattern` et `turnKeyAttributes`. `turnKeyAttributes` désigne les attributs qui conservent l'identité d'un message utilisateur lorsque la page le re-rend ; le suivi des envois (utilisé par la vue Activité des dossiers et par les horodatages de la chronologie) ne s'exécute que sur un site qui le définit, avec `composer`, `userTurn` et un `conversationIdPattern`. `validateSiteAdapterData`, dans `src/features/plugins/sites/siteAdapterData.ts`, le valide, et `bun run catalog:build` valide tous les sites et plugins avant publication.
-
-`site.json` est l'adaptateur de site lui-même, écrit comme des données. Les plateformes actuelles sont ChatGPT, Claude, DeepSeek et Kimi. Gemini et AI Studio sont des surfaces natives de Voyager avec leur propre `site.json` (`catalog/sites/gemini/` et `catalog/sites/aistudio/`), mais il est livré dans le paquet et n'est jamais publié dans le catalogue distant ; `sites/adapters/gemini.ts`, `aistudio.ts`, `claude.ts`, `chatgpt.ts` et `deepseek.ts` ne sont plus que des coquilles d'une ligne au-dessus de leur `site.json` : modifiez le JSON, pas le TypeScript. Le catalogue publié par hôte transporte aussi les données du site, donc une correction de sélecteur atteint les utilisateurs sans nouvelle version de l'extension. Un site tout nouveau nécessite toutefois une nouvelle version, car il lui faut aussi une permission d'hôte et l'enregistrement d'un script de contenu, livrés dans le paquet.
-
-Pour une nouvelle plateforme comme DeepSeek, concentrez le travail sur le contrat de la plateforme. Regroupez dans un même changement complet le `site.json`, les tests de sélecteurs requis et la documentation minimale qui explique le support. Le registre des sites récupère le nouvel adaptateur à partir du fichier lui-même : aucune liste d'enregistrement à modifier. N'ajoutez pas un nouveau site pour chaque plugin.
-
-Une fois l'adaptateur accepté, les plugins suivants peuvent être proposés comme changements distincts et ciblés. Si plusieurs changements dépendent les uns des autres, une chaîne de PR empilées est utile : chaque branche suivante repose sur la précédente, et chaque PR n'affiche que sa propre fonctionnalité incrémentale. La chaîne doit suivre la même règle de périmètre : un objectif utilisateur clair par PR, avec ses tests requis et son nettoyage.
-
-Le support d'un site ne nécessite aucune intégration d'API de modèle. N'ajoutez pas de script de contenu statique ni de permission d'hôte obligatoire pour une nouvelle plateforme ; utilisez le flux existant des permissions facultatives et de l'enregistrement dynamique pour les sites qui ne servent qu'à des plugins.
-
-Ce flux dépend de la version du navigateur. Chrome et Edge prennent en charge le flux utilisé par l'extension. Firefox exige la version 128 ou une version ultérieure pour les permissions d'hôte facultatives, et Safari exige la version 16.4 ou une version ultérieure pour l'enregistrement dynamique des scripts de contenu. Sur les anciennes versions prises en charge, la popup peut refuser à juste titre d'activer un plugin pour un site personnalisé, car les API requises ne peuvent pas fournir une autorisation persistante. Ne contournez pas cette limite en ajoutant une permission d'hôte statique large sans l'accord d'un mainteneur.
+[Ajouter une nouvelle plateforme](./adding-a-platform.md)
 
 ## Périmètre d'un plugin
 
@@ -161,43 +144,7 @@ Les plugins déclaratifs sont validés comme des entrées non fiables. Gardez do
 
 Si le plugin a besoin de réglages, commencez de préférence par des valeurs numériques. Un plugin de largeur de lecture peut par exemple écrire la valeur dans une variable CSS, puis la consommer côté CSS.
 
-## Limites des opérations DOM
-
-Les plugins déclaratifs prennent actuellement en charge :
-
-- `addClass` : ajoute une classe aux éléments ciblés.
-- `setAttribute` : définit un attribut.
-- `setStyle` : définit des styles inline ou des variables CSS. Terminez une valeur par `!important` pour l'appliquer avec cette priorité ; les anciennes versions de Voyager ignorent une telle valeur, donc réglez `engine` sur `>=1.9.0` si votre plugin en dépend. Les raccourcis comme `margin` sont suivis longhand par longhand : désactiver un plugin n'efface jamais le `margin-top` d'un autre plugin.
-- `hide` : masque les éléments ciblés.
-
-La cible peut être un sélecteur CSS ou l'une des clés sémantiques listées plus haut, écrite `{ "kind": "semantic", "key": "userTurn" }`. Les clés sémantiques sont souvent plus stables, mais l'adaptateur du site doit déclarer la clé.
-
-Les opérations déclaratives doivent être réversibles et sûres à exécuter plusieurs fois. Ne dépendez pas d'un état ponctuel de la page et ne supposez pas que le DOM ne change jamais.
-
-### Primitives
-
-Certains comportements ne se décrivent pas avec du CSS et une modification réversible du DOM. Une primitive est du code interne livré dans Voyager, qu'un manifest peut appeler par son nom via l'opération `native` :
-
-```json
-{
-  "engine": ">=1.3.0",
-  "requires": { "handlers": ["formulaCopy"] },
-  "contributes": {
-    "domOps": [{ "op": "native", "handler": "formulaCopy", "params": {} }]
-  }
-}
-```
-
-Le manifest choisit une primitive et la configure ; il ne fournit jamais de logique, et la primitive valide elle-même `params` avant de s'exécuter.
-
-Deux règles s'appliquent à tout plugin qui en utilise une :
-
-- Chaque site visé par le plugin doit déclarer les clés sémantiques que lit la primitive (`mermaid`, par exemple, lit `assistantTurn` et `codeBlock`). `requires.handlers` est facultatif : l’opération `native` implique déjà sa primitive.
-- `engine` doit valoir au moins la version du moteur qui l'a livrée en premier. `formulaCopy` est arrivée dans le moteur 1.3.0, donc un plugin qui l'utilise déclare `">=1.3.0"`. Une plage inférieure fait échouer `bun run catalog:build`, car une ancienne version de Voyager signalerait alors un handler manquant au lieu de demander une mise à jour.
-
-Les primitives ne font que s'enrichir : un nouveau paramètre est toujours optionnel et un changement cassant est livré sous un nouveau nom.
-
-Un plugin dont le comportement change peut aussi porter un `changelog` d'une ligne, que le popup affiche à côté de la version. Traduisez-le dans `i18n.<locale>.changelog`, à côté de `name` et `description`.
+[Limites des opérations DOM](./dom-operation-boundaries.md)
 
 ## Quand éviter un plugin classique
 

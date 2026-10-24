@@ -70,6 +70,8 @@ const locale: LocaleSpecificConfig<DefaultTheme.Config> & { label: string; link?
           { text: 'الجسر المحلي لـ ChatGPT', link: '/ar/guide/local-bridge' },
           { text: 'اكتب إضافتك الخاصة', link: '/ar/guide/write-a-plugin' },
           { text: 'المساهمة في الإضافات', link: '/ar/guide/plugin-contribution' },
+          { text: 'إضافة منصة جديدة', link: '/ar/guide/adding-a-platform' },
+          { text: 'حدود عمليات DOM', link: '/ar/guide/dom-operation-boundaries' },
         ],
       },
       {

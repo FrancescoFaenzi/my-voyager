@@ -66,6 +66,8 @@ const locale: LocaleSpecificConfig<DefaultTheme.Config> & { label: string; link?
           { text: 'ChatGPT ローカルブリッジ', link: '/ja/guide/local-bridge' },
           { text: '自分でプラグインを作る', link: '/ja/guide/write-a-plugin' },
           { text: 'プラグイン貢献ガイド', link: '/ja/guide/plugin-contribution' },
+          { text: '新しいプラットフォームを追加する', link: '/ja/guide/adding-a-platform' },
+          { text: 'DOM 操作の範囲', link: '/ja/guide/dom-operation-boundaries' },
         ],
       },
       {

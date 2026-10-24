@@ -67,6 +67,8 @@ const locale: LocaleSpecificConfig<DefaultTheme.Config> & { label: string; link?
           { text: 'ChatGPT Local Bridge', link: '/en/guide/local-bridge' },
           { text: 'Write Your Own Plugin', link: '/en/guide/write-a-plugin' },
           { text: 'Plugin Contribution', link: '/en/guide/plugin-contribution' },
+          { text: 'Adding a new platform', link: '/en/guide/adding-a-platform' },
+          { text: 'DOM operation boundaries', link: '/en/guide/dom-operation-boundaries' },
         ],
       },
       {

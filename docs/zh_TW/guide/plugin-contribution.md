@@ -55,24 +55,7 @@ src/features/plugins/catalog/
 
 `conversationIdPattern` 是 `site.json` 裡的另一個欄位，不是選擇器：它是比對 URL 路徑的正規表示式，第一個擷取群組就是對話 id，例如 `^/chat/([^/?#]+)`。
 
-## 新增平台
-
-新增一個聊天網站，分為兩個獨立的層次：
-
-1. **網站適配器**，即 `catalog/sites/<site>/site.json`，告訴 Voyager 如何辨識這個網站，並找到它的使用者訊息、助理訊息、輸入框、側邊欄與主題標記。
-2. **外掛**，位於 `catalog/sites/<site>/plugins/<id>/`，用來解決該網站上某一個面向使用者的問題，例如閱讀寬度或轉譯修正。
-
-`site.json` 包含 `id`（與其目錄名相同）、`label`、`matches`、`selectors`、`theme`、`brandColor`、`capabilities`，以及選填的 `conversationIdPattern` 與 `turnKeyAttributes`。`turnKeyAttributes` 指定當頁面重新轉譯使用者訊息時，用來保持其身分識別的屬性。送出追蹤（供資料夾活動與時間軸時間戳記使用）只會在有設定它的網站上執行，並同時需要 `composer`、`userTurn` 與 `conversationIdPattern`。`src/features/plugins/sites/siteAdapterData.ts` 中的 `validateSiteAdapterData` 會驗證它，而 `bun run catalog:build` 會在發布前驗證每個網站與外掛。
-
-`site.json` 就是網站適配器本身，只是寫成了資料。目前的外掛平台是 ChatGPT、Claude、DeepSeek 和 Kimi。Gemini 和 AI Studio 是 Voyager 的原生介面，同樣有各自的 `site.json`（`catalog/sites/gemini/`、`catalog/sites/aistudio/`），但它隨擴充功能打包，不會發布到遠端目錄；`sites/adapters/` 下的 `gemini.ts`、`aistudio.ts`、`claude.ts`、`chatgpt.ts`、`deepseek.ts` 現在都只是 `site.json` 的一行外殼，要改就改 JSON，不要改 TypeScript。發布的分網站目錄也帶上了網站資料，所以 `site.json` 裡的選擇器修正不必發新版本就能送到使用者手上。全新的網站仍然需要發新版本，因為它還需要隨套件發布主機權限與內容腳本註冊。
-
-以 DeepSeek 這類新平台為例，適配器的工作應聚焦於平台契約。請在同一個完整的變更中提交 `site.json`、必要的選擇器測試，以及說明支援範圍所需的最少文件。網站註冊表會直接從檔案中取得新適配器，因此不需要修改任何註冊清單。不要為每個外掛都新增一個網站。
-
-適配器被接受後，後續的外掛可以各自以獨立、聚焦的變更提交。如果多個變更彼此相依，使用堆疊式 PR 鏈會很有用：後一個分支以前一個分支為基礎，每個 PR 只顯示自己增量的功能。整條鏈仍須遵守相同的範圍原則：每個 PR 只解決一個明確的使用者目標，並附上必要的測試與清理。
-
-網站支援不需要模型 API 整合。新平台不要加入靜態內容腳本或必要的主機權限；僅供外掛使用的網站，請使用既有的選用權限與動態註冊流程。
-
-選用權限與動態註冊流程取決於瀏覽器版本。Chrome 與 Edge 支援擴充功能所使用的流程。Firefox 需要 128 或更新版本才能使用選用主機權限，Safari 需要 16.4 或更新版本才能使用動態內容腳本註冊。在較舊的受支援瀏覽器版本上，彈出視窗可能會正確地拒絕為自訂網站啟用外掛，因為所需 API 無法提供持久的授權。請不要為了繞過這個限制而加入範圍過大的靜態主機權限，除非維護者同意。
+[新增平台](./adding-a-platform.md)
 
 ## 外掛粒度
 
@@ -161,43 +144,7 @@ catalog 裡的外掛屬於單一網站資料夾，它的每個 `matches` 都必�
 
 如果外掛需要使用者設定，建議先使用數字型設定；例如閱讀寬度外掛可以用設定值寫入 CSS 變數，再由樣式消費。
 
-## DOM 操作邊界
-
-目前宣告式外掛支援這些操作：
-
-- `addClass`：給目標元素添加類別名稱。
-- `setAttribute`：設定屬性。
-- `setStyle`：設定行內樣式或 CSS 變數。值的結尾可加上 `!important`，以該優先順序套用；較舊的 Voyager 版本會捨棄這類值，因此若外掛依賴它，請將 `engine` 設為 `>=1.9.0`。`margin` 之類的簡寫會逐個長屬性追蹤，因此關閉某個外掛時，不會清除另一個外掛的 `margin-top`。
-- `hide`：隱藏目標元素。
-
-目標可以是 CSS 選擇器，也可以是上面列出的語義鍵，寫成 `{ "kind": "semantic", "key": "userTurn" }`。語義鍵通常更穩定，但需要目前網站適配器宣告了這個鍵。
-
-宣告式操作必須可撤銷、可重複執行。不要依賴一次性的頁面狀態，也不要假設頁面 DOM 永遠不變。
-
-### 原語
-
-有些行為沒辦法只用 CSS 和可撤銷的 DOM 修改描述出來。原語是隨 Voyager 一起打包的第一方程式碼，清單可以透過 `native` 操作按名稱呼叫它：
-
-```json
-{
-  "engine": ">=1.3.0",
-  "requires": { "handlers": ["formulaCopy"] },
-  "contributes": {
-    "domOps": [{ "op": "native", "handler": "formulaCopy", "params": {} }]
-  }
-}
-```
-
-清單只負責挑一個原語並給它設定，不提供邏輯；`params` 會先由該原語驗證，然後才會執行。
-
-用到原語的外掛要遵守兩條規則：
-
-- 外掛匹配的每個網站都必須宣告該原語讀取的語意鍵（例如 `mermaid` 讀取 `assistantTurn` 和 `codeBlock`）。`requires.handlers` 可寫可不寫：`native` 操作本身就隱含了它用到的原語。
-- `engine` 至少要寫到首次提供該原語的引擎版本。`formulaCopy` 從引擎 1.3.0 開始提供，所以用到它的外掛寫 `">=1.3.0"`。寫低了 `bun run catalog:build` 會失敗，因為舊版 Voyager 那時會回報缺少 handler，而不是提示使用者升級。
-
-原語只增不改：新參數一定是可選的，破壞性變更會換一個新名字。
-
-有行為變化的外掛還可以寫一行 `changelog`，popup 會把它顯示在版本號旁邊。翻譯放在 `i18n.<locale>.changelog`，和 `name`、`description` 並列。
+[DOM 操作邊界](./dom-operation-boundaries.md)
 
 ## 什麼時候不適合做成普通外掛
 

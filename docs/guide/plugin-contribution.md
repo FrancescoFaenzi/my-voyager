@@ -55,26 +55,7 @@ src/features/plugins/catalog/
 
 `conversationIdPattern` 是 `site.json` 里的另一个字段，不是选择器：它是一个匹配 URL 路径的正则，第一个捕获组就是会话 id，例如 `^/chat/([^/?#]+)`。
 
-## 新增平台
-
-新增一个聊天网站分为两个相互独立的层次：
-
-1. **站点适配器**，即 `catalog/sites/<site>/site.json`，它告诉 Voyager 如何识别该网站，并找到用户消息、助手消息、输入框、侧边栏和主题标记。
-2. **插件**，位于 `catalog/sites/<site>/plugins/<id>/` 下，用于解决该网站上某个面向用户的具体问题，例如阅读宽度或渲染修复。
-
-`site.json` 包含 `id`（与目录名相同）、`label`、`matches`、`selectors`、`theme`、`brandColor`、`capabilities`，以及可选的 `conversationIdPattern` 和 `turnKeyAttributes`。`turnKeyAttributes` 指定在页面重新渲染用户消息时，用于保持其身份的属性。发送追踪（用于文件夹的 Activity 和时间线时间戳）只会在设置了该字段、`composer`、`userTurn` 和 `conversationIdPattern` 的站点上运行。`src/features/plugins/sites/siteAdapterData.ts` 中的 `validateSiteAdapterData` 负责校验它；`bun run catalog:build` 会在发布前校验每个站点和插件。
-
-`site.json` 就是站点适配器本身，只是写成了数据。目前的插件平台是 ChatGPT、Claude、DeepSeek 和 Kimi。Gemini 和 AI Studio 是 Voyager 的原生界面，同样有各自的 `site.json`（`catalog/sites/gemini/`、`catalog/sites/aistudio/`），但它随扩展打包，不会发布到远端目录；`sites/adapters/` 下的 `gemini.ts`、`aistudio.ts`、`claude.ts`、`chatgpt.ts`、`deepseek.ts` 现在都只是 `site.json` 的一行壳，要改就改 JSON，不要改 TypeScript。
-
-发布的分站点目录里也带上了站点数据，所以选择器修复不发新版本也能到达用户。全新的站点仍然需要扩展本身的支持，因为它还需要随包提供的主机权限和 content script 注册。
-
-对于 DeepSeek 这样的新平台，请让适配器工作专注于平台契约本身。将 `site.json`、必要的选择器测试，以及解释该支持所需的最少文档，放在同一个完整的变更中。站点注册表会直接从文件中识别新适配器，因此无需编辑任何注册列表。不要为每个插件都新增一个站点。
-
-适配器通过审核后，后续插件可以作为独立的、聚焦的变更单独提交。如果多个变更彼此依赖，可以使用堆叠 PR 链：每个后续分支基于前一个分支，每个 PR 只展示自己增量的功能。整条链仍应遵循同样的范围原则：每个 PR 只对应一个明确的用户目标，并附带必要的测试和清理。
-
-站点支持不需要模型 API 集成。不要为新平台添加静态 content script 或必需的主机权限；对于仅插件的站点，请使用现有的可选权限与动态注册流程。
-
-可选权限与动态注册路径依赖于浏览器版本：Chrome 和 Edge 支持扩展所使用的流程；Firefox 需要 128 或更高版本才能使用可选主机权限；Safari 需要 16.4 或更高版本才能进行动态 content script 注册。在较旧的受支持浏览器版本上，弹窗可能会正确地拒绝为自定义站点启用插件，因为所需的 API 无法提供持久授权。不要通过添加宽泛的静态主机权限来绕过此限制，除非得到维护者的批准。
+[新增平台](./adding-a-platform.md)
 
 ## 插件粒度
 
@@ -163,43 +144,7 @@ catalog 里的插件属于单个站点文件夹，它的每个 `matches` 都必�
 
 如果插件需要用户设置，推荐先使用数字型设置；例如阅读宽度这类插件可以用设置值写入 CSS 变量，再由样式消费。
 
-## DOM 操作边界
-
-当前声明式插件支持这些操作：
-
-- `addClass`：给目标元素添加类名。
-- `setAttribute`：设置属性。
-- `setStyle`：设置内联样式或 CSS 变量。值以 `!important` 结尾时会以该优先级应用；旧版本的 Voyager 会丢弃这样的值，因此如果插件依赖它，请将 `engine` 设为 `>=1.9.0`。`margin` 之类的简写属性按各自的长属性分别记录，因此关闭某个插件时，不会清除另一个插件设置的 `margin-top`。
-- `hide`：隐藏目标元素。
-
-目标可以是 CSS 选择器，也可以是上面列出的语义键，写成 `{ "kind": "semantic", "key": "userTurn" }`。语义键更稳，但需要当前站点适配器声明了这个键。
-
-声明式操作必须是可撤销、可重复执行的。不要依赖一次性的页面状态，也不要假设页面 DOM 永远不变。
-
-### 原语
-
-有些行为没法只用 CSS 和可撤销的 DOM 修改描述出来。原语是随 Voyager 一起打包的第一方代码，清单可以通过 `native` 操作按名字调用它：
-
-```json
-{
-  "engine": ">=1.3.0",
-  "requires": { "handlers": ["formulaCopy"] },
-  "contributes": {
-    "domOps": [{ "op": "native", "handler": "formulaCopy", "params": {} }]
-  }
-}
-```
-
-清单只负责挑一个原语并给它配置，不提供逻辑；`params` 会先由该原语校验，然后才会执行。
-
-用到原语的插件要遵守两条规则：
-
-- 插件匹配的每个站点都必须声明该原语读取的语义键（例如 `mermaid` 读取 `assistantTurn` 和 `codeBlock`）。`requires.handlers` 可写可不写：`native` 操作本身就隐含了它用到的原语。
-- `engine` 至少要写到首次提供该原语的引擎版本。`formulaCopy` 从引擎 1.3.0 开始提供，所以用到它的插件写 `">=1.3.0"`。写低了 `bun run catalog:build` 会失败，因为旧版 Voyager 那时会报缺少 handler，而不是提示用户升级。
-
-原语只增不改：新参数一定是可选的，破坏性变更会换一个新名字。
-
-有行为变化的插件还可以写一行 `changelog`，popup 会把它显示在版本号旁边。翻译放在 `i18n.<locale>.changelog`，和 `name`、`description` 并列。
+[DOM 操作边界](./dom-operation-boundaries.md)
 
 ## 什么时候不适合做成普通插件
 

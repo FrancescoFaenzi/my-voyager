@@ -66,6 +66,8 @@ const locale: LocaleSpecificConfig<DefaultTheme.Config> & { label: string; link?
           { text: 'ChatGPT 本機橋接', link: '/zh_TW/guide/local-bridge' },
           { text: '撰寫自己的外掛', link: '/zh_TW/guide/write-a-plugin' },
           { text: '外掛貢獻說明', link: '/zh_TW/guide/plugin-contribution' },
+          { text: '新增平台', link: '/zh_TW/guide/adding-a-platform' },
+          { text: 'DOM 操作邊界', link: '/zh_TW/guide/dom-operation-boundaries' },
         ],
       },
       {
