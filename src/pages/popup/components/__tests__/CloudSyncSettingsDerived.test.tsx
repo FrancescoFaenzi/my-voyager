@@ -21,15 +21,14 @@ vi.mock('@/features/plugins/catalog/sites', async (importOriginal) => {
     ...actual,
     BUNDLED_SITE_ADAPTERS: [
       ...actual.BUNDLED_SITE_ADAPTERS,
-      ...[
-        { id: 'kimi', label: 'Kimi fixture', host: 'www.kimi.com' },
-        { id: 'unknown-chat', label: 'Unknown Chat', host: 'chat.unknown.example' },
-      ].map(({ id, label, host }) => ({
-        ...template,
-        id,
-        label,
-        matches: [`https://${host}/*`],
-      })),
+      ...[{ id: 'unknown-chat', label: 'Unknown Chat', host: 'chat.unknown.example' }].map(
+        ({ id, label, host }) => ({
+          ...template,
+          id,
+          label,
+          matches: [`https://${host}/*`],
+        }),
+      ),
     ],
   };
 });
@@ -66,7 +65,7 @@ describe('CloudSyncSettings derived folder sites', () => {
   it('does not crash the cloud sync card for a folder site without a preset', async () => {
     await mount('https://www.kimi.com/a/conversation');
     const summary = container.querySelector('[data-testid="sync-platform-summary"]');
-    expect(summary?.textContent).toContain('Kimi fixture');
+    expect(summary?.textContent).toContain('Kimi');
     expect(summary?.querySelector('svg')?.getAttribute('viewBox')).toBe(
       PLATFORM_LOGOS.kimi.viewBox,
     );

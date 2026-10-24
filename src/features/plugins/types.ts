@@ -29,7 +29,14 @@ import type { ProjectsSection } from './sites/sections/projectsData';
 // Sites
 // ---------------------------------------------------------------------------
 
-export const KNOWN_SITE_IDS = ['gemini', 'aistudio', 'chatgpt', 'claude', 'deepseek'] as const;
+export const KNOWN_SITE_IDS = [
+  'gemini',
+  'aistudio',
+  'chatgpt',
+  'claude',
+  'deepseek',
+  'kimi',
+] as const;
 export type KnownSiteId = (typeof KNOWN_SITE_IDS)[number];
 
 /**

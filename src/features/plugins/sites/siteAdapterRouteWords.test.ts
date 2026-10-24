@@ -19,7 +19,14 @@ vi.mock('../catalog/sites', async (importOriginal) => {
   const { validateSiteAdapterData: validate } = await import('./siteAdapterData');
   const parsed = validate(KIMI);
   if (!parsed.success) throw new Error('invalid Kimi fixture');
-  return { ...actual, BUNDLED_SITE_ADAPTERS: [...actual.BUNDLED_SITE_ADAPTERS, parsed.data] };
+  return {
+    ...actual,
+    // The fixture is the site.json under test, even after Kimi ships its own.
+    BUNDLED_SITE_ADAPTERS: [
+      ...actual.BUNDLED_SITE_ADAPTERS.filter((adapter) => adapter.id !== KIMI.id),
+      parsed.data,
+    ],
+  };
 });
 
 function kimi(): SiteAdapter {

@@ -32,6 +32,15 @@ const sites = [
       '<div data-fixture-root><div><textarea class="ds-scroll-area">draft</textarea></div>' +
       '<div class="ds-button--primary ds-button--circle" role="button">Send</div></div>',
   },
+  {
+    // Measured live 2026-10-24: a Lexical editor and a bare div send control.
+    name: 'Kimi',
+    adapter: requireBundledSiteAdapter('kimi'),
+    markup:
+      '<div class="chat-editor-content" data-fixture-root><div class="chat-input-editor" contenteditable="true" role="textbox" data-lexical-editor="true">' +
+      '<p dir="ltr"><span data-lexical-text="true">draft</span></p></div>' +
+      '<div class="send-button-container">Send</div></div>',
+  },
 ];
 const scopes: PluginScope[] = [];
 
@@ -396,6 +405,21 @@ describe('sendShortcut', () => {
       expect(replacement.clicks).toHaveBeenCalledOnce();
       expect(readComposer(replacement.field)).toBe(before);
     });
+  });
+
+  it('does not press the Kimi send control while Kimi marks it disabled', () => {
+    const kimi = sites.find((site) => site.name === 'Kimi')!;
+    const { field, button, clicks } = fixture(kimi);
+    // Kimi's empty composer shows its send control with only a `disabled` class.
+    button.classList.add('disabled');
+    activate(kimi.adapter);
+
+    expect(enter(field, { ctrlKey: true }).defaultPrevented).toBe(true);
+    expect(clicks).not.toHaveBeenCalled();
+
+    button.classList.remove('disabled');
+    enter(field, { metaKey: true });
+    expect(clicks).toHaveBeenCalledOnce();
   });
 
   it.each(sites.slice(0, 2))('does not click a natively disabled $name button', (site) => {

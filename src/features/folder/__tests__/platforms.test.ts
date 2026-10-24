@@ -53,8 +53,25 @@ describe('folder platform map', () => {
         lastUploadTimeField: 'lastUploadTimeDeepSeek',
         lastSyncTimeField: 'lastSyncTimeDeepSeek',
       },
+      // Derived from the bundled site.json: every stored name comes from the id.
+      kimi: {
+        hosts: ['www.kimi.com'],
+        folderStorageKey: 'gvFolderData:kimi',
+        accountIsolationStorageKey: null,
+        driveFoldersFileName: 'gemini-voyager-kimi-folders.json',
+        backupNamespace: 'kimi-folders',
+        lastUploadTimeField: 'lastUploadTime:kimi',
+        lastSyncTimeField: 'lastSyncTime:kimi',
+      },
     });
-    expect(FOLDER_PLATFORM_IDS).toEqual(['gemini', 'aistudio', 'chatgpt', 'claude', 'deepseek']);
+    expect(FOLDER_PLATFORM_IDS).toEqual([
+      'gemini',
+      'aistudio',
+      'chatgpt',
+      'claude',
+      'deepseek',
+      'kimi',
+    ]);
   });
 
   it('never lets two platforms share a host, bucket, Drive file or sync timestamp', () => {
@@ -84,6 +101,7 @@ describe('folder platform map', () => {
     expect(getFolderPlatformForHost('chatgpt.com')).toBe('chatgpt');
     expect(getFolderPlatformForHost('claude.ai')).toBe('claude');
     expect(getFolderPlatformForHost('chat.deepseek.com')).toBe('deepseek');
+    expect(getFolderPlatformForHost('www.kimi.com')).toBe('kimi');
     for (const host of ['chat.openai.com', 'www.deepseek.com', 'google.com', '']) {
       expect(getFolderPlatformForHost(host), host).toBeNull();
     }

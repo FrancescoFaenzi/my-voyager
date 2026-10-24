@@ -29,7 +29,7 @@ describe('build-plugin-catalog', () => {
 
     const names = readdirSync(join(outDir, 'hosts')).sort();
     expect(names).toEqual(
-      ['chat.deepseek.com', 'chat.openai.com', 'chatgpt.com', 'claude.ai'].map(
+      ['chat.deepseek.com', 'chat.openai.com', 'chatgpt.com', 'claude.ai', 'www.kimi.com'].map(
         (host) => `${host}.json`,
       ),
     );

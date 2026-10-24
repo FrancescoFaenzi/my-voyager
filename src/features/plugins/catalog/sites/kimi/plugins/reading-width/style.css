@@ -1,0 +1,12 @@
+/* Kimi centers its conversation column (.chat-content-list, native 800px cap)
+ * and its composer (.chat-editor-wrap, 768px). Both take the reading width so
+ * the composer lines up under the column; the sidebar keeps its native sizing.
+ * border-box keeps Kimi's own padding inside the width. On a narrow window both
+ * leave 20px gutters. */
+.gv-plugin-kimi-readable :is(.chat-content-list, .chat-editor-wrap) {
+  box-sizing: border-box !important;
+  width: min(var(--gv-plugin-reading-width, 1000px), calc(100% - 40px)) !important;
+  max-width: calc(100% - 40px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

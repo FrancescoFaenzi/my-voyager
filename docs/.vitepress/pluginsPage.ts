@@ -19,14 +19,28 @@ const DOCS_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const CATALOG_DIR = resolve(DOCS_ROOT, '../src/features/plugins/catalog');
 
 /** Column order. */
-export const PLUGIN_SITES = ['gemini', 'aistudio', 'chatgpt', 'claude', 'deepseek'] as const;
+export const PLUGIN_SITES = [
+  'gemini',
+  'aistudio',
+  'chatgpt',
+  'claude',
+  'deepseek',
+  'kimi',
+] as const;
 export type PluginSite = (typeof PLUGIN_SITES)[number];
 
 /**
  * Which site's plugin names a row. Cross-site plugins carry generic names, while
  * Gemini's packaged plugins keep the names of the settings they replaced.
  */
-const NAMING_SITES: readonly PluginSite[] = ['chatgpt', 'claude', 'deepseek', 'gemini', 'aistudio'];
+const NAMING_SITES: readonly PluginSite[] = [
+  'chatgpt',
+  'claude',
+  'deepseek',
+  'kimi',
+  'gemini',
+  'aistudio',
+];
 
 const SITE_HOSTS: Readonly<Record<PluginSite, readonly string[]>> = {
   gemini: ['gemini.google.com'],
@@ -34,6 +48,7 @@ const SITE_HOSTS: Readonly<Record<PluginSite, readonly string[]>> = {
   chatgpt: ['chatgpt.com', 'chat.openai.com'],
   claude: ['claude.ai'],
   deepseek: ['chat.deepseek.com'],
+  kimi: ['www.kimi.com'],
 };
 
 /** Rows in reading order: the features people come for first. Unlisted ones follow. */
@@ -173,7 +188,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: '',
     title: '插件一览',
     intro:
-      '在对应网站上打开 Voyager 弹窗即可开启插件；Claude、ChatGPT 和 DeepSeek 第一次开启时会请求访问该网站。',
+      '在对应网站上打开 Voyager 弹窗即可开启插件；Claude、ChatGPT、DeepSeek 和 Kimi 第一次开启时会请求访问该网站。',
     feature: '功能',
     defaultOn: '默认开启',
     disclaimer:
@@ -184,7 +199,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'zh_TW',
     title: '外掛一覽',
     intro:
-      '在對應網站上打開 Voyager 彈出視窗即可開啟外掛；Claude、ChatGPT 和 DeepSeek 第一次開啟時會要求存取該網站。',
+      '在對應網站上打開 Voyager 彈出視窗即可開啟外掛；Claude、ChatGPT、DeepSeek 和 Kimi 第一次開啟時會要求存取該網站。',
     feature: '功能',
     defaultOn: '預設開啟',
     disclaimer:
@@ -195,7 +210,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'en',
     title: 'All plugins',
     intro:
-      'Turn a plugin on from the Voyager popup while you are on the site. Claude, ChatGPT and DeepSeek ask for access to the site the first time.',
+      'Turn a plugin on from the Voyager popup while you are on the site. Claude, ChatGPT, DeepSeek and Kimi ask for access to the site the first time.',
     feature: 'Feature',
     defaultOn: 'On by default',
     disclaimer:
@@ -206,7 +221,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'ja',
     title: 'プラグイン一覧',
     intro:
-      '使いたいサイトで Voyager のポップアップを開き、プラグインをオンにします。Claude、ChatGPT、DeepSeek では初回にサイトへのアクセス許可を求められます。',
+      '使いたいサイトで Voyager のポップアップを開き、プラグインをオンにします。Claude、ChatGPT、DeepSeek、Kimi では初回にサイトへのアクセス許可を求められます。',
     feature: '機能',
     defaultOn: '既定でオン',
     disclaimer:
@@ -217,7 +232,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'ko',
     title: '플러그인 목록',
     intro:
-      '해당 사이트에서 Voyager 팝업을 열고 플러그인을 켜세요. Claude, ChatGPT, DeepSeek에서는 처음 켤 때 사이트 접근 권한을 요청합니다.',
+      '해당 사이트에서 Voyager 팝업을 열고 플러그인을 켜세요. Claude, ChatGPT, DeepSeek, Kimi에서는 처음 켤 때 사이트 접근 권한을 요청합니다.',
     feature: '기능',
     defaultOn: '기본 켜짐',
     disclaimer:
@@ -228,7 +243,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'fr',
     title: 'Tous les plugins',
     intro:
-      'Activez un plugin depuis la fenêtre de Voyager, sur le site concerné. Claude, ChatGPT et DeepSeek vous demandent l’accès au site la première fois.',
+      'Activez un plugin depuis la fenêtre de Voyager, sur le site concerné. Claude, ChatGPT, DeepSeek et Kimi vous demandent l’accès au site la première fois.',
     feature: 'Fonction',
     defaultOn: 'Activé par défaut',
     disclaimer:
@@ -239,7 +254,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'es',
     title: 'Todos los plugins',
     intro:
-      'Activa un plugin desde la ventana de Voyager mientras estás en el sitio. Claude, ChatGPT y DeepSeek te piden acceso al sitio la primera vez.',
+      'Activa un plugin desde la ventana de Voyager mientras estás en el sitio. Claude, ChatGPT, DeepSeek y Kimi te piden acceso al sitio la primera vez.',
     feature: 'Función',
     defaultOn: 'Activado por defecto',
     disclaimer:
@@ -250,7 +265,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'pt',
     title: 'Todos os plugins',
     intro:
-      'Ative um plugin na janela do Voyager enquanto está no site. O Claude, o ChatGPT e o DeepSeek pedem acesso ao site na primeira vez.',
+      'Ative um plugin na janela do Voyager enquanto está no site. O Claude, o ChatGPT, o DeepSeek e o Kimi pedem acesso ao site na primeira vez.',
     feature: 'Funcionalidade',
     defaultOn: 'Ativado por predefinição',
     disclaimer:
@@ -261,7 +276,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'ar',
     title: 'كل الإضافات',
     intro:
-      'فعّل الإضافة من نافذة Voyager وأنت على الموقع. يطلب Claude وChatGPT وDeepSeek إذن الوصول إلى الموقع في المرة الأولى.',
+      'فعّل الإضافة من نافذة Voyager وأنت على الموقع. يطلب Claude وChatGPT وDeepSeek وKimi إذن الوصول إلى الموقع في المرة الأولى.',
     feature: 'الميزة',
     defaultOn: 'مفعّلة افتراضيًا',
     disclaimer:
@@ -272,7 +287,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     prefix: 'ru',
     title: 'Все плагины',
     intro:
-      'Включите плагин во всплывающем окне Voyager, открыв нужный сайт. Claude, ChatGPT и DeepSeek в первый раз попросят доступ к сайту.',
+      'Включите плагин во всплывающем окне Voyager, открыв нужный сайт. Claude, ChatGPT, DeepSeek и Kimi в первый раз попросят доступ к сайту.',
     feature: 'Функция',
     defaultOn: 'Включено по умолчанию',
     disclaimer:
@@ -297,7 +312,7 @@ export interface FeatureRow {
 
 function siteOf(manifest: PluginManifest): PluginSite[] {
   // This shared builtin also covers already-authorized custom sites. Its broad
-  // runtime match grants no access; these are the five columns shown here.
+  // runtime match grants no access; these are the six columns shown here.
   if (manifest.id === OFFICIAL_PLUGIN_IDS.visualEffects) return [...PLUGIN_SITES];
   return PLUGIN_SITES.filter((site) =>
     manifest.matches.some((match) => SITE_HOSTS[site].some((host) => match.includes(`//${host}/`))),

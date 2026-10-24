@@ -40,7 +40,7 @@ describe('derived folder sites', () => {
   it("names a new site's bucket, backups, Drive file and sync times after its id, on its first exact host", () => {
     const derived = derive(site('orbit', ['https://*.orbit.test/*', 'https://chat.orbit.test/*']));
 
-    expect([...derived.keys()]).toEqual(['orbit']);
+    expect(new Set(derived.keys())).toEqual(new Set(['kimi', 'orbit']));
     const orbit = derived.get('orbit' as never)!;
     expect(orbit.origin).toBe('https://chat.orbit.test');
     expect({ ...orbit.definition, folderExport: orbit.definition.folderExport.platform }).toEqual({
@@ -60,14 +60,24 @@ describe('derived folder sites', () => {
   });
 
   it('gives the bundled five no derived bucket of their own', () => {
-    expect(derive().size).toBe(0);
+    const derived = derive();
+    for (const id of FROZEN_FOLDER_PLATFORM_IDS) expect(derived.has(id as never)).toBe(false);
+  });
+
+  it('derives the bundled Kimi bucket from its site.json', () => {
+    const derived = derive();
+    expect([...derived.keys()]).toEqual(['kimi']);
+    const kimi = derived.get('kimi' as never)!;
+    expect(kimi.origin).toBe('https://www.kimi.com');
+    expect(kimi.definition.folderStorageKey).toBe('gvFolderData:kimi');
   });
 
   it('gives nothing to a site whose id could pass for a frozen site', () => {
     const spoofs = ['chat-gpt', 'deep-seek', 'ai-studio', 'gemini-pro', 'my-claude'].map((id, i) =>
       site(id, [`https://chat${i}.spoof.test/*`]),
     );
-    expect(derive(...spoofs).size).toBe(0);
+    const derived = derive(...spoofs);
+    for (const spoof of spoofs) expect(derived.has(spoof.id as never), spoof.id).toBe(false);
   });
 
   it("gives nothing to a site on a frozen site's host, even one its bucket never names", () => {
@@ -76,7 +86,9 @@ describe('derived folder sites', () => {
       'https://chat.openai.com/*',
       'https://gemini.google.com/*',
     ];
-    expect(derive(...hosts.map((match, i) => site(`taker${i}`, [match]))).size).toBe(0);
+    const takers = hosts.map((match, i) => site(`taker${i}`, [match]));
+    const derived = derive(...takers);
+    for (const taker of takers) expect(derived.has(taker.id as never), taker.id).toBe(false);
   });
 
   it('gives nothing to a site with no exact https host, no folders or no conversation route', () => {
@@ -84,21 +96,22 @@ describe('derived folder sites', () => {
     const { conversationIdPattern: _route, ...withoutRoute } = site('noroute', [
       'https://b.none.test/*',
     ]);
-    expect(
-      derive(
-        site('wildcard', ['https://*.wild.test/*', 'http://plain.wild.test/*']),
-        withoutFolders,
-        withoutRoute,
-      ).size,
-    ).toBe(0);
+    const derived = derive(
+      site('wildcard', ['https://*.wild.test/*', 'http://plain.wild.test/*']),
+      withoutFolders,
+      withoutRoute,
+    );
+    for (const id of ['wildcard', 'nofolders', 'noroute']) {
+      expect(derived.has(id as never), id).toBe(false);
+    }
   });
 
   it('gives nothing to two sites that claim one host, since neither can own it', () => {
-    expect(
-      derive(
-        site('first', ['https://chat.shared.test/*']),
-        site('second', ['https://chat.shared.test/*']),
-      ).size,
-    ).toBe(0);
+    const derived = derive(
+      site('first', ['https://chat.shared.test/*']),
+      site('second', ['https://chat.shared.test/*']),
+    );
+    expect(derived.has('first' as never)).toBe(false);
+    expect(derived.has('second' as never)).toBe(false);
   });
 });

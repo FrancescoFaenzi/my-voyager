@@ -227,7 +227,7 @@ describe('folders on a site described only by data', () => {
   });
 
   it('leaves every name the five frozen sites store under unchanged', () => {
-    expect(FOLDER_PLATFORM_IDS).toEqual([...FROZEN, DATA_SITE.id]);
+    expect(FOLDER_PLATFORM_IDS).toEqual([...FROZEN, 'kimi', DATA_SITE.id]);
     for (const id of FROZEN) {
       const { folderExport, ...names } = FOLDER_PLATFORMS[id];
       expect({ ...names, folderExport: folderExport?.platform ?? null }).toEqual(

@@ -187,6 +187,51 @@
       "name": "claude-export",
       "source": "sites/claude/plugins/export/plugin.json",
       "official": true
+    },
+    {
+      "name": "kimi-reading-width",
+      "source": "sites/kimi/plugins/reading-width/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-reading-typography",
+      "source": "sites/kimi/plugins/reading-typography/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-ctrl-enter-send",
+      "source": "sites/kimi/plugins/ctrl-enter-send/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-draft-save",
+      "source": "sites/kimi/plugins/draft-save/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-quote-reply",
+      "source": "sites/kimi/plugins/quote-reply/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-composer-counter",
+      "source": "sites/kimi/plugins/composer-counter/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-folders",
+      "source": "sites/kimi/plugins/folders/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-site-check",
+      "source": "sites/kimi/plugins/site-check/plugin.json",
+      "official": true
+    },
+    {
+      "name": "kimi-export",
+      "source": "sites/kimi/plugins/export/plugin.json",
+      "official": true
     }
   ]
 }

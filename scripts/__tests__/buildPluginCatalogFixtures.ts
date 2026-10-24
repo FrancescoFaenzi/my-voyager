@@ -13,6 +13,7 @@ export const EXPECTED_SITES: Readonly<Record<string, string>> = {
   'chatgpt.com': 'chatgpt',
   'chat.openai.com': 'chatgpt',
   'chat.deepseek.com': 'deepseek',
+  'www.kimi.com': 'kimi',
 };
 
 const tempRoots: string[] = [];

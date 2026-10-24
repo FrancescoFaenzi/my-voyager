@@ -1,6 +1,6 @@
 ---
 name: write-voyager-plugin
-description: "Voyager plugin authoring: write and check a local plugin (a JSON manifest plus CSS) for the Voyager browser extension. Use when the user wants to change how Gemini, AI Studio, ChatGPT, Claude or DeepSeek looks or is laid out through Voyager; to add a small feature Voyager ships as a primitive (copy button, word count, collapse, diagrams, draft save, Ctrl+Enter send, timeline); or to check or fix a plugin that fails to import."
+description: "Voyager plugin authoring: write and check a local plugin (a JSON manifest plus CSS) for the Voyager browser extension. Use when the user wants to change how Gemini, AI Studio, ChatGPT, Claude, DeepSeek or Kimi looks or is laid out through Voyager; to add a small feature Voyager ships as a primitive (copy button, word count, collapse, diagrams, draft save, Ctrl+Enter send, timeline); or to check or fix a plugin that fails to import."
 ---
 
 # Write a Voyager plugin
@@ -19,12 +19,13 @@ This skill is split into files. The links below are relative to this SKILL.md; w
   - ChatGPT: [sites/chatgpt.md](sites/chatgpt.md)
   - Claude: [sites/claude.md](sites/claude.md)
   - DeepSeek: [sites/deepseek.md](sites/deepseek.md)
+  - Kimi: [sites/kimi.md](sites/kimi.md)
 - Read [primitives.md](primitives.md) when the request needs behavior that CSS and the four page changes cannot give: copy buttons, counters, collapsing long content, diagrams (Mermaid, ECharts, WaveDrom), saving drafts, send shortcuts, a conversation timeline, formula copy, Vim input or rendering the user’s own LaTeX. Always read it before answering NOT POSSIBLE.
 
 ## Workflow
 
 1. Find out which site the change is for and what should change. Then scaffold a folder:
-   `npx create-voyager-plugin@latest init my-plugin --site <site>` (site: gemini, aistudio, chatgpt, claude, deepseek) writes plugin.json, style.css and an AGENTS.md with this contract for that site. Without Node, write the two files by hand from the examples below.
+   `npx create-voyager-plugin@latest init my-plugin --site <site>` (site: gemini, aistudio, chatgpt, claude, deepseek, kimi) writes plugin.json, style.css and an AGENTS.md with this contract for that site. Without Node, write the two files by hand from the examples below.
 2. Edit plugin.json and style.css for the request. Give the plugin its own "id", "name" and class names.
 3. Run `npx create-voyager-plugin@latest check my-plugin`. It runs the same checks as Voyager’s popup import, offline, and exits 0 only when the plugin would import. Fix every `path: message` line it prints and run it again. `--json` prints the issues as a JSON array of { path, message }, empty when it imports.
 4. Hand over to the user: open the target site, open the Voyager popup, find the "Local plugins" card (on Gemini and AI Studio it sits right below Cloud Sync, and the "Jump to" links at the top lead to it), choose Import files and pick plugin.json together with style.css. The plugin lands switched off; the user turns it on in the plugin list. Re-importing the same "id" replaces the installed version (raise "version" when you change it).

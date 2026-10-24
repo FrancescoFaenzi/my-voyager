@@ -7,7 +7,14 @@ import type { PluginManifest, SettingField } from '@/features/plugins/types';
 import type { TranslationKey } from '@/utils/translations';
 
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { IconAIStudio, IconChatGPT, IconClaude, IconDeepSeek, IconGemini } from './WebsiteLogos';
+import {
+  IconAIStudio,
+  IconChatGPT,
+  IconClaude,
+  IconDeepSeek,
+  IconGemini,
+  IconKimi,
+} from './WebsiteLogos';
 
 /**
  * Where a listed plugin came from. Anything else (an unknown source id, or a
@@ -28,6 +35,7 @@ const SITE_BADGES: Record<string, { Icon: typeof IconClaude; color: string }> = 
   claude: { Icon: IconClaude, color: '#d97757' },
   chatgpt: { Icon: IconChatGPT, color: '#0ea5e9' },
   deepseek: { Icon: IconDeepSeek, color: '#4d6bfe' },
+  kimi: { Icon: IconKimi, color: '#1783ff' },
 };
 
 /**
@@ -67,7 +75,7 @@ function soleMatchedSiteId(matches: readonly string[]): string | undefined {
 
 /** Strip a redundant site prefix ("Claude · ", "Gemini · "): the logo or the list already says it. */
 export function displayName(name: string): string {
-  return name.replace(/^(Claude|ChatGPT|Gemini|AI Studio|DeepSeek)\s*[·:|]\s*/i, '');
+  return name.replace(/^(Claude|ChatGPT|Gemini|AI Studio|DeepSeek|Kimi)\s*[·:|]\s*/i, '');
 }
 
 /**

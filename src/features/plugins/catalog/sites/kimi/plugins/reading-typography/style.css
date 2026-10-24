@@ -1,0 +1,36 @@
+/* Answer prose only: Kimi renders paragraphs as .paragraph divs. Its thinking
+ * block carries its own .markdown and stays native, so every rule skips
+ * .thinking-container. Paragraphs, list items and table cells get an absolute
+ * size, so nesting never compounds; a list item's own .paragraph sets its 16px
+ * and must be sized too. Each kind
+ * scales from its own native size, not its 14px parent — answer paragraphs and
+ * list items 16px/26px, table cells 14px/22px — so 100% leaves Kimi untouched
+ * and 125% makes a paragraph 20px. Code blocks keep their own size, and a
+ * paragraph holding block math stays native because KaTeX sizes it in em. */
+.gv-plugin-kimi-reading-typography[data-gv-font-size='true']
+  .markdown
+  :is(.paragraph, li):not(table *, pre *, .thinking-container *):not(:has(.katex-display)) {
+  font-size: calc(16px * var(--gv-plugin-reading-text-scale, 100) / 100) !important;
+  line-height: 1.625em !important;
+}
+
+/* Cells scale once from their own 14px; nested and code-block table cells are skipped. */
+.gv-plugin-kimi-reading-typography[data-gv-font-size='true']
+  .markdown
+  :is(td, th):not(:is(td, th) *, pre *, .thinking-container *) {
+  font-size: calc(14px * var(--gv-plugin-reading-text-scale, 100) / 100) !important;
+  line-height: 1.5715em !important;
+}
+
+.gv-plugin-kimi-reading-typography[data-gv-spacing='true']
+  .markdown
+  :is(.paragraph, li):not(table *, pre *, .thinking-container *):not(:has(.katex-display)) {
+  line-height: calc(var(--gv-plugin-reading-line-height, 160) / 100) !important;
+}
+
+/* Kimi spaces paragraphs on the bottom only; keep that shape. */
+.gv-plugin-kimi-reading-typography[data-gv-spacing='true']
+  .markdown
+  .paragraph:not(:last-child):not(table *, pre *, .thinking-container *) {
+  margin-block-end: var(--gv-plugin-reading-paragraph-spacing, 16px) !important;
+}

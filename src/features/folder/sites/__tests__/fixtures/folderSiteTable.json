@@ -408,5 +408,89 @@
     "guideId": "deepseek-folders-sidebar-intro-v1",
     "importStrategies": ["merge"],
     "extension": null
+  },
+  "kimi": {
+    "platform": {
+      "hosts": ["www.kimi.com"],
+      "folderStorageKey": "gvFolderData:kimi",
+      "accountIsolationStorageKey": null,
+      "syncsSharedData": false,
+      "driveFoldersFileName": "gemini-voyager-kimi-folders.json",
+      "syncsConversationExtras": false,
+      "backupNamespace": "kimi-folders",
+      "lastUploadTimeField": "lastUploadTime:kimi",
+      "lastUploadTimeStorageKey": "gvLastUploadTime:kimi",
+      "lastSyncTimeField": "lastSyncTime:kimi",
+      "lastSyncTimeStorageKey": "gvLastSyncTime:kimi",
+      "folderExport": "kimi"
+    },
+    "config": {
+      "platform": null,
+      "storageKey": "gvFolderData:kimi",
+      "backupNamespace": "kimi-folders",
+      "rootBucketId": "__root_conversations__",
+      "isolationSettingKeys": [],
+      "logPrefix": "[SiteFolderStore:kimi]",
+      "debugFlag": "gvFolderDebug:kimi",
+      "pruneOrphanBuckets": true,
+      "recoverMissingData": false,
+      "retryFailedSave": true,
+      "checkEmptyOverwrite": true,
+      "normalizes": true,
+      "legacyMigration": "none"
+    },
+    "policy": {
+      "site": "kimi",
+      "hosts": ["www.kimi.com"],
+      "rootBucketId": "__root_conversations__",
+      "resetAddedAtOnMove": false,
+      "singleBucket": false,
+      "addPlacement": {
+        "native-menu": "top",
+        "outside-drop": "append",
+        "picker": "top",
+        "project": "top"
+      }
+    },
+    "storage": "local",
+    "identity": "route",
+    "tree": {
+      "folderOrder": "sorted",
+      "conversationOrder": "sorted",
+      "rootSectionLabel": null,
+      "refusedOps": [
+        "placeAIStudioPrompt",
+        "saveCurrentData",
+        "ensureDefaultAIStudioFolder",
+        "bufferNativeTitle",
+        "flushNativeTitles",
+        "syncNativeSidebarTitles",
+        "setFolderInstructions",
+        "reorderConversations",
+        "removeConversationEverywhere",
+        "renameConversation",
+        "setConversationGem"
+      ]
+    },
+    "prefs": {
+      "codec": "record",
+      "keys": {
+        "panel": "gvFolderPanel:kimi",
+        "section": "gvFolderSection:kimi"
+      }
+    },
+    "activity": "sends",
+    "messages": {
+      "hint": "chatgptFoldersHint",
+      "added": "chatgptFoldersAdded",
+      "alreadyFiled": "chatgptFoldersAlreadyFiled",
+      "untitled": "chatgptFoldersUntitled",
+      "noConversation": "siteFoldersNoConversation",
+      "guideTitle": "chatgptFoldersCoachmarkTitle",
+      "guideBody": "chatgptFoldersCoachmarkBody"
+    },
+    "guideId": null,
+    "importStrategies": ["merge"],
+    "extension": null
   }
 }
