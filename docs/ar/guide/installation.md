@@ -26,6 +26,8 @@
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Download-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="التثبيت من إضافات Firefox" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
+> 📱 **Firefox لنظام Android:** لا يعمل على الهاتف إلا الخط الزمني في Gemini وClaude وChatGPT وDeepSeek، وتصدير Gemini وChatGPT، والمؤثرات البصرية. تظهر بقية الإضافات في النافذة المنبثقة بعبارة **غير متاح على الهاتف حاليًا**، ويبقى اختيار التشغيل أو الإيقاف محفوظًا لحاسوبك. المجلدات ومزامنة Google Drive غير متاحة على الهاتف.
+
 ## 2. الطريقة اليدوية (أحدث الميزات)
 
 يمكن أن تكون عملية مراجعة متجر الويب بطيئة. إذا كنت تريد أحدث إصدار فوراً، فقم بالتثبيت يدوياً.

@@ -57,7 +57,7 @@
 
 ### 활성화 방법
 
-Claude, ChatGPT, DeepSeek에서는 그 사이트에 있는 상태에서 Voyager 팝업을 열고 해당 사이트의 스위치를 켜세요(예: **Claude에서 프롬프트 관리자 사용**). 접근 권한을 요청하면 허용하세요.
+Claude, ChatGPT, DeepSeek, Kimi에서는 그 사이트에 있는 상태에서 Voyager 팝업을 열고 해당 사이트의 스위치를 켜세요(예: **Claude에서 프롬프트 관리자 사용**). 접근 권한을 요청하면 허용하세요.
 
 그 밖의 사이트라면 다음과 같이 하세요.
 
@@ -81,5 +81,5 @@ Claude, ChatGPT, DeepSeek에서는 그 사이트에 있는 상태에서 Voyager 
 ![DeepSeek Harness 안에서 실행 중인 프롬프트 관리자](/assets/prompt-manager-deepseek-harness.png)
 
 ::: tip
-사용자 지정 웹사이트에서는 **프롬프트 관리자** 기능만 활성화됩니다. 타임라인 및 폴더와 같은 다른 기능은 로드되지 않습니다. Claude, ChatGPT, DeepSeek은 다릅니다. 이 사이트들은 전용 공식 플러그인을 사용하며, [플러그인 목록](/ko/guide/plugins)에서 확인할 수 있습니다.
+사용자 지정 웹사이트에서는 **프롬프트 관리자** 기능만 활성화됩니다. 타임라인 및 폴더와 같은 다른 기능은 로드되지 않습니다. Claude, ChatGPT, DeepSeek, Kimi는 다릅니다. 이 사이트들은 전용 공식 플러그인을 사용하며, [플러그인 목록](/ko/guide/plugins)에서 확인할 수 있습니다.
 :::

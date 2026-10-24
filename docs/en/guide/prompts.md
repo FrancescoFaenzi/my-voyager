@@ -57,7 +57,7 @@ The Prompt Manager can now be used on any website you choose, not just Gemini™
 
 ### How to Enable
 
-On Claude, ChatGPT, and DeepSeek, open the Voyager popup while you're on the site and turn on the site's switch (for example, **Enable Prompt Manager on Claude**). You'll be asked to grant access.
+On Claude, ChatGPT, DeepSeek, and Kimi, open the Voyager popup while you're on the site and turn on the site's switch (for example, **Enable Prompt Manager on Claude**). You'll be asked to grant access.
 
 For any other site:
 
@@ -81,5 +81,5 @@ Local addresses work too — enter `localhost:3080` or `127.0.0.1:3080` the same
 ![Prompt Manager running inside DeepSeek Harness](/assets/prompt-manager-deepseek-harness.png)
 
 ::: tip
-On websites you add yourself, **only** the Prompt Manager is activated. Features like Timeline and Folders don't load there. Claude, ChatGPT, and DeepSeek are different: they get their own official plugins, which you can browse in the [plugin list](/en/guide/plugins).
+On websites you add yourself, **only** the Prompt Manager is activated. Features like Timeline and Folders don't load there. Claude, ChatGPT, DeepSeek, and Kimi are different: they get their own official plugins, which you can browse in the [plugin list](/en/guide/plugins).
 :::

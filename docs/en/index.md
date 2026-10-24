@@ -5,7 +5,7 @@ gitChangelog: false
 hero:
   name: 'Voyager'
   text: 'The missing OS for your AI web UIs.'
-  tagline: 'Gemini · Claude · ChatGPT · DeepSeek — finally, complete.'
+  tagline: 'Gemini · Claude · ChatGPT · DeepSeek · Kimi — finally, complete.'
   image:
     src: /logo.png
     alt: Voyager Logo

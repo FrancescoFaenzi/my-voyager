@@ -1,6 +1,6 @@
 # 自分でプラグインを作る
 
-ローカルプラグインは、自分のために作るプラグインです。Gemini、AI Studio、ChatGPT、Claude、DeepSeek の見た目やレイアウトを変えられ、保存先は自分のブラウザの中だけ。PR を出す必要も、Voyager のソースコードを手元に用意する必要もありません。
+ローカルプラグインは、自分のために作るプラグインです。Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi の見た目やレイアウトを変えられ、保存先は自分のブラウザの中だけ。PR を出す必要も、Voyager のソースコードを手元に用意する必要もありません。
 
 ほかの Voyager プラグインと同じく宣言的で、`plugin.json` マニフェストと CSS だけでできています。プラグイン自身がコードを実行することはありません。Voyager がインポート時に内容をチェックして変更を適用し、オフにすればすべての変更を元に戻します。インポートしたプラグインは最初オフになっているので、中身を確かめてから有効にできます。
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` は、そのままでチェックを通る `plugin.json` と `style.css` に加えて、そのサイトのルールをまとめた `AGENTS.md` を書き出します。`--site` には `gemini`、`aistudio`、`chatgpt`、`claude`、`deepseek` のいずれかを指定します。
+`init` は、そのままでチェックを通る `plugin.json` と `style.css` に加えて、そのサイトのルールをまとめた `AGENTS.md` を書き出します。`--site` には `gemini`、`aistudio`、`chatgpt`、`claude`、`deepseek`、`kimi` のいずれかを指定します。
 
 `check` は popup でのインポートと同じチェックをオフラインで実行します。インポートできる状態なら終了コード 0 を返し、そうでなければ問題ごとに `path: message` 形式の行を 1 行ずつ出力します。`--json` を付けると機械可読な形式で出力します。
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - CSS を追加する。適用範囲は、プラグインがページに付ける `gv-` クラスの下に限られます。
 - クラスの追加、安全な属性やインラインスタイルの設定、要素の非表示。対象には、サイトが宣言しているセマンティックキー（`userTurn`、`assistantTurn`、`composer` など）か CSS セレクタを指定します。
 - popup に設定項目（スイッチ、スライダー、ドロップダウン）を用意する。設定値は `{{key}}` トークンで CSS に渡されます。
-- ChatGPT、Claude、DeepSeek では、Voyager のプリミティブ（数式コピー、タイムライン、Mermaid 図など）を有効にしたり、Voyager 自身の UI の色を変えたりできます。
+- ChatGPT、Claude、DeepSeek、Kimi では、Voyager のプリミティブ（数式コピー、タイムライン、Mermaid 図など）を有効にしたり、Voyager 自身の UI の色を変えたりできます。
 
 ## プラグインにできないこと
 

@@ -1,6 +1,6 @@
 # 编写自己的插件
 
-本地插件是你给自己做的插件：它改变 Gemini、AI Studio、ChatGPT、Claude 或 DeepSeek 的外观和布局，只存在于你的浏览器里，不需要提 PR，也不需要 Voyager 的源码。
+本地插件是你给自己做的插件：它改变 Gemini、AI Studio、ChatGPT、Claude、DeepSeek 或 Kimi 的外观和布局，只存在于你的浏览器里，不需要提 PR，也不需要 Voyager 的源码。
 
 和所有 Voyager 插件一样，它是声明式的：一个 `plugin.json` 清单加上 CSS，本身不运行任何代码。Voyager 在导入时检查它、应用它的改动，关掉时撤销全部改动。导入的插件默认是关闭的，你可以先看一遍再打开。
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` 会写出一个已经能通过检查的 `plugin.json` 和 `style.css`，外加一份写有该网站规则的 `AGENTS.md`。`--site` 可选 `gemini`、`aistudio`、`chatgpt`、`claude` 或 `deepseek`。
+`init` 会写出一个已经能通过检查的 `plugin.json` 和 `style.css`，外加一份写有该网站规则的 `AGENTS.md`。`--site` 可选 `gemini`、`aistudio`、`chatgpt`、`claude`、`deepseek` 或 `kimi`。
 
 `check` 离线运行和 popup 导入完全相同的检查。插件能导入时退出码为 0，否则每个问题输出一行 `path: message`。加 `--json` 可得到机器可读的输出。
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - 添加 CSS，作用域限定在插件给页面加上的 `gv-` 类名下。
 - 添加类名、设置安全的属性或内联样式、隐藏元素。目标可以是网站声明的语义锚点（`userTurn`、`assistantTurn`、`composer` 等），也可以是 CSS 选择器。
 - 在 popup 里提供设置：开关、滑块和下拉框，设置值通过 `{{key}}` 写进 CSS。
-- 在 ChatGPT、Claude 和 DeepSeek 上，启用 Voyager 的原语（公式复制、时间轴、Mermaid 图表等），并给 Voyager 自己的界面换色。
+- 在 ChatGPT、Claude、DeepSeek 和 Kimi 上，启用 Voyager 的原语（公式复制、时间轴、Mermaid 图表等），并给 Voyager 自己的界面换色。
 
 ## 插件做不到什么
 

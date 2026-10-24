@@ -488,7 +488,7 @@ export const es: HomeFeaturesContent = {
         {
           icon: 'globe',
           name: 'Funciona en más sitios',
-          detail: 'También en Claude, ChatGPT y DeepSeek',
+          detail: 'También en Claude, ChatGPT, DeepSeek y Kimi',
         },
         {
           icon: 'monitor',

@@ -4,15 +4,15 @@ Voyager Cloud Sync backs up your folders, prompt library, starred messages, and 
 
 ## What Gets Synced
 
-| Data Type               | Synced | Details                                                                                  |
-| ----------------------- | ------ | ---------------------------------------------------------------------------------------- |
-| Folder structure        | Yes    | Folders on Gemini, AI Studio, and ChatGPT: nesting, colors, and conversation assignments |
-| Prompt library          | Yes    | All saved prompts with tags and folder organization                                      |
-| Starred messages        | Yes    | Timeline bookmarks from any conversation                                                 |
-| Timeline on other sites | Yes    | Timeline stars and levels on ChatGPT, Claude, and DeepSeek                               |
-| Extension settings      | Yes    | Cross-device preferences such as sorting, colors, and input behavior                     |
-| Plugin configuration    | Yes    | Install/enable state and plugin settings; site permissions remain per-device             |
-| Model answers           | No     | Star backups contain user prompts, not model answers                                     |
+| Data Type               | Synced | Details                                                                                                          |
+| ----------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
+| Folder structure        | Yes    | Folders on Gemini, AI Studio, ChatGPT, Claude, DeepSeek, and Kimi: nesting, colors, and conversation assignments |
+| Prompt library          | Yes    | All saved prompts with tags and folder organization                                                              |
+| Starred messages        | Yes    | Timeline bookmarks from any conversation                                                                         |
+| Timeline on other sites | Yes    | Timeline stars and levels on ChatGPT, Claude, and DeepSeek                                                       |
+| Extension settings      | Yes    | Cross-device preferences such as sorting, colors, and input behavior                                             |
+| Plugin configuration    | Yes    | Install/enable state and plugin settings; site permissions remain per-device                                     |
+| Model answers           | No     | Star backups contain user prompts, not model answers                                                             |
 
 ## Starred Data and Sync Limits
 
@@ -34,7 +34,7 @@ Device identifiers, access tokens, caches, viewport coordinates, and temporary r
 
 ## How to Use
 
-1. Open a Gemini, AI Studio, or ChatGPT tab, then click the Voyager icon in your browser's toolbar to open the popup. The **Cloud Sync** section appears only on these sites, and each site's folders sync separately.
+1. Open a Gemini, AI Studio, ChatGPT, Claude, DeepSeek, or Kimi tab, then click the Voyager icon in your browser's toolbar to open the popup. The **Cloud Sync** section appears only on these sites, and each site's folders sync separately.
 2. Locate the **Cloud Sync** section.
 3. On Safari, choose **Google Drive** or **iCloud**. Other browsers use Google Drive.
 4. Set **Sync Mode** to **Manual**. It starts as **Disabled**, and the sync buttons appear only in Manual mode.
@@ -78,4 +78,4 @@ Switching providers does not copy data between them and does not write to both p
 
 ## Supported Platforms
 
-Google Drive sync works on Chrome, Edge, Firefox, and Safari. iCloud sync is available only in the directly distributed Safari app and uses the iCloud account signed in on the Mac.
+Google Drive sync works on Chrome, Edge, Firefox, and Safari on computers. It isn't available on phones (Firefox for Android), which can't open Google's sign-in window. iCloud sync is available only in the directly distributed Safari app and uses the iCloud account signed in on the Mac.

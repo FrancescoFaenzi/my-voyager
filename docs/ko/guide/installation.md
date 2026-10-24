@@ -26,6 +26,8 @@
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Download-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Firefox 추가 기능에서 설치" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
+> 📱 **Firefox for Android:** 휴대폰에서는 Gemini, Claude, ChatGPT, DeepSeek 타임라인, Gemini와 ChatGPT 내보내기, 시각 효과만 작동합니다. 다른 플러그인은 팝업에 **휴대폰에서는 아직 사용할 수 없습니다**로 표시되며, 켜기/끄기 설정은 컴퓨터용으로 유지됩니다. 폴더와 Google Drive 동기화는 휴대폰에서 사용할 수 없습니다.
+
 ## 2. 수동 설치 (최신 기능)
 
 웹 스토어의 심사 과정은 다소 느릴 수 있습니다. 최신 기능을 즉시 사용하고 싶다면 수동으로 설치하세요.

@@ -26,6 +26,8 @@ The simplest way to get started. Updates are automatic.
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Download-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Install from Firefox Add-ons" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
+> 📱 **Firefox for Android:** on phones, only the Gemini, Claude, ChatGPT, and DeepSeek timelines, Gemini and ChatGPT export, and visual effects run. Other plugins show **Not available on phones yet** in the popup and keep your on/off choice for your computer. Folders and Google Drive sync aren't available on phones.
+
 ## 2. The Manual Way (Latest Features)
 
 The Web Store review process can be slow. If you want the cutting-edge version immediately, install manually.

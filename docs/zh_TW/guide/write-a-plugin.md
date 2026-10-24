@@ -1,6 +1,6 @@
 # 撰寫自己的外掛
 
-本機外掛是你為自己做的外掛：它能改變 Gemini、AI Studio、ChatGPT、Claude 或 DeepSeek 的外觀與版面，只存在你的瀏覽器裡，不需要發 PR，也不需要 Voyager 的原始碼。
+本機外掛是你為自己做的外掛：它能改變 Gemini、AI Studio、ChatGPT、Claude、DeepSeek 或 Kimi 的外觀與版面，只存在你的瀏覽器裡，不需要發 PR，也不需要 Voyager 的原始碼。
 
 和所有 Voyager 外掛一樣，它是宣告式的：一份 `plugin.json` 清單加上 CSS，本身不執行任何程式碼。Voyager 會在匯入時檢查它、套用它的修改，關閉時再把所有修改全部還原。匯入的外掛預設是關閉的，你可以先看過一遍再開啟。
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` 會產生一份已經能通過檢查的 `plugin.json` 和 `style.css`，另外附上一份寫有該網站規則的 `AGENTS.md`。`--site` 可以填 `gemini`、`aistudio`、`chatgpt`、`claude` 或 `deepseek`。
+`init` 會產生一份已經能通過檢查的 `plugin.json` 和 `style.css`，另外附上一份寫有該網站規則的 `AGENTS.md`。`--site` 可以填 `gemini`、`aistudio`、`chatgpt`、`claude`、`deepseek` 或 `kimi`。
 
 `check` 會離線執行和 popup 匯入時完全相同的檢查。外掛能順利匯入時以結束代碼 0 結束，否則每個問題輸出一行 `path: message`。加上 `--json` 可以取得機器可讀的輸出。
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - 加入 CSS，作用範圍限定在外掛替頁面加上的 `gv-` class 之下。
 - 加入 class、設定安全的屬性或行內樣式、隱藏元素。目標可以是網站宣告的語義鍵（`userTurn`、`assistantTurn`、`composer` 等），也可以是 CSS 選擇器。
 - 在 popup 裡提供設定：開關、滑桿和下拉選單，設定值會透過 `{{key}}` 帶進 CSS。
-- 在 ChatGPT、Claude 和 DeepSeek 上，啟用 Voyager 的原語（公式複製、時間軸、Mermaid 圖表等），並替 Voyager 自己的介面換色。
+- 在 ChatGPT、Claude、DeepSeek 和 Kimi 上，啟用 Voyager 的原語（公式複製、時間軸、Mermaid 圖表等），並替 Voyager 自己的介面換色。
 
 ## 外掛做不到什麼
 

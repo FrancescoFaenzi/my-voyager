@@ -1,6 +1,6 @@
 # Escreva o seu próprio plugin
 
-Um plugin local é um plugin que cria para si. Altera o aspeto ou a disposição do Gemini, AI Studio, ChatGPT, Claude ou DeepSeek, vive apenas no seu navegador e não precisa de nenhuma pull request nem de uma cópia do código-fonte do Voyager.
+Um plugin local é um plugin que cria para si. Altera o aspeto ou a disposição do Gemini, AI Studio, ChatGPT, Claude, DeepSeek ou Kimi, vive apenas no seu navegador e não precisa de nenhuma pull request nem de uma cópia do código-fonte do Voyager.
 
 Como todos os plugins do Voyager, é declarativo: um manifest `plugin.json` mais CSS. Não executa código próprio. O Voyager verifica-o ao importar, aplica as alterações e remove-as todas quando o desativa. Um plugin importado começa desativado, para que o possa rever primeiro.
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` gera um `plugin.json` e um `style.css` que já passam nas verificações, além de um `AGENTS.md` com as regras desse site. `--site` aceita `gemini`, `aistudio`, `chatgpt`, `claude` ou `deepseek`.
+`init` gera um `plugin.json` e um `style.css` que já passam nas verificações, além de um `AGENTS.md` com as regras desse site. `--site` aceita `gemini`, `aistudio`, `chatgpt`, `claude`, `deepseek` ou `kimi`.
 
 `check` executa offline as mesmas verificações que a importação do popup. Termina com o código 0 quando o plugin pode ser importado e, caso contrário, imprime uma linha `path: message` por problema. Acrescente `--json` para obter uma saída legível por máquina.
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - Acrescentar CSS, limitado a uma classe `gv-` que o plugin adiciona à página.
 - Adicionar uma classe, definir um atributo seguro ou um estilo inline, ou esconder elementos. Os alvos são chaves semânticas que o site declara (`userTurn`, `assistantTurn`, `composer`, …) ou seletores CSS.
 - Oferecer definições no popup: interruptores, controlos deslizantes e listas pendentes, cujos valores chegam ao CSS através de tokens `{{key}}`.
-- No ChatGPT, Claude e DeepSeek, ativar uma primitiva do Voyager (cópia de fórmulas, a linha do tempo, diagramas Mermaid e outras) e mudar as cores da própria interface do Voyager.
+- No ChatGPT, Claude, DeepSeek e Kimi, ativar uma primitiva do Voyager (cópia de fórmulas, a linha do tempo, diagramas Mermaid e outras) e mudar as cores da própria interface do Voyager.
 
 ## O que não pode fazer
 

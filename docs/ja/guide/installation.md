@@ -26,6 +26,8 @@
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-ダウンロード-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Firefox Add-ons からインストール" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
+> 📱 **Firefox for Android：** スマートフォンで動作するのは、Gemini・Claude・ChatGPT・DeepSeek のタイムライン、Gemini と ChatGPT のエクスポート、視覚効果だけです。そのほかのプラグインはポップアップに**スマートフォンではまだ使えません**と表示され、オン/オフの設定はパソコン用に保持されます。フォルダと Google ドライブ同期はスマートフォンでは使えません。
+
 ## 2. 手動インストール（最新版）
 
 ストアの審査は時間がかかります。最新機能をいち早く試したい方は、こちらをどうぞ。

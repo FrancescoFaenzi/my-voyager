@@ -1,6 +1,6 @@
 # Écrire son propre plugin
 
-Un plugin local est un plugin que vous créez pour vous-même. Il modifie l'apparence ou la mise en page de Gemini, AI Studio, ChatGPT, Claude ou DeepSeek, il ne vit que dans votre navigateur, et il ne demande ni pull request ni copie du code source de Voyager.
+Un plugin local est un plugin que vous créez pour vous-même. Il modifie l'apparence ou la mise en page de Gemini, AI Studio, ChatGPT, Claude, DeepSeek ou Kimi, il ne vit que dans votre navigateur, et il ne demande ni pull request ni copie du code source de Voyager.
 
 Comme tous les plugins Voyager, il est déclaratif : un manifest `plugin.json` et du CSS. Il n'exécute aucun code qui lui soit propre. Voyager le vérifie à l'import, applique ses modifications et les retire toutes quand vous le désactivez. Un plugin importé est désactivé au départ, pour que vous puissiez le relire avant de l'activer.
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` génère un `plugin.json` et un `style.css` qui passent déjà les vérifications, ainsi qu'un `AGENTS.md` qui rassemble les règles du site. `--site` accepte `gemini`, `aistudio`, `chatgpt`, `claude` ou `deepseek`.
+`init` génère un `plugin.json` et un `style.css` qui passent déjà les vérifications, ainsi qu'un `AGENTS.md` qui rassemble les règles du site. `--site` accepte `gemini`, `aistudio`, `chatgpt`, `claude`, `deepseek` ou `kimi`.
 
 `check` exécute hors ligne les mêmes vérifications que l'import du popup. Il se termine avec le code 0 si le plugin peut être importé, et sinon affiche une ligne `path: message` par problème. Ajoutez `--json` pour une sortie lisible par une machine.
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - Ajouter du CSS, limité à une classe `gv-` que le plugin ajoute à la page.
 - Ajouter une classe, définir un attribut sûr ou un style en ligne, ou masquer des éléments. Les cibles sont des clés sémantiques déclarées par le site (`userTurn`, `assistantTurn`, `composer`…) ou des sélecteurs CSS.
 - Proposer des réglages dans le popup : interrupteurs, curseurs et listes déroulantes, dont les valeurs arrivent dans le CSS via des jetons `{{key}}`.
-- Sur ChatGPT, Claude et DeepSeek, activer une primitive de Voyager (copie de formules, timeline, diagrammes Mermaid, etc.) et changer les couleurs de l'interface de Voyager elle-même.
+- Sur ChatGPT, Claude, DeepSeek et Kimi, activer une primitive de Voyager (copie de formules, timeline, diagrammes Mermaid, etc.) et changer les couleurs de l'interface de Voyager elle-même.
 
 ## Ce qu'il ne peut pas faire
 

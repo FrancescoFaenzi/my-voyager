@@ -483,7 +483,7 @@ export const pt: HomeFeaturesContent = {
         {
           icon: 'globe',
           name: 'Funciona noutros sites',
-          detail: 'Também no Claude, ChatGPT e DeepSeek',
+          detail: 'Também no Claude, ChatGPT, DeepSeek e Kimi',
         },
         {
           icon: 'monitor',

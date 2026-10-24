@@ -433,7 +433,11 @@ export const en: HomeFeaturesContent = {
           name: 'Plugins',
           detail: 'Official plugins, plus your own local ones',
         },
-        { icon: 'globe', name: 'Works across sites', detail: 'Claude, ChatGPT and DeepSeek too' },
+        {
+          icon: 'globe',
+          name: 'Works across sites',
+          detail: 'Claude, ChatGPT, DeepSeek and Kimi too',
+        },
         {
           icon: 'monitor',
           name: 'Local web UIs',

@@ -57,7 +57,7 @@
 
 ### 如何啟用
 
-在 Claude、ChatGPT 和 DeepSeek 上，在該網站頁面打開 Voyager 彈窗，打開該網站的開關（例如 **在 Claude 上開啟提示詞管理器**），並授予存取權限。
+在 Claude、ChatGPT、DeepSeek 和 Kimi 上，在該網站頁面打開 Voyager 彈窗，打開該網站的開關（例如 **在 Claude 上開啟提示詞管理器**），並授予存取權限。
 
 其他任何網站：
 
@@ -81,5 +81,5 @@
 ![在 DeepSeek Harness 中執行的提示詞管理器](/assets/prompt-manager-deepseek-harness.png)
 
 ::: tip
-在您自行添加的網站上，**僅**激活提示詞管理器功能。時間軸、資料夾等其他功能不會加載。Claude、ChatGPT 和 DeepSeek 不同：它們有各自的官方外掛，可以在[外掛一覽](/zh_TW/guide/plugins)中瀏覽。
+在您自行添加的網站上，**僅**激活提示詞管理器功能。時間軸、資料夾等其他功能不會加載。Claude、ChatGPT、DeepSeek 和 Kimi 不同：它們有各自的官方外掛，可以在[外掛一覽](/zh_TW/guide/plugins)中瀏覽。
 :::

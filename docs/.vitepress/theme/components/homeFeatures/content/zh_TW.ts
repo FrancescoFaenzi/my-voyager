@@ -342,7 +342,7 @@ export const zhTW: HomeFeaturesContent = {
       title: '開放生態',
       items: [
         { icon: 'puzzle', name: '外掛', detail: '官方外掛，也能裝你自己的本機外掛' },
-        { icon: 'globe', name: '多站通用', detail: 'Claude、ChatGPT、DeepSeek 也能用' },
+        { icon: 'globe', name: '多站通用', detail: 'Claude、ChatGPT、DeepSeek、Kimi 也能用' },
         {
           icon: 'monitor',
           name: '本機 Web UI',

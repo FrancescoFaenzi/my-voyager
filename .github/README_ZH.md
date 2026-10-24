@@ -2,7 +2,7 @@
   <img src="../docs/public/logo.png" alt="Voyager logo" width="120" height="120">
   <h3>打造属于你的 AI 体验 ✨</h3>
   <p>
-    <b>Gemini · Claude · ChatGPT · DeepSeek，终于完整了。</b>
+    <b>Gemini · Claude · ChatGPT · DeepSeek · Kimi，终于完整了。</b>
   </p>
 
   <p>
@@ -60,7 +60,7 @@
 
 我们热爱 AI 聊天助手，但有时候总觉得它们少了一点"秩序感"。
 
-这就是我开发 **Voyager** 的初衷。它能帮你把 AI 对话变得井井有条、触手可及——无论你用的是 Gemini、Claude 还是 ChatGPT。不管你是需要处理大量对话的研究人员，还是喜欢收藏代码片段的开发者，亦或是单纯的整理控，Voyager 都是为你准备的。
+这就是我开发 **Voyager** 的初衷。它能帮你把 AI 对话变得井井有条、触手可及——无论你用的是 Gemini、Claude、ChatGPT 还是 Kimi。不管你是需要处理大量对话的研究人员，还是喜欢收藏代码片段的开发者，亦或是单纯的整理控，Voyager 都是为你准备的。
 
 <p align="center">
   <a href="https://x.com/Nag1ovo/status/2024509398601597412?s=20" target="_blank">
@@ -97,7 +97,7 @@
   - **[输入框折叠](https://voyager.nagi.fun/guide/input-collapse)**: 输入框自动收纳，释放阅读空间。
   - **[默认模型](https://voyager.nagi.fun/guide/default-model)**: 为新对话设置默认选中的模型。
 
-### 🔌 Claude, ChatGPT & DeepSeek
+### 🔌 Claude, ChatGPT, DeepSeek & Kimi
 
 通过 [Voyager 插件引擎](https://voyager.nagi.fun/guide/plugins)，这些功能让你的体验延伸到 Gemini 之外。在扩展弹窗中开启它们，并分别授权每个网站：
 
@@ -106,8 +106,8 @@
 - **💾 ChatGPT 导出**: 将 ChatGPT 对话导出为 Markdown、JSON、PDF 或图片。
 - **📐 公式复制**: 在 Claude、ChatGPT 和 DeepSeek 上点击公式即可复制其 LaTeX。
 - **⌨️ Vim 输入**: 在 Claude、ChatGPT 和 DeepSeek 的输入框中使用 Vim 风格的模态编辑和光标移动。
-- **📖 舒适阅读宽度**: 调整 Claude、ChatGPT 和 DeepSeek 的对话宽度，获得更好的阅读体验。
-- **💬 日常小工具**: 在 Claude、ChatGPT 和 DeepSeek 上提供引用回复、Ctrl/⌘+Enter 发送和草稿字数统计；在 Claude 和 DeepSeek 上还提供草稿自动保存。
+- **📖 舒适阅读宽度**: 调整 Claude、ChatGPT、DeepSeek 和 Kimi 的对话宽度，获得更好的阅读体验。
+- **💬 日常小工具**: 在 Claude、ChatGPT、DeepSeek 和 Kimi 上提供引用回复、Ctrl/⌘+Enter 发送和草稿字数统计；在 Claude、DeepSeek 和 Kimi 上还提供草稿自动保存。
 - **🈶 CJK 渲染修复**: 修复 Claude 上的中日韩字符渲染问题。
 - **📜 代码不换行**: DeepSeek 上的长代码行改为横向滚动，缩进不会被折断。
 

@@ -3,7 +3,7 @@
 Le verrouillage des données est l'ennemi.
 Nous croyons que si vous le créez, vous le possédez.
 
-Voyager Export vous permet de télécharger n'importe quelle conversation Gemini ou ChatGPT au format Markdown, PDF, JSON ou image. Il extrait l'intégralité du contenu, y compris les blocs de code, les images et la mise en forme, et vous offre une copie permanente et portable de chaque conversation IA.
+Voyager Export vous permet de télécharger n'importe quelle conversation Gemini, ChatGPT, Claude, DeepSeek ou Kimi au format Markdown, PDF, JSON ou image. Il extrait l'intégralité du contenu, y compris les blocs de code, les images et la mise en forme, et vous offre une copie permanente et portable de chaque conversation IA.
 
 ## Comparaison des formats
 
@@ -28,9 +28,11 @@ Voyager vous permet de retirer vos données du cloud pour les mettre entre vos m
 
 ### Comment Exporter
 
-1. Cliquez sur le bouton **Exporter** en haut à droite de la page (ChatGPT et les mises en page actuelles de Gemini). Sur Gemini, vous pouvez aussi choisir **Exporter l'historique de la conversation** dans le menu ⋮ d'une conversation ou d'une réponse ; sur les anciennes mises en page de Gemini, survolez le logo Gemini pour voir l'**Icône d'Export**.
+1. Cliquez sur le bouton **Exporter** en haut à droite de la page (ChatGPT, Claude, DeepSeek, Kimi et les mises en page actuelles de Gemini). Sur Gemini, vous pouvez aussi choisir **Exporter l'historique de la conversation** dans le menu ⋮ d'une conversation ou d'une réponse ; sur les anciennes mises en page de Gemini, survolez le logo Gemini pour voir l'**Icône d'Export**.
 2. Choisissez votre format.
 3. C'est fait.
+
+Sur Claude, DeepSeek et Kimi, l'export est une extension désactivée par défaut : activez-la d'abord dans la section **Extensions** du popup (ordinateur uniquement). Voyager fait défiler une longue conversation pour la lire en entier. S'il ne peut pas confirmer le début et la fin, il prévient que l'export est peut-être incomplet. Passer à une autre conversation arrête l'export, tout comme le début d'une nouvelle réponse sur Claude.
 
 Ce sont vos données. Faites-en ce que vous voulez.
 
@@ -77,4 +79,4 @@ C'est utile pour la recherche académique, l'analyse concurrentielle et la docum
 
 ## Plateformes prises en charge
 
-L'export fonctionne sur Gemini et ChatGPT, sur Chrome, Edge, Firefox, Safari, Opera et Brave. Sur Safari, l'export PDF passe par une étape d'impression manuelle (Commande+P après avoir cliqué sur Exporter) ; les exports Markdown et JSON incluent toujours les images.
+L'export fonctionne sur Gemini et ChatGPT, sur Chrome, Edge, Firefox, Safari, Opera et Brave. Sur Claude, DeepSeek et Kimi, l'export passe par des extensions désactivées par défaut, à activer dans **Extensions**, sur ordinateur uniquement. Sur Firefox pour Android, seuls les exports Gemini et ChatGPT fonctionnent. Sur Safari, l'export PDF passe par une étape d'impression manuelle (Commande+P après avoir cliqué sur Exporter) ; les exports Markdown et JSON incluent toujours les images.

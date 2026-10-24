@@ -2,7 +2,7 @@
   <img src="docs/public/logo.png" alt="Voyager logo" width="112" height="112">
   <h1>Voyager</h1>
   <p><b>Make every AI chat yours.</b></p>
-  <p>Folders, a timeline, export and formula copy on Gemini, AI Studio, ChatGPT, Claude and DeepSeek,<br>each one a plugin. Yours can be one too: a few lines of JSON, no code.</p>
+  <p>Folders, a timeline, export and formula copy on Gemini, AI Studio, ChatGPT, Claude, DeepSeek and Kimi,<br>each one a plugin. Yours can be one too: a few lines of JSON, no code.</p>
 
   <p>
     <img src="https://voyager.nagi.fun/badges/github-stars.svg" alt="GitHub stars">
@@ -57,7 +57,7 @@ Voyager keeps three things apart.
 - **Primitives.** Abilities Voyager ships once and runs anywhere: a timeline, folders, formula copy, diagrams, export.
 - **Plugins.** Plain JSON that points primitives and CSS at those places. Nothing in a plugin runs as code, and every change it makes comes off when you turn it off.
 
-So a site that redesigns its page needs one file fixed, and on ChatGPT, Claude and DeepSeek that fix arrives from the plugin catalog without an extension update. A new site is one more file. And a plugin written once runs on every site it names.
+So a site that redesigns its page needs one file fixed, and on ChatGPT, Claude, DeepSeek and Kimi that fix arrives from the plugin catalog without an extension update. A new site is one more file. And a plugin written once runs on every site it names.
 
 This is the core of a plugin that blurs the sidebar before you take a screenshot, on four sites:
 
@@ -90,20 +90,20 @@ Voyager's own features are built the same way. The timeline, formula copy, quote
 
 ● works once installed · ○ one switch in the popup
 
-| Feature                                                        | Gemini | AI Studio | ChatGPT | Claude | DeepSeek |
-| -------------------------------------------------------------- | :----: | :-------: | :-----: | :----: | :------: |
-| [Folders](https://voyager.nagi.fun/en/guide/folders)           |   ●    |     ●     |    ●    |   ○    |    ○     |
-| [Timeline](https://voyager.nagi.fun/en/guide/timeline)         |   ●    |           |    ○    |   ○    |    ○     |
-| [Export](https://voyager.nagi.fun/en/guide/export)             |   ●    |           |    ○    |        |          |
-| [Formula copy](https://voyager.nagi.fun/en/guide/formula-copy) |   ●    |     ●     |    ○    |   ○    |    ○     |
-| [Quote reply](https://voyager.nagi.fun/en/guide/quote-reply)   |   ●    |           |    ○    |   ○    |    ○     |
-| [Diagrams](https://voyager.nagi.fun/en/guide/mermaid)          |   ●    |           |    ○    |        |          |
-| Reading width and typography                                   |   ○    |           |    ○    |   ○    |    ○     |
-| Vim keys in the input box                                      |   ○    |           |    ○    |   ○    |    ○     |
-| [Send key](https://voyager.nagi.fun/en/guide/send-behavior)    |   ○    |     ○     |    ○    |   ○    |    ○     |
-| Draft auto-save                                                |   ○    |           |         |   ○    |    ○     |
-| [Batch delete](https://voyager.nagi.fun/en/guide/batch-delete) |   ●    |     ●     |         |        |          |
-| Visual effects (snow, rain, sakura)                            |   ○    |     ○     |    ○    |   ○    |    ○     |
+| Feature                                                        | Gemini | AI Studio | ChatGPT | Claude | DeepSeek | Kimi |
+| -------------------------------------------------------------- | :----: | :-------: | :-----: | :----: | :------: | :--: |
+| [Folders](https://voyager.nagi.fun/en/guide/folders)           |   ●    |     ●     |    ●    |   ○    |    ○     |  ○   |
+| [Timeline](https://voyager.nagi.fun/en/guide/timeline)         |   ●    |           |    ○    |   ○    |    ○     |      |
+| [Export](https://voyager.nagi.fun/en/guide/export)             |   ●    |           |    ○    |        |          |  ○   |
+| [Formula copy](https://voyager.nagi.fun/en/guide/formula-copy) |   ●    |     ●     |    ○    |   ○    |    ○     |      |
+| [Quote reply](https://voyager.nagi.fun/en/guide/quote-reply)   |   ●    |           |    ○    |   ○    |    ○     |  ○   |
+| [Diagrams](https://voyager.nagi.fun/en/guide/mermaid)          |   ●    |           |    ○    |        |          |      |
+| Reading width and typography                                   |   ○    |           |    ○    |   ○    |    ○     |  ○   |
+| Vim keys in the input box                                      |   ○    |           |    ○    |   ○    |    ○     |      |
+| [Send key](https://voyager.nagi.fun/en/guide/send-behavior)    |   ○    |     ○     |    ○    |   ○    |    ○     |  ○   |
+| Draft auto-save                                                |   ○    |           |         |   ○    |    ○     |  ○   |
+| [Batch delete](https://voyager.nagi.fun/en/guide/batch-delete) |   ●    |     ●     |         |        |          |      |
+| Visual effects (snow, rain, sakura)                            |   ○    |     ○     |    ○    |   ○    |    ○     |  ○   |
 
 On every site, and on any other site you add, `localhost` included:
 
@@ -310,7 +310,7 @@ If your project is inspired by Voyager, forked from it, or built on top of it, s
 Voyager is licensed under **GPL-3.0**.
 Third-party MIT notices for Image Refinement-related code and assets are retained in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
-Gemini is a trademark of Google LLC. Claude is a trademark of Anthropic, PBC. ChatGPT is a trademark of OpenAI, Inc. Voyager is an independent project and is not affiliated with, endorsed by, or sponsored by any of these companies.
+Gemini is a trademark of Google LLC. Claude is a trademark of Anthropic, PBC. ChatGPT is a trademark of OpenAI, Inc. Kimi is a trademark of Moonshot AI. Voyager is an independent project and is not affiliated with, endorsed by, or sponsored by any of these companies.
 
 ---
 

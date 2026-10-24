@@ -192,7 +192,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: '功能',
     defaultOn: '默认开启',
     disclaimer:
-      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek 等名称与标志为其各自所有者的商标。Voyager 与 Google、OpenAI、Anthropic、DeepSeek 无关联，亦未获其背书。',
+      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi 等名称与标志为其各自所有者的商标。Voyager 与 Google、OpenAI、Anthropic、DeepSeek、Moonshot AI 无关联，亦未获其背书。',
   },
   {
     manifest: 'zh_TW',
@@ -203,7 +203,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: '功能',
     defaultOn: '預設開啟',
     disclaimer:
-      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek 等名稱與標誌為其各自所有者的商標。Voyager 與 Google、OpenAI、Anthropic、DeepSeek 無關聯，亦未獲其背書。',
+      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi 等名稱與標誌為其各自所有者的商標。Voyager 與 Google、OpenAI、Anthropic、DeepSeek、Moonshot AI 無關聯，亦未獲其背書。',
   },
   {
     manifest: 'en',
@@ -214,7 +214,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'Feature',
     defaultOn: 'On by default',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek and other names and logos are trademarks of their respective owners. Voyager is not affiliated with, or endorsed by, Google, OpenAI, Anthropic or DeepSeek.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi and other names and logos are trademarks of their respective owners. Voyager is not affiliated with, or endorsed by, Google, OpenAI, Anthropic, DeepSeek or Moonshot AI.',
   },
   {
     manifest: 'ja',
@@ -225,7 +225,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: '機能',
     defaultOn: '既定でオン',
     disclaimer:
-      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek などの名称およびロゴは各所有者の商標です。Voyager は Google・OpenAI・Anthropic・DeepSeek とは関係なく、承認も受けていません。',
+      'Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi などの名称およびロゴは各所有者の商標です。Voyager は Google・OpenAI・Anthropic・DeepSeek・Moonshot AI とは関係なく、承認も受けていません。',
   },
   {
     manifest: 'ko',
@@ -236,7 +236,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: '기능',
     defaultOn: '기본 켜짐',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek 등의 이름과 로고는 각 소유자의 상표입니다. Voyager는 Google, OpenAI, Anthropic 또는 DeepSeek와 제휴하거나 보증받지 않았습니다.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi 등의 이름과 로고는 각 소유자의 상표입니다. Voyager는 Google, OpenAI, Anthropic, DeepSeek 또는 Moonshot AI와 제휴하거나 보증받지 않았습니다.',
   },
   {
     manifest: 'fr',
@@ -247,7 +247,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'Fonction',
     defaultOn: 'Activé par défaut',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek et les autres noms et logos sont des marques de leurs propriétaires respectifs. Voyager n’est ni affilié à Google, OpenAI, Anthropic ou DeepSeek, ni approuvé par eux.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi et les autres noms et logos sont des marques de leurs propriétaires respectifs. Voyager n’est ni affilié à Google, OpenAI, Anthropic, DeepSeek ou Moonshot AI, ni approuvé par eux.',
   },
   {
     manifest: 'es',
@@ -258,7 +258,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'Función',
     defaultOn: 'Activado por defecto',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek y otros nombres y logotipos son marcas de sus respectivos propietarios. Voyager no está afiliado ni respaldado por Google, OpenAI, Anthropic o DeepSeek.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi y otros nombres y logotipos son marcas de sus respectivos propietarios. Voyager no está afiliado ni respaldado por Google, OpenAI, Anthropic, DeepSeek o Moonshot AI.',
   },
   {
     manifest: 'pt',
@@ -269,7 +269,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'Funcionalidade',
     defaultOn: 'Ativado por predefinição',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek e outros nomes e logótipos são marcas dos respetivos proprietários. O Voyager não tem qualquer afiliação ou aprovação da Google, da OpenAI, da Anthropic ou da DeepSeek.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi e outros nomes e logótipos são marcas dos respetivos proprietários. O Voyager não tem qualquer afiliação ou aprovação da Google, da OpenAI, da Anthropic, da DeepSeek ou da Moonshot AI.',
   },
   {
     manifest: 'ar',
@@ -280,7 +280,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'الميزة',
     defaultOn: 'مفعّلة افتراضيًا',
     disclaimer:
-      'أسماء وشعارات Gemini وAI Studio وChatGPT وClaude وDeepSeek وغيرها علامات تجارية لأصحابها. Voyager غير مرتبط بـ Google أو OpenAI أو Anthropic أو DeepSeek ولا يحظى بموافقتها.',
+      'أسماء وشعارات Gemini وAI Studio وChatGPT وClaude وDeepSeek وKimi وغيرها علامات تجارية لأصحابها. Voyager غير مرتبط بـ Google أو OpenAI أو Anthropic أو DeepSeek أو Moonshot AI ولا يحظى بموافقتها.',
   },
   {
     manifest: 'ru',
@@ -291,7 +291,7 @@ export const PLUGINS_LOCALES: readonly PluginsLocale[] = [
     feature: 'Функция',
     defaultOn: 'Включено по умолчанию',
     disclaimer:
-      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek и другие названия и логотипы являются товарными знаками их владельцев. Voyager не связан с Google, OpenAI, Anthropic или DeepSeek и не одобрен ими.',
+      'Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi и другие названия и логотипы являются товарными знаками их владельцев. Voyager не связан с Google, OpenAI, Anthropic, DeepSeek или Moonshot AI и не одобрен ими.',
   },
 ];
 

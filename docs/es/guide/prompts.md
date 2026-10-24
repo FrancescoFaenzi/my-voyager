@@ -57,7 +57,7 @@ El Gestor de Prompts ahora se puede utilizar en cualquier sitio web que elijas, 
 
 ### Cómo Habilitarlo
 
-En Claude, ChatGPT y DeepSeek, abre el popup de Voyager mientras estás en el sitio y activa el interruptor de ese sitio (por ejemplo, **Activar el Gestor de prompts en Claude**). Se te pedirá que concedas acceso.
+En Claude, ChatGPT, DeepSeek y Kimi, abre el popup de Voyager mientras estás en el sitio y activa el interruptor de ese sitio (por ejemplo, **Activar el Gestor de prompts en Claude**). Se te pedirá que concedas acceso.
 
 Para cualquier otro sitio:
 
@@ -81,5 +81,5 @@ Las direcciones locales también funcionan: introduce `localhost:3080` o `127.0.
 ![Gestor de Prompts dentro de DeepSeek Harness](/assets/prompt-manager-deepseek-harness.png)
 
 ::: tip
-En los sitios web que añades tú mismo, **solo** se activa la función del Gestor de Prompts. Otras funciones como la Línea de tiempo y las Carpetas no se cargarán allí. Claude, ChatGPT y DeepSeek son distintos: tienen sus propios plugins oficiales, que puedes consultar en el [catálogo de plugins](/es/guide/plugins).
+En los sitios web que añades tú mismo, **solo** se activa la función del Gestor de Prompts. Otras funciones como la Línea de tiempo y las Carpetas no se cargarán allí. Claude, ChatGPT, DeepSeek y Kimi son distintos: tienen sus propios plugins oficiales, que puedes consultar en el [catálogo de plugins](/es/guide/plugins).
 :::

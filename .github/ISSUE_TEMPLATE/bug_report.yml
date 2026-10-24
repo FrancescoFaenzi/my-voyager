@@ -82,6 +82,7 @@ body:
         - ChatGPT
         - Claude
         - DeepSeek
+        - Kimi
         - Extension popup / background
         - Other
     validations:

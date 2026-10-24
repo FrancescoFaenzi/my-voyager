@@ -1,6 +1,6 @@
 # 직접 플러그인 만들기
 
-로컬 플러그인은 나를 위해 직접 만드는 플러그인입니다. Gemini, AI Studio, ChatGPT, Claude, DeepSeek의 모양이나 레이아웃을 바꾸며, 내 브라우저 안에만 저장됩니다. PR을 보낼 필요도, Voyager 소스 코드를 받아 둘 필요도 없습니다.
+로컬 플러그인은 나를 위해 직접 만드는 플러그인입니다. Gemini, AI Studio, ChatGPT, Claude, DeepSeek, Kimi의 모양이나 레이아웃을 바꾸며, 내 브라우저 안에만 저장됩니다. PR을 보낼 필요도, Voyager 소스 코드를 받아 둘 필요도 없습니다.
 
 다른 Voyager 플러그인과 마찬가지로 선언형입니다. `plugin.json` 매니페스트와 CSS로만 이루어지고, 플러그인 자체는 어떤 코드도 실행하지 않습니다. Voyager가 가져올 때 내용을 검사하고 변경 사항을 적용하며, 끄면 모든 변경을 되돌립니다. 가져온 플러그인은 꺼진 상태로 시작하므로 먼저 살펴본 뒤 켤 수 있습니다.
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init`은 이미 검사를 통과하는 `plugin.json`과 `style.css`, 그리고 해당 사이트의 규칙을 담은 `AGENTS.md`를 만들어 줍니다. `--site`에는 `gemini`, `aistudio`, `chatgpt`, `claude`, `deepseek` 중 하나를 넣습니다.
+`init`은 이미 검사를 통과하는 `plugin.json`과 `style.css`, 그리고 해당 사이트의 규칙을 담은 `AGENTS.md`를 만들어 줍니다. `--site`에는 `gemini`, `aistudio`, `chatgpt`, `claude`, `deepseek`, `kimi` 중 하나를 넣습니다.
 
 `check`는 popup에서 가져올 때와 같은 검사를 오프라인으로 실행합니다. 가져올 수 있는 플러그인이면 종료 코드 0으로 끝나고, 그렇지 않으면 문제마다 `path: message` 한 줄을 출력합니다. `--json`을 붙이면 기계가 읽을 수 있는 형식으로 출력합니다.
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - CSS 추가. 적용 범위는 플러그인이 페이지에 붙이는 `gv-` 클래스 아래로 한정됩니다.
 - 클래스 추가, 안전한 속성이나 인라인 스타일 설정, 요소 숨기기. 대상은 사이트가 선언한 시맨틱 키(`userTurn`, `assistantTurn`, `composer` 등)나 CSS 선택자입니다.
 - popup에 설정 제공: 스위치, 슬라이더, 드롭다운이며, 설정값은 `{{key}}` 토큰으로 CSS에 전달됩니다.
-- ChatGPT, Claude, DeepSeek에서는 Voyager 프리미티브(수식 복사, 타임라인, Mermaid 다이어그램 등)를 켜고 Voyager 자체 UI의 색을 바꿀 수 있습니다.
+- ChatGPT, Claude, DeepSeek, Kimi에서는 Voyager 프리미티브(수식 복사, 타임라인, Mermaid 다이어그램 등)를 켜고 Voyager 자체 UI의 색을 바꿀 수 있습니다.
 
 ## 할 수 없는 일
 

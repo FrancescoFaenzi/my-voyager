@@ -6,7 +6,7 @@ La Synchro Cloud de Voyager sauvegarde vos dossiers, votre bibliothèque de prom
 
 | Type de données              | Synchronisé | Détails                                                                                                                       |
 | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Structure des dossiers       | Oui         | Dossiers de Gemini, AI Studio et ChatGPT : imbrication, couleurs et rattachement des conversations                            |
+| Structure des dossiers       | Oui         | Dossiers de Gemini, AI Studio, ChatGPT, Claude, DeepSeek et Kimi : imbrication, couleurs et rattachement des conversations    |
 | Bibliothèque de prompts      | Oui         | Tous les prompts enregistrés, avec leurs étiquettes et leur organisation en dossiers                                          |
 | Messages favoris             | Oui         | Signets de la chronologie, issus de n'importe quelle conversation                                                             |
 | Chronologie des autres sites | Oui         | Favoris et niveaux de la chronologie sur ChatGPT, Claude et DeepSeek                                                          |
@@ -34,7 +34,7 @@ Les identifiants d'appareil, les jetons d'accès, les caches, les coordonnées d
 
 ## Comment utiliser
 
-1. Ouvrez un onglet Gemini, AI Studio ou ChatGPT, puis cliquez sur l'icône Voyager dans la barre d'outils du navigateur pour ouvrir le panneau des paramètres. La section **Synchro Cloud** n'apparaît que sur ces sites, et les dossiers de chaque site se synchronisent séparément.
+1. Ouvrez un onglet Gemini, AI Studio, ChatGPT, Claude, DeepSeek ou Kimi, puis cliquez sur l'icône Voyager dans la barre d'outils du navigateur pour ouvrir le panneau des paramètres. La section **Synchro Cloud** n'apparaît que sur ces sites, et les dossiers de chaque site se synchronisent séparément.
 2. Localisez la section **Synchro Cloud**.
 3. Sur Safari, choisissez **Google Drive** ou **iCloud**. Les autres navigateurs utilisent Google Drive.
 4. Réglez **Mode** sur **Manuel**. Il est sur **Désactivé** par défaut, et les boutons de synchronisation n'apparaissent qu'en mode Manuel.
@@ -78,4 +78,4 @@ Changer de fournisseur ne copie pas les données de l'un vers l'autre et n'écri
 
 ## Plateformes prises en charge
 
-La synchronisation Google Drive fonctionne sur Chrome, Edge, Firefox et Safari. La synchronisation iCloud n'est disponible que dans l'application Safari distribuée directement et utilise le compte iCloud connecté sur le Mac.
+La synchronisation Google Drive fonctionne sur Chrome, Edge, Firefox et Safari sur ordinateur. Elle n'est pas disponible sur téléphone (Firefox pour Android), qui ne peut pas ouvrir la fenêtre de connexion Google. La synchronisation iCloud n'est disponible que dans l'application Safari distribuée directement et utilise le compte iCloud connecté sur le Mac.

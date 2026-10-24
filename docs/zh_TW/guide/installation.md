@@ -26,6 +26,8 @@
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-前往下載-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="從 Firefox Add-ons 安裝" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
+> 📱 **Firefox for Android**：手機上只會執行 Gemini、Claude、ChatGPT 與 DeepSeek 的時間軸，Gemini 與 ChatGPT 匯出，以及視覺特效。其他外掛在彈出視窗中會顯示 **手機上暫不支援**，開關狀態會保留，在電腦上照常生效。資料夾與 Google 雲端硬碟同步在手機上無法使用。
+
 ## 2. 手動（搶鮮版）
 
 應用店審核慢。如果你追求最新功能，走這條路。

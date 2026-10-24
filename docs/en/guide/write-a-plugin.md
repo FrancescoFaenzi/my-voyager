@@ -1,6 +1,6 @@
 # Write Your Own Plugin
 
-A local plugin is a plugin you make for yourself. It changes how Gemini, AI Studio, ChatGPT, Claude or DeepSeek looks or is laid out, it lives only in your browser, and it needs no pull request and no copy of the Voyager source.
+A local plugin is a plugin you make for yourself. It changes how Gemini, AI Studio, ChatGPT, Claude, DeepSeek or Kimi looks or is laid out, it lives only in your browser, and it needs no pull request and no copy of the Voyager source.
 
 Like every Voyager plugin, it is declarative: a `plugin.json` manifest plus CSS. It runs no code of its own. Voyager checks it on import, applies its changes, and removes every change when you turn it off. An imported plugin starts switched off, so you can review it first.
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-`init` writes a `plugin.json` and `style.css` that already pass, plus an `AGENTS.md` with the rules for that site. `--site` takes `gemini`, `aistudio`, `chatgpt`, `claude` or `deepseek`.
+`init` writes a `plugin.json` and `style.css` that already pass, plus an `AGENTS.md` with the rules for that site. `--site` takes `gemini`, `aistudio`, `chatgpt`, `claude`, `deepseek` or `kimi`.
 
 `check` runs the same checks as the popup's import, offline. It exits 0 when the plugin would import, and otherwise prints one `path: message` line per problem. Add `--json` for machine-readable output.
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - Add CSS, scoped under a `gv-` class the plugin adds to the page.
 - Add a class, set a safe attribute or inline style, or hide elements. Targets are semantic anchors the site declares (`userTurn`, `assistantTurn`, `composer`, …) or CSS selectors.
 - Offer settings in the popup: switches, sliders and dropdowns, whose values reach CSS through `{{key}}` tokens.
-- On ChatGPT, Claude and DeepSeek, turn on a Voyager primitive (formula copy, the timeline, Mermaid diagrams and others) and tint Voyager's own UI.
+- On ChatGPT, Claude, DeepSeek and Kimi, turn on a Voyager primitive (formula copy, the timeline, Mermaid diagrams and others) and tint Voyager's own UI.
 
 ## What it cannot do
 

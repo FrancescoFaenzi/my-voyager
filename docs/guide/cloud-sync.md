@@ -5,13 +5,13 @@
 ## 功能特点
 
 - **多端同步**：利用 Google Drive 或 iCloud，在多台电脑上同步配置。
-- **全面覆盖**：支持同步文件夹（Gemini、AI Studio、ChatGPT）、提示词库、星标、分支、时间线层级、高亮、个性化设置和插件配置，以及 ChatGPT、Claude、DeepSeek 上的时间线星标与层级。
+- **全面覆盖**：支持同步文件夹（Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi）、提示词库、星标、分支、时间线层级、高亮、个性化设置和插件配置，以及 ChatGPT、Claude、DeepSeek 上的时间线星标与层级。
 - **数据安全**：数据存储在您自己的 Google Drive 或 iCloud 私有数据库中，不经过 Voyager 服务器。
 - **灵活同步**：支持手动上传、下载合并数据。
 
 ## 如何使用
 
-1. 打开 Gemini、AI Studio 或 ChatGPT 页面，再点击浏览器工具栏中的 Voyager 图标，打开设置面板。**云同步** 区域只在这些网站上显示，各网站的文件夹分别同步。
+1. 打开 Gemini、AI Studio、ChatGPT、Claude、DeepSeek 或 Kimi 页面，再点击浏览器工具栏中的 Voyager 图标，打开设置面板。**云同步** 区域只在这些网站上显示，各网站的文件夹分别同步。
 2. 找到 **云同步** 区域。
 3. Safari 可选择 **Google Drive** 或 **iCloud**；其他浏览器使用 Google Drive。
 4. 将 **同步模式** 切换为 **手动**。默认是 **已禁用**，切到手动后才会出现同步按钮。
@@ -28,7 +28,7 @@ Voyager 会把不同类型的数据保存为独立备份，避免某一类数据
 
 - `gemini-voyager-settings.json`：跨设备的个性化设置，例如会话排序、文件夹字号、颜色和输入行为。
 - `gemini-voyager-plugins.json`：插件安装、启用状态及插件内部设置。插件所需的网站权限仍需在每台设备上单独授权。
-- 文件夹（Gemini、AI Studio、ChatGPT 各自独立）、提示词、星标、分支、时间线层级和高亮分别使用各自的同步文件；高亮内容仅在开启高亮云同步后上传。
+- 文件夹（Gemini、AI Studio、ChatGPT、Claude、DeepSeek、Kimi 各自独立）、提示词、星标、分支、时间线层级和高亮分别使用各自的同步文件；高亮内容仅在开启高亮云同步后上传。
 - ChatGPT、Claude、DeepSeek 上的时间线星标与层级按网站分别保存。
 
 窗口坐标、缓存、访问令牌、设备 ID 和临时任务状态不会写入个性化设置文件。
@@ -74,4 +74,4 @@ Voyager 会把不同类型的数据保存为独立备份，避免某一类数据
 
 ## 支持的平台
 
-Google Drive 同步可在 Chrome、Edge、Firefox 和 Safari 上使用。iCloud 同步仅在 Safari 直装版中可用，使用 Mac 上登录的 iCloud 账户。
+Google Drive 同步可在电脑上的 Chrome、Edge、Firefox 和 Safari 中使用；手机（Firefox for Android）上暂不支持，因为它无法打开 Google 登录窗口。iCloud 同步仅在 Safari 直装版中可用，使用 Mac 上登录的 iCloud 账户。

@@ -4,15 +4,15 @@ La sincronización en la nube de Voyager guarda una copia de seguridad de tus ca
 
 ## Qué se sincroniza
 
-| Tipo de dato                    | Sincronizado | Detalles                                                                                                       |
-| ------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
-| Estructura de carpetas          | Sí           | Carpetas de Gemini, AI Studio y ChatGPT: anidamiento, colores y conversaciones asignadas                       |
-| Biblioteca de prompts           | Sí           | Todos los prompts guardados, con etiquetas y organización por carpetas                                         |
-| Mensajes destacados             | Sí           | Marcadores de la línea de tiempo de cualquier conversación                                                     |
-| Línea de tiempo en otros sitios | Sí           | Destacados y niveles de la línea de tiempo en ChatGPT, Claude y DeepSeek                                       |
-| Ajustes de la extensión         | Sí           | Preferencias compartidas entre dispositivos, como el orden, los colores y el comportamiento de la entrada      |
-| Configuración de plugins        | Sí           | Estado de instalación y activación, y ajustes del plugin; los permisos del sitio siguen siendo por dispositivo |
-| Respuestas del modelo           | No           | Las copias de destacados contienen los prompts del usuario, no las respuestas del modelo                       |
+| Tipo de dato                    | Sincronizado | Detalles                                                                                                         |
+| ------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Estructura de carpetas          | Sí           | Carpetas de Gemini, AI Studio, ChatGPT, Claude, DeepSeek y Kimi: anidamiento, colores y conversaciones asignadas |
+| Biblioteca de prompts           | Sí           | Todos los prompts guardados, con etiquetas y organización por carpetas                                           |
+| Mensajes destacados             | Sí           | Marcadores de la línea de tiempo de cualquier conversación                                                       |
+| Línea de tiempo en otros sitios | Sí           | Destacados y niveles de la línea de tiempo en ChatGPT, Claude y DeepSeek                                         |
+| Ajustes de la extensión         | Sí           | Preferencias compartidas entre dispositivos, como el orden, los colores y el comportamiento de la entrada        |
+| Configuración de plugins        | Sí           | Estado de instalación y activación, y ajustes del plugin; los permisos del sitio siguen siendo por dispositivo   |
+| Respuestas del modelo           | No           | Las copias de destacados contienen los prompts del usuario, no las respuestas del modelo                         |
 
 ## Datos destacados y límites de sincronización
 
@@ -34,7 +34,7 @@ Los identificadores de dispositivo, los tokens de acceso, las cachés, las coord
 
 ## Cómo usar
 
-1. Abre una pestaña de Gemini, AI Studio o ChatGPT y haz clic en el icono de Voyager en la barra de herramientas del navegador para abrir el popup. La sección **Sincronización en Nube** solo aparece en estos sitios, y las carpetas de cada sitio se sincronizan por separado.
+1. Abre una pestaña de Gemini, AI Studio, ChatGPT, Claude, DeepSeek o Kimi y haz clic en el icono de Voyager en la barra de herramientas del navegador para abrir el popup. La sección **Sincronización en Nube** solo aparece en estos sitios, y las carpetas de cada sitio se sincronizan por separado.
 2. Localiza la sección **Sincronización en Nube**.
 3. En Safari, elige **Google Drive** o **iCloud**. Los demás navegadores usan Google Drive.
 4. Cambia **Modo sinc.** a **Manual**. Empieza en **Desactivado**, y los botones de sincronización solo aparecen en modo Manual.
@@ -78,4 +78,4 @@ Cambiar de proveedor no copia datos entre ellos ni escribe en los dos a la vez. 
 
 ## Plataformas compatibles
 
-La sincronización con Google Drive funciona en Chrome, Edge, Firefox y Safari. La sincronización con iCloud solo está disponible en la aplicación de Safari distribuida directamente y usa la cuenta de iCloud iniciada en el Mac.
+La sincronización con Google Drive funciona en Chrome, Edge, Firefox y Safari en el ordenador. No está disponible en el móvil (Firefox para Android), que no puede abrir la ventana de inicio de sesión de Google. La sincronización con iCloud solo está disponible en la aplicación de Safari distribuida directamente y usa la cuenta de iCloud iniciada en el Mac.

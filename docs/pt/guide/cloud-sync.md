@@ -4,15 +4,15 @@ A Sincronização na Nuvem do Voyager faz backup das suas pastas, da biblioteca 
 
 ## O que é sincronizado
 
-| Tipo de dado                   | Sincronizado | Detalhes                                                                                                  |
-| ------------------------------ | ------------ | --------------------------------------------------------------------------------------------------------- |
-| Estrutura de pastas            | Sim          | Pastas do Gemini, AI Studio e ChatGPT: aninhamento, cores e atribuições de conversas                      |
-| Biblioteca de prompts          | Sim          | Todos os prompts salvos, com tags e organização em pastas                                                 |
-| Mensagens com estrela          | Sim          | Marcadores da linha do tempo de qualquer conversa                                                         |
-| Linha do tempo em outros sites | Sim          | Favoritos e níveis da linha do tempo no ChatGPT, Claude e DeepSeek                                        |
-| Configurações da extensão      | Sim          | Preferências que valem em todos os dispositivos, como ordenação, cores e comportamento da entrada         |
-| Configuração de plugins        | Sim          | Estado de instalação/ativação e configurações do plugin; as permissões de sites continuam por dispositivo |
-| Respostas do modelo            | Não          | Os backups de estrelas contêm prompts do usuário, não respostas do modelo                                 |
+| Tipo de dado                   | Sincronizado | Detalhes                                                                                                     |
+| ------------------------------ | ------------ | ------------------------------------------------------------------------------------------------------------ |
+| Estrutura de pastas            | Sim          | Pastas do Gemini, AI Studio, ChatGPT, Claude, DeepSeek e Kimi: aninhamento, cores e atribuições de conversas |
+| Biblioteca de prompts          | Sim          | Todos os prompts salvos, com tags e organização em pastas                                                    |
+| Mensagens com estrela          | Sim          | Marcadores da linha do tempo de qualquer conversa                                                            |
+| Linha do tempo em outros sites | Sim          | Favoritos e níveis da linha do tempo no ChatGPT, Claude e DeepSeek                                           |
+| Configurações da extensão      | Sim          | Preferências que valem em todos os dispositivos, como ordenação, cores e comportamento da entrada            |
+| Configuração de plugins        | Sim          | Estado de instalação/ativação e configurações do plugin; as permissões de sites continuam por dispositivo    |
+| Respostas do modelo            | Não          | Os backups de estrelas contêm prompts do usuário, não respostas do modelo                                    |
 
 ## Dados com estrela e limites de sincronização
 
@@ -34,7 +34,7 @@ Identificadores de dispositivo, tokens de acesso, caches, coordenadas da janela 
 
 ## Como usar
 
-1. Abra uma aba do Gemini, AI Studio ou ChatGPT e clique no ícone do Voyager na barra de ferramentas do navegador para abrir o popup. A seção **Sincronização na Nuvem** só aparece nesses sites, e as pastas de cada site são sincronizadas separadamente.
+1. Abra uma aba do Gemini, AI Studio, ChatGPT, Claude, DeepSeek ou Kimi e clique no ícone do Voyager na barra de ferramentas do navegador para abrir o popup. A seção **Sincronização na Nuvem** só aparece nesses sites, e as pastas de cada site são sincronizadas separadamente.
 2. Localize a seção **Sincronização na Nuvem**.
 3. No Safari, escolha **Google Drive** ou **iCloud**. Os outros navegadores usam o Google Drive.
 4. Defina **Modo Sincr.** como **Manual**. O padrão é **Desativado**, e os botões de sincronização só aparecem no modo Manual.
@@ -78,4 +78,4 @@ Trocar de provedor não copia dados entre eles nem grava em ambos. Depois de tro
 
 ## Plataformas compatíveis
 
-A sincronização com o Google Drive funciona no Chrome, Edge, Firefox e Safari. A sincronização com o iCloud está disponível apenas no app do Safari distribuído diretamente e usa a conta do iCloud conectada no Mac.
+A sincronização com o Google Drive funciona no Chrome, Edge, Firefox e Safari no computador. Ela não está disponível no celular (Firefox para Android), que não consegue abrir a janela de login do Google. A sincronização com o iCloud está disponível apenas no app do Safari distribuído diretamente e usa a conta do iCloud conectada no Mac.

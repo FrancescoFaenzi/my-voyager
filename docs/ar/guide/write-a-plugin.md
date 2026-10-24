@@ -1,6 +1,6 @@
 # اكتب إضافتك الخاصة
 
-الإضافة المحلية إضافة تصنعها لنفسك. تغيّر مظهر Gemini أو AI Studio أو ChatGPT أو Claude أو DeepSeek أو تخطيطه، وتبقى في متصفحك وحده، ولا تحتاج إلى أي PR ولا إلى نسخة من الشيفرة المصدرية لـ Voyager.
+الإضافة المحلية إضافة تصنعها لنفسك. تغيّر مظهر Gemini أو AI Studio أو ChatGPT أو Claude أو DeepSeek أو Kimi أو تخطيطه، وتبقى في متصفحك وحده، ولا تحتاج إلى أي PR ولا إلى نسخة من الشيفرة المصدرية لـ Voyager.
 
 ومثل كل إضافات Voyager، فهي تعريفية: ملف manifest باسم `plugin.json` ومعه CSS، ولا تشغّل أي شيفرة خاصة بها. يفحصها Voyager عند الاستيراد، ويطبّق تغييراتها، ويزيل كل تلك التغييرات عند إيقافها. وتبدأ الإضافة المستوردة متوقفة، حتى تتمكن من مراجعتها أولًا.
 
@@ -37,7 +37,7 @@ npx create-voyager-plugin@latest init my-plugin --site claude
 npx create-voyager-plugin@latest check my-plugin
 ```
 
-ينشئ `init` ملفي `plugin.json` و`style.css` يجتازان الفحص من البداية، إضافة إلى ملف `AGENTS.md` يضم قواعد ذلك الموقع. ويقبل `--site` القيم `gemini` أو `aistudio` أو `chatgpt` أو `claude` أو `deepseek`.
+ينشئ `init` ملفي `plugin.json` و`style.css` يجتازان الفحص من البداية، إضافة إلى ملف `AGENTS.md` يضم قواعد ذلك الموقع. ويقبل `--site` القيم `gemini` أو `aistudio` أو `chatgpt` أو `claude` أو `deepseek` أو `kimi`.
 
 يشغّل `check` دون اتصال الفحوص نفسها التي يجريها الاستيراد في popup. ينتهي برمز الخروج 0 إذا كانت الإضافة قابلة للاستيراد، وإلا فيطبع سطر `path: message` لكل مشكلة. أضف `--json` لتحصل على مخرجات قابلة للقراءة آليًا.
 
@@ -46,7 +46,7 @@ npx create-voyager-plugin@latest check my-plugin
 - إضافة CSS محصور تحت صنف `gv-` تضيفه الإضافة إلى الصفحة.
 - إضافة صنف، أو ضبط سمة آمنة أو نمط مضمّن، أو إخفاء عناصر. والأهداف إما مفاتيح دلالية يعلنها الموقع (`userTurn` و`assistantTurn` و`composer` وغيرها) وإما محددات CSS.
 - توفير إعدادات في popup: مفاتيح تبديل ومنزلقات وقوائم منسدلة، تصل قيمها إلى CSS عبر رموز `{{key}}`.
-- في ChatGPT وClaude وDeepSeek، تفعيل إحدى بدائيات Voyager (نسخ الصيغ، والخط الزمني، ومخططات Mermaid وغيرها) وتغيير ألوان واجهة Voyager نفسها.
+- في ChatGPT وClaude وDeepSeek وKimi، تفعيل إحدى بدائيات Voyager (نسخ الصيغ، والخط الزمني، ومخططات Mermaid وغيرها) وتغيير ألوان واجهة Voyager نفسها.
 
 ## ما الذي لا تستطيع فعله
 

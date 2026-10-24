@@ -1,6 +1,6 @@
 # 완전한 자유
 
-Voyager 내보내기를 사용하면 Gemini나 ChatGPT의 모든 대화를 Markdown, PDF, JSON 또는 이미지 파일로 다운로드할 수 있습니다. 코드 블록, 이미지, 서식을 포함한 전체 채팅 내용을 추출하므로, 나눴던 모든 AI 대화의 영구적이고 휴대 가능한 사본을 가질 수 있습니다.
+Voyager 내보내기를 사용하면 Gemini, ChatGPT, Claude, DeepSeek, Kimi의 모든 대화를 Markdown, PDF, JSON 또는 이미지 파일로 다운로드할 수 있습니다. 코드 블록, 이미지, 서식을 포함한 전체 채팅 내용을 추출하므로, 나눴던 모든 AI 대화의 영구적이고 휴대 가능한 사본을 가질 수 있습니다.
 
 데이터에 갇히는 것은 적입니다.
 우리는 당신이 만든 것이라면 당신이 소유해야 한다고 믿습니다.
@@ -28,9 +28,11 @@ Voyager를 사용하면 데이터를 클라우드에서 꺼내어 당신의 손�
 
 ### 내보내는 방법
 
-1. 페이지 오른쪽 위의 **내보내기** 버튼을 클릭하세요(ChatGPT 및 현재 Gemini 레이아웃). Gemini에서는 대화나 답변의 ⋮ 메뉴에서 **대화 기록 내보내기**를 선택할 수도 있습니다. 이전 Gemini 레이아웃에서는 Gemini 로고 위에 마우스를 올리면 **내보내기 아이콘**이 나타납니다.
+1. 페이지 오른쪽 위의 **내보내기** 버튼을 클릭하세요(ChatGPT, Claude, DeepSeek, Kimi 및 현재 Gemini 레이아웃). Gemini에서는 대화나 답변의 ⋮ 메뉴에서 **대화 기록 내보내기**를 선택할 수도 있습니다. 이전 Gemini 레이아웃에서는 Gemini 로고 위에 마우스를 올리면 **내보내기 아이콘**이 나타납니다.
 2. 형식을 선택하세요.
 3. 끝입니다.
+
+Claude, DeepSeek, Kimi에서는 내보내기가 기본적으로 꺼져 있는 플러그인입니다. 먼저 팝업의 **플러그인**에서 켜세요(컴퓨터 전용). 긴 대화는 Voyager가 스크롤하며 전체를 읽습니다. 처음과 끝을 모두 확인하지 못하면 내보내기가 불완전할 수 있다고 경고합니다. 다른 채팅으로 이동하면 내보내기가 중단되며, Claude에서는 새 답변 생성이 시작되어도 중단됩니다.
 
 이것은 당신의 데이터입니다. 원하는 대로 사용하세요.
 
@@ -77,4 +79,4 @@ Gemini의 Deep Research 모드는 출처, 생각 단계, 인용이 담긴 구조
 
 ## 지원 플랫폼
 
-내보내기는 Chrome, Edge, Firefox, Safari, Opera, Brave에서 Gemini와 ChatGPT를 지원합니다. Safari에서 PDF 내보내기는 내보내기 버튼을 클릭한 뒤 수동으로 인쇄(Command+P)하는 단계를 사용하며, Markdown과 JSON 내보내기에는 여전히 이미지가 포함됩니다.
+내보내기는 Chrome, Edge, Firefox, Safari, Opera, Brave에서 Gemini와 ChatGPT를 지원합니다. Claude, DeepSeek, Kimi 내보내기는 플러그인이며 기본적으로 꺼져 있습니다. **플러그인**에서 켤 수 있고 컴퓨터에서만 작동합니다. Firefox for Android에서는 Gemini와 ChatGPT 내보내기만 작동합니다. Safari에서 PDF 내보내기는 내보내기 버튼을 클릭한 뒤 수동으로 인쇄(Command+P)하는 단계를 사용하며, Markdown과 JSON 내보내기에는 여전히 이미지가 포함됩니다.
