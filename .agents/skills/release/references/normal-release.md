@@ -210,6 +210,14 @@ Do not use the workflow's auto-increment `workflow_dispatch` path for a normal c
 
 ## 6. Monitor CI
 
+The release jobs run in the `release` environment, which holds the run at `waiting` until a reviewer approves it. Approving it is part of the authorized tag push, so approve it yourself, and again whenever the run returns to `waiting`:
+
+```bash
+ENV_ID=$(gh api repos/voyager-crew/voyager/actions/runs/{RUN_ID}/pending_deployments --jq '.[0].environment.id')
+gh api -X POST repos/voyager-crew/voyager/actions/runs/{RUN_ID}/pending_deployments \
+  -F "environment_ids[]=$ENV_ID" -f state=approved -f comment="Release v{VERSION}"
+```
+
 The tag workflow runs these gates:
 
 1. `build-safari-release` builds `dist_safari`, imports the Developer ID certificate and provisioning profiles, then calls `scripts/build-safari-release.sh`.
