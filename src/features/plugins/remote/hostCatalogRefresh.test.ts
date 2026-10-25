@@ -98,6 +98,18 @@ function harness(options: {
 }
 
 describe('HostCatalogRefresher', () => {
+  it('caches a revocation-only update even when the plugin list has not changed', async () => {
+    const { refresher, saved } = harness({
+      entry: entry(),
+      respond: () => ({
+        status: 200,
+        body: { ...catalogFile(), revoked: ['voyager.deepseek-retired'] },
+      }),
+    });
+    expect((await refresher.refresh(HOST)).status).toBe('updated');
+    expect(saved[0].revoked).toEqual(['voyager.deepseek-retired']);
+  });
+
   it('fetches, validates and caches a host file on the first check', async () => {
     const { refresher, fetchImpl, saved } = harness({});
     const result = await refresher.refresh(HOST);
@@ -209,7 +221,12 @@ describe('HostCatalogRefresher', () => {
   });
 
   it('keeps the previous catalog and records a failed attempt on 5xx, invalid JSON or a foreign file', async () => {
-    const previous = entry({ failureCount: 1, fetchedAt: 1, lastAttemptAt: 1 });
+    const previous = entry({
+      failureCount: 1,
+      fetchedAt: 1,
+      lastAttemptAt: 1,
+      revoked: ['voyager.deepseek-retired'],
+    });
     const cases = [
       () => ({ status: 503 }),
       () => ({ status: 200, body: 'not an object' }),
@@ -222,6 +239,7 @@ describe('HostCatalogRefresher', () => {
       expect(saved[0]).toMatchObject({
         status: 'ok',
         failureCount: 2,
+        revoked: ['voyager.deepseek-retired'],
         lastAttemptAt: 20 * HOUR,
         fetchedAt: 1,
         extensionVersion: '1.8.3',

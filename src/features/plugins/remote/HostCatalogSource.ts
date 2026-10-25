@@ -8,8 +8,8 @@
  * into each other.
  *
  * The source is authoritative for a host only when the cached entry is a
- * successful fetch by the running extension version (D6): then its plugin set
- * is the truth and a bundled plugin it no longer lists is dropped. A 404
+ * successful fetch by the running extension version (D6): then its explicit
+ * revocations may drop bundled plugins. A 404
  * ("missing"), a failed-only history, or an entry from another version yield
  * nothing, and the bundled snapshot stays in force.
  */
@@ -66,7 +66,7 @@ export class HostCatalogSource implements PluginSource {
   async listWithAuthority(context?: PluginSourceContext): Promise<PluginSourceListing> {
     const entry = await this.usableEntry(context);
     return entry
-      ? { manifests: entry.manifests, authoritative: true }
+      ? { manifests: entry.manifests, authoritative: true, revoked: entry.revoked }
       : { manifests: [], authoritative: false };
   }
 

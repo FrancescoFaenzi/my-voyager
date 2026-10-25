@@ -67,6 +67,7 @@ import {
 import { resolveStyleFileContributions } from '../../src/features/plugins/sources/styleFiles';
 import type { PluginManifest, SiteAdapter } from '../../src/features/plugins/types';
 import { getCatalogRevision } from './catalogRevision';
+import { pluginCoversHost, readSiteRevocations } from './catalogRevocations';
 import {
   checkManifestAgainstSite,
   compareStrings,
@@ -82,6 +83,7 @@ export interface HostCatalogFile {
   readonly generatedAt: string;
   readonly site?: SiteAdapterData;
   readonly plugins: readonly PluginManifest[];
+  readonly revoked?: readonly string[];
 }
 
 export interface BuildOptions {
@@ -116,6 +118,7 @@ interface CatalogSite {
   readonly dir: string;
   readonly adapter: SiteAdapter;
   readonly plugins: readonly PluginManifest[];
+  readonly revoked?: readonly string[];
 }
 
 /**
@@ -150,7 +153,9 @@ async function readSitePlugins(
   for (const pluginDir of listSubdirectories(pluginsRoot)) {
     const dir = join(pluginsRoot, pluginDir);
     const manifestPath = join(dir, 'plugin.json');
-    if (!existsSync(manifestPath)) continue;
+    if (!existsSync(manifestPath)) {
+      throw new Error(`${relative(catalogDir, dir)}: missing plugin.json`);
+    }
     const relPath = relative(catalogDir, manifestPath);
 
     const parsed: unknown = JSON.parse(readFileSync(manifestPath, 'utf8'));
@@ -181,7 +186,8 @@ async function readCatalogSites(catalogDir: string): Promise<readonly CatalogSit
   for (const dir of listSubdirectories(sitesRoot)) {
     const adapter = readSiteAdapter(catalogDir, dir);
     const plugins = await readSitePlugins(catalogDir, { dir, adapter });
-    sites.push({ dir, adapter, plugins });
+    const revoked = readSiteRevocations(catalogDir, dir, plugins);
+    sites.push({ dir, adapter, plugins, revoked });
   }
   return sites;
 }
@@ -235,6 +241,23 @@ export async function buildHostCatalogs(
 
   const byHost = new Map<string, PluginManifest[]>();
   for (const site of sites) {
+    const hosts = new Set(
+      [
+        ...concreteHosts(site.adapter.matches),
+        ...site.plugins.flatMap((plugin) => concreteHosts(plugin.matches)),
+      ].filter(allowsRemoteCatalog),
+    );
+    if (existsSync(join(options.catalogDir, 'sites', site.dir, 'revoked.json')) && !hosts.size) {
+      throw new Error(
+        `sites/${site.dir}/revoked.json: no concrete host allows remote catalog publication; revocations would never reach clients`,
+      );
+    }
+    // A narrowed matches list must also stop bundled copies on the site's other hosts.
+    if (site.plugins.length || site.revoked?.length) {
+      for (const host of hosts) {
+        if (!byHost.has(host)) byHost.set(host, []);
+      }
+    }
     for (const manifest of site.plugins) {
       for (const host of concreteHosts(manifest.matches)) {
         // Gemini and AI Studio data is packaged only (D14): validated above, never published.
@@ -259,12 +282,21 @@ export async function buildHostCatalogs(
       throw new Error(`${host}: no site.json under sites/ covers this host`);
     }
     assertPublishableSemanticKeys(host, site);
+    const revoked = [
+      ...new Set([
+        ...(site.revoked ?? []),
+        ...site.plugins
+          .filter((plugin) => !pluginCoversHost(plugin.matches, host))
+          .map((plugin) => plugin.id),
+      ]),
+    ].sort(compareStrings);
     files.set(host, {
       format: HOST_CATALOG_FORMAT,
       host,
       generatedAt: options.generatedAt,
       site: siteAdapterToData({ ...site.adapter, catalogRevision: options.catalogRevision }),
       plugins,
+      ...(revoked.length ? { revoked } : {}),
     });
   }
   return files;

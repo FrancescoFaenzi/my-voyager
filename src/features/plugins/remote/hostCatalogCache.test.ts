@@ -84,6 +84,14 @@ describe('host catalog storage keys', () => {
 });
 
 describe('normalizeHostCatalogCacheEntry', () => {
+  it('keeps only valid cached revocations and clears them for a missing catalog', () => {
+    const raw = { ...entry(), revoked: ['voyager.retired', 12, null] };
+    expect(normalizeHostCatalogCacheEntry(raw, HOST)?.revoked).toEqual(['voyager.retired']);
+    expect(
+      normalizeHostCatalogCacheEntry({ ...raw, status: 'missing' }, HOST)?.revoked,
+    ).toBeUndefined();
+  });
+
   it('round-trips a valid entry and drops manifests that fail validation', () => {
     const stored = { ...entry(), manifests: [manifest('voyager.a'), { id: '' }] };
     const normalized = normalizeHostCatalogCacheEntry(stored, HOST);
@@ -127,6 +135,17 @@ describe('load / save', () => {
 });
 
 describe('subscribeHostCatalog', () => {
+  it('wakes subscribers when only the revocations change', () => {
+    const callback = vi.fn();
+    subscribeHostCatalog(HOST, callback);
+    const listener = registeredListener();
+    listener(
+      { [KEY]: { oldValue: entry(), newValue: entry({ revoked: ['voyager.retired'] }) } },
+      'local',
+    );
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   it('fires only when the manifest content, status or writer version changes', () => {
     const callback = vi.fn();
     subscribeHostCatalog(HOST, callback);

@@ -181,6 +181,7 @@ export class HostCatalogRefresher {
         extensionVersion: entry?.extensionVersion || this.extensionVersion,
         ...(entry?.generatedAt ? { generatedAt: entry.generatedAt } : {}),
         ...(entry?.site ? { site: entry.site } : {}),
+        ...(entry?.revoked ? { revoked: entry.revoked } : {}),
       });
       return { ok: true, status: 'failed', reason, checkedAt: now };
     } finally {
@@ -218,7 +219,7 @@ export class HostCatalogRefresher {
     const validation = validateHostCatalogFile(await response.json(), host);
     if (!validation) throw new Error('Unrecognized host catalog file');
     if (validation.issues.length > 0) {
-      logger.warn('Host catalog: skipped invalid plugin entries', {
+      logger.warn('Host catalog: skipped invalid entries', {
         host,
         issues: validation.issues,
       });
@@ -233,6 +234,7 @@ export class HostCatalogRefresher {
       host,
       status: 'ok',
       manifests: validation.manifests,
+      ...(validation.revoked ? { revoked: validation.revoked } : {}),
       fetchedAt: now,
       lastAttemptAt: now,
       failureCount: 0,

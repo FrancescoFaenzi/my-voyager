@@ -47,11 +47,11 @@ without an extension release.
   recording a failed or byte-identical attempt must not remount plugin CSS or
   feed back into another refresh.
 - **`remote/hostCatalogFile.ts`** — validates the published file (`format: 1`,
-  matching `host`, a plugin array, an optional `site` section), which
+  matching `host`, a plugin array, optional `site` and `revoked` sections), which
   `scripts/build-plugin-catalog.ts` generates from `catalog/` with the CSS
   inlined. Every entry passes the same `validateManifest` as the bundled
   snapshot and the `site` section the same `validateSiteAdapterData`; a bad
-  entry or a bad `site` is skipped and logged, a bad file is discarded whole.
+  entry, revocation or `site` is skipped and logged; a bad file is discarded whole.
 - **`remote/config.ts`** — build-time flags injected through Vite `define`:
   `VOYAGER_PLUGIN_CATALOG_URL` repoints the base URL (https only) for a preview
   environment, and `VOYAGER_PLUGIN_CATALOG_REMOTE=off` compiles a build that
@@ -74,6 +74,8 @@ plugin id:
 
 - builtin ids always come from `builtin/`; a remote entry with the same id is
   ignored, so first-party scope and settings can never be rewritten remotely;
+- build-only ids (packaged official plugins and catalog folders) always come
+  from this build and cannot be replaced or revoked remotely;
 - a remote entry whose `engine` range this build satisfies replaces the bundled
   copy;
 - if the remote entry needs a newer engine, the bundled copy stays and carries
@@ -81,10 +83,33 @@ plugin id:
   neither copy is compatible the remote one is listed and the status machine
   reports needs-engine);
 - when the remote catalog is authoritative for the host, a bundled plugin that
-  targets the page and is absent from the catalog is dropped: the kill switch;
+  targets the page is dropped only if its id is in `revoked`: the kill switch;
+  a plugin merely absent from the catalog keeps its bundled copy, so an accidental
+  build omission cannot uninstall it;
 - a 404, a failed fetch, or an entry written by a different extension version
   contributes nothing, so the bundled snapshot stays in force until the next
   successful fetch;
 - `local.*` ids belong to the user: an official or remote record in that
   namespace is dropped, and local plugins are added last, never replace an
   official id, and are outside the kill switch.
+
+To revoke a plugin, remove its live manifest and add
+`catalog/sites/<site>/revoked.json`:
+
+```json
+[{ "id": "voyager.deepseek-retired", "reason": "Retired because the host now provides it." }]
+```
+
+`catalog:build` requires unique ids in the site's `voyager.<site>-<kebab-case>`
+namespace, a non-empty reason and no live plugin with the same id. It publishes
+only the ids as an optional top-level `"revoked": ["voyager.deepseek-retired"]`
+in every concrete host file of that site, even after its last plugin is removed.
+The build fails if a plugin directory lacks `plugin.json`, or if `revoked.json`
+has no concrete host that can publish it (including packaged-only Gemini and
+AI Studio sites).
+Each host file also revokes the site's live plugin ids whose `matches` no longer
+cover that host. Narrowing a plugin to one host therefore stops its older bundled
+copy on the site's other hosts. When renaming a plugin id, add the old id to
+`revoked.json` so its bundled copy does not run alongside the renamed plugin.
+The additive field keeps `format: 1`; older clients ignore it and still revoke
+through absence from `plugins`. The reason stays in the source file.

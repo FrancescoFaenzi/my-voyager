@@ -27,6 +27,45 @@ function file(plugins: unknown[], overrides: Record<string, unknown> = {}) {
 }
 
 describe('validateHostCatalogFile', () => {
+  it('accepts explicit revocations without requiring the optional field', () => {
+    expect(validateHostCatalogFile(file([]), 'chat.deepseek.com')?.revoked).toBeUndefined();
+    const result = validateHostCatalogFile(
+      file([VALID], { revoked: ['voyager.deepseek-retired'] }),
+      'chat.deepseek.com',
+    );
+    expect(result?.revoked).toEqual(['voyager.deepseek-retired']);
+    expect(result?.issues).toEqual([]);
+    expect(result?.manifests.map((plugin) => plugin.id)).toEqual([VALID.id]);
+  });
+
+  it('skips invalid revocations and reports them without dropping valid plugins', () => {
+    const result = validateHostCatalogFile(
+      file([VALID], { revoked: ['voyager.deepseek-retired', null, 42, {}, '', '  '] }),
+      'chat.deepseek.com',
+    );
+    expect(result?.revoked).toEqual(['voyager.deepseek-retired']);
+    expect(result?.issues.map((issue) => issue.path)).toEqual([
+      'revoked[1]',
+      'revoked[2]',
+      'revoked[3]',
+      'revoked[4]',
+      'revoked[5]',
+    ]);
+    expect(result?.manifests.map((plugin) => plugin.id)).toEqual([VALID.id]);
+  });
+
+  it('ignores a malformed revocation list without discarding the catalog', () => {
+    const result = validateHostCatalogFile(
+      file([VALID], { revoked: 'voyager.deepseek-retired' }),
+      'chat.deepseek.com',
+    );
+    expect(result?.revoked).toEqual([]);
+    expect(result?.issues).toEqual([
+      { path: 'revoked', message: 'must be an array of plugin ids' },
+    ]);
+    expect(result?.manifests.map((plugin) => plugin.id)).toEqual([VALID.id]);
+  });
+
   it('accepts a well-formed file and returns validated manifests', () => {
     const result = validateHostCatalogFile(file([VALID]), 'chat.deepseek.com');
     expect(result).not.toBeNull();

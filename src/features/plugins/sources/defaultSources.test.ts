@@ -92,26 +92,37 @@ describe('default plugin sources', () => {
     ]);
   });
 
-  it('passes the listing context to every source and derives the kill-switch scope from it', async () => {
+  it('revokes only plugins targeting the scope derived from the listing context', async () => {
     const seen: (PluginSourceContext | undefined)[] = [];
+    const bundled: PluginSource = {
+      id: 'bundled-catalog',
+      kind: 'bundled',
+      async list(context) {
+        seen.push(context);
+        return [
+          manifest('voyager.a'),
+          manifest('voyager.other-site', 'other', { matches: ['https://other.example/*'] }),
+        ];
+      },
+    };
     const spy: PluginSource = {
       id: 'spy',
       kind: 'remote',
-      async list(context) {
-        seen.push(context);
+      async list() {
         return [];
       },
-      async isAuthoritative() {
-        return true;
+      async listWithAuthority(context) {
+        seen.push(context);
+        return {
+          manifests: [],
+          authoritative: true,
+          revoked: ['voyager.a', 'voyager.other-site'],
+        };
       },
     };
-    const result = await listPluginManifestsWithSources(
-      [new StaticSource('bundled-catalog', [manifest('voyager.a')], 'bundled'), spy],
-      { host: 'example.com' },
-    );
-    expect(seen).toEqual([{ host: 'example.com' }]);
-    // Remote authoritative for example.com and silent about voyager.a → dropped.
-    expect(result).toEqual([]);
+    const result = await listPluginManifestsWithSources([bundled, spy], { host: 'example.com' });
+    expect(seen).toEqual([{ host: 'example.com' }, { host: 'example.com' }]);
+    expect(result.map((record) => record.manifest.id)).toEqual(['voyager.other-site']);
   });
 });
 
@@ -132,7 +143,7 @@ describe('listPluginManifestsWithSources with an atomic remote listing', () => {
       [new StaticSource('bundled-catalog', [manifest('voyager.a')], 'bundled'), atomic],
       { host: 'example.com', url: 'https://example.com/' },
     );
-    // The split reads would have said "authoritative + empty" and dropped voyager.a.
+    // Split reads must not mix catalog versions.
     expect(result.map((record) => record.manifest.id)).toEqual(['voyager.a']);
     expect(list).not.toHaveBeenCalled();
     expect(isAuthoritative).not.toHaveBeenCalled();
@@ -140,6 +151,19 @@ describe('listPluginManifestsWithSources with an atomic remote listing', () => {
 });
 
 describe('mergePluginRecords (plan D6 / D20)', () => {
+  it('keeps a bundled plugin the catalog leaves out by mistake', () => {
+    const bundled = record(manifest('voyager.a'), 'bundled-catalog');
+    expect(
+      mergePluginRecords({
+        builtin: [],
+        snapshot: [bundled],
+        remote: [],
+        remoteAuthoritative: true,
+        scopeUrl: SCOPE.url,
+      }),
+    ).toEqual([bundled]);
+  });
+
   it('selects next-engine remote updates on main while a released engine keeps its compatible snapshot', async () => {
     const bundled = await new BundledCatalogPluginSource().list();
     const future = bundled.find((plugin) => plugin.id === 'voyager.deepseek-table-copy')!;
@@ -212,7 +236,7 @@ describe('mergePluginRecords (plan D6 / D20)', () => {
     expect(merged.map((r) => `${r.manifest.name}:${r.sourceId}`)).toEqual(['remote:host-catalog']);
   });
 
-  it('drops a snapshot plugin for this page that an authoritative remote no longer lists (kill switch)', () => {
+  it('drops a bundled plugin the catalog revokes', () => {
     const merged = mergePluginRecords({
       builtin: [],
       snapshot: [
@@ -223,6 +247,7 @@ describe('mergePluginRecords (plan D6 / D20)', () => {
         ),
       ],
       remote: [record(manifest('voyager.new'), 'host-catalog')],
+      revoked: ['voyager.retired', 'voyager.other-site'],
       remoteAuthoritative: true,
       scopeUrl: SCOPE.url,
       engineVersion: ENGINE,
@@ -236,6 +261,7 @@ describe('mergePluginRecords (plan D6 / D20)', () => {
       snapshot: [record(manifest('voyager.a'), 'bundled-catalog')],
       remote: [],
       remoteAuthoritative: false,
+      revoked: ['voyager.a'],
       scopeUrl: SCOPE.url,
       engineVersion: ENGINE,
     });
@@ -245,6 +271,7 @@ describe('mergePluginRecords (plan D6 / D20)', () => {
   it('never lets a remote entry override a builtin id, and drops that remote entry', () => {
     const merged = mergePluginRecords({
       builtin: [record(manifest('voyager.formula-copy', 'native'), 'builtin')],
+      revoked: ['voyager.formula-copy'],
       snapshot: [],
       remote: [
         record(
@@ -265,6 +292,7 @@ describe('mergePluginRecords (plan D6 / D20)', () => {
 
   it('does not apply the kill switch without a scope url', () => {
     const merged = mergePluginRecords({
+      revoked: ['voyager.a'],
       builtin: [],
       snapshot: [record(manifest('voyager.a'), 'bundled-catalog')],
       remote: [],
@@ -308,7 +336,7 @@ describe('mergePluginRecords with packaged official ids', () => {
     }
   });
 
-  it('survives an authoritative remote listing that omits it, while the kill switch still delists others', () => {
+  it('survives explicit revocation of a packaged official id while delisting regular plugins', () => {
     const regular = record(
       manifest('voyager.gemini-other', 'other', { matches: ['https://gemini.google.com/*'] }),
       'bundled-catalog',
@@ -317,6 +345,7 @@ describe('mergePluginRecords with packaged official ids', () => {
       builtin: [],
       snapshot: [bundledFormula, regular],
       remote: [],
+      revoked: [bundledFormula.manifest.id, regular.manifest.id],
       remoteAuthoritative: true,
       scopeUrl: GEMINI_URL,
       engineVersion: ENGINE,
@@ -400,6 +429,7 @@ describe('mergePluginRecords with local plugins', () => {
       builtin: [],
       snapshot: [record(manifest('voyager.retired'), 'bundled-catalog')],
       remote: [],
+      revoked: ['voyager.retired', 'local.me.tweak'],
       local: [record(manifest('local.me.tweak'), 'local')],
       remoteAuthoritative: true,
       scopeUrl: SCOPE.url,
@@ -417,7 +447,10 @@ describe('mergePluginRecords with local plugins', () => {
       ],
       SCOPE,
     );
-    expect(result.map((r) => `${r.manifest.id}:${r.sourceId}`)).toEqual(['local.me.tweak:local']);
+    expect(result.map((r) => `${r.manifest.id}:${r.sourceId}`)).toEqual([
+      'voyager.a:bundled-catalog',
+      'local.me.tweak:local',
+    ]);
   });
 });
 
@@ -450,11 +483,12 @@ describe('mergePluginRecords with the catalog sites’ folders plugins', () => {
     expect(merged).toEqual([bundledFolders]);
   });
 
-  it('keeps the bundled folders listed when an authoritative remote listing omits them', () => {
+  it('keeps the bundled folders listed when an authoritative remote catalog revokes them', () => {
     const merged = mergePluginRecords({
       builtin: [],
       snapshot: [bundledFolders],
       remote: [],
+      revoked: [bundledFolders.manifest.id],
       remoteAuthoritative: true,
       scopeUrl: DEEPSEEK_URL,
       engineVersion: ENGINE,

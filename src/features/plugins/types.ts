@@ -395,16 +395,15 @@ export interface PluginSource {
   readonly kind?: PluginSourceKind;
   list(context?: PluginSourceContext): Promise<readonly PluginManifest[]>;
   /**
-   * Remote sources only: true when a valid catalog for `context.host` is cached
-   * and its plugin set is therefore the truth for that host — a snapshot plugin
-   * the remote no longer lists is dropped (kill switch).
+   * Remote sources only: legacy authority check for a cached catalog at
+   * `context.host`. Alone it cannot revoke snapshot plugins: revocations must
+   * come from `listWithAuthority`, together with manifests and authority.
    */
   isAuthoritative?(context?: PluginSourceContext): Promise<boolean>;
   /**
-   * Remote sources only: manifests and authority from ONE cache read, so a
-   * catalog written between two separate reads can never yield "authoritative
-   * but empty" and drop bundled plugins by mistake. Preferred by the merger
-   * when present.
+   * Remote sources only: manifests, revocations and authority from ONE cache
+   * read, so a background write cannot split their versions. Preferred by the
+   * merger when present.
    */
   listWithAuthority?(context?: PluginSourceContext): Promise<PluginSourceListing>;
   /**
@@ -418,6 +417,7 @@ export interface PluginSource {
 export interface PluginSourceListing {
   readonly manifests: readonly PluginManifest[];
   readonly authoritative: boolean;
+  readonly revoked?: readonly string[];
 }
 
 /** Decides whether a plugin may run (always `free` now; account/Stripe later). */

@@ -9,6 +9,7 @@
  *
  * Shape:
  *   { format: 1, host: "chat.deepseek.com", generatedAt: "<ISO>",
+ *     revoked?: [<explicitly revoked plugin ids>],
  *     site?: <site.json data; a valid one covering the host overrides the bundled adapter>,
  *     plugins: [<raw manifest with CSS inlined as contributes.styles[].css>] }
  */
@@ -16,6 +17,7 @@ import { type ManifestIssue, validateManifest } from '../manifest/validate';
 import { matchesAnyPattern } from '../sites/matchPattern';
 import { readSiteAdapterData } from '../sites/siteAdapterData';
 import type { PluginManifest, SiteAdapter } from '../types';
+import { readCatalogRevocations } from './catalogRevocations';
 
 export const HOST_CATALOG_FORMAT = 1;
 
@@ -24,6 +26,7 @@ export const MAX_HOST_CATALOG_PLUGINS = 200;
 
 export interface HostCatalogFileValidation {
   readonly manifests: readonly PluginManifest[];
+  readonly revoked?: readonly string[];
   /** Per-plugin problems for entries that were skipped (logged, never fatal). */
   readonly issues: readonly ManifestIssue[];
   readonly generatedAt?: string;
@@ -101,6 +104,7 @@ export function validateHostCatalogFile(
 
   return {
     manifests,
+    ...(raw.revoked !== undefined ? { revoked: readCatalogRevocations(raw.revoked, issues) } : {}),
     issues,
     siteIssues,
     ...(typeof raw.generatedAt === 'string' ? { generatedAt: raw.generatedAt } : {}),

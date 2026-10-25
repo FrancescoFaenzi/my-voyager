@@ -61,7 +61,9 @@ export interface MergePluginRecordsInput {
   readonly remote: readonly SourcedPluginManifest[];
   /** User-imported plugins; merged last, only under `local.*` ids. */
   readonly local?: readonly SourcedPluginManifest[];
-  /** True when the remote list is the truth for `scopeUrl`'s host (kill switch). */
+  /** Explicit revocations from an authoritative catalog for this host. */
+  readonly revoked?: readonly string[];
+  /** True when remote revocations may apply to `scopeUrl`'s host (kill switch). */
   readonly remoteAuthoritative: boolean;
   /** Page the listing is for; scopes the kill switch to plugins that target it. */
   readonly scopeUrl?: string;
@@ -78,7 +80,7 @@ export interface MergePluginRecordsInput {
  *     the blocked update so the popup can say "needs a newer Voyager";
  *   - both incompatible → remote (the status machine reports needs-engine);
  *   - remote authoritative for this host and a snapshot plugin targeting this
- *     page is absent from it → dropped (kill switch);
+ *     page is in its revoked list → dropped (kill switch);
  *   - remote unavailable → snapshot as-is;
  *   - `local.*` ids belong to the user's imported plugins: an official or
  *     remote record under one is dropped, and a local record is added last,
@@ -92,6 +94,7 @@ export interface MergePluginRecordsInput {
 export function mergePluginRecords(input: MergePluginRecordsInput): SourcedPluginManifest[] {
   const engineVersion = input.engineVersion ?? EFFECTIVE_PLUGIN_ENGINE_VERSION;
   const seen = new Set<string>();
+  const revoked = new Set(input.revoked);
   const merged: SourcedPluginManifest[] = [];
   const official = (record: SourcedPluginManifest): boolean => !isLocalPluginId(record.manifest.id);
   const builtin = input.builtin.filter(official);
@@ -139,7 +142,9 @@ export function mergePluginRecords(input: MergePluginRecordsInput): SourcedPlugi
     }
     const targetsScope =
       !!input.scopeUrl && matchesAnyPattern(input.scopeUrl, record.manifest.matches);
-    if (input.remoteAuthoritative && targetsScope && !isBuildOnlyPluginId(id)) continue;
+    // A catalog build that omits a plugin by mistake must not uninstall its bundled copy.
+    if (input.remoteAuthoritative && targetsScope && revoked.has(id) && !isBuildOnlyPluginId(id))
+      continue;
     merged.push(record);
   }
 
@@ -192,14 +197,17 @@ export async function listPluginManifestsWithSources(
   const remote: SourcedPluginManifest[] = [];
   const local: SourcedPluginManifest[] = [];
   let remoteAuthoritative = false;
+  const revoked = new Set<string>();
 
   for (const source of sources) {
     if (source.kind === 'remote' && source.listWithAuthority) {
-      // Manifests and authority from the same read: two reads could straddle
-      // a background write and report "authoritative" with a stale empty list.
+      // Keep manifests, revocations and authority from the same cache version.
       const listing = await listingFromSource(source, context);
       remote.push(...listing.manifests.map((manifest) => ({ manifest, sourceId: source.id })));
       remoteAuthoritative ||= listing.authoritative;
+      if (listing.authoritative) {
+        for (const id of listing.revoked ?? []) revoked.add(id);
+      }
       continue;
     }
     const records = (await listFromSource(source, context)).map((manifest) => ({
@@ -228,7 +236,15 @@ export async function listPluginManifestsWithSources(
   }
 
   const scopeUrl = context?.url ?? (context?.host ? `https://${context.host}/` : undefined);
-  return mergePluginRecords({ builtin, snapshot, remote, local, remoteAuthoritative, scopeUrl });
+  return mergePluginRecords({
+    builtin,
+    snapshot,
+    remote,
+    local,
+    remoteAuthoritative,
+    scopeUrl,
+    revoked: [...revoked],
+  });
 }
 
 export async function listPluginManifests(

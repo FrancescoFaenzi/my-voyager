@@ -18,9 +18,10 @@ import { isExtensionContextInvalidatedError } from '@/core/utils/extensionContex
 import { validateManifest } from '../manifest/validate';
 import { type SiteAdapterData, readSiteAdapterData } from '../sites/siteAdapterData';
 import type { PluginManifest, SiteAdapter } from '../types';
+import { readCatalogRevocations } from './catalogRevocations';
 
 /**
- * `ok`      a valid catalog file was fetched; `manifests` is the truth for the host.
+ * `ok`      a valid catalog file was fetched; its explicit revocations apply to the host.
  * `missing` the server answered 404: no catalog exists for this host. Treated
  *           like "no remote information" — the bundled snapshot stays in force.
  * `unknown` no successful fetch yet (only failed attempts recorded).
@@ -31,6 +32,7 @@ export interface HostCatalogCacheEntry {
   readonly host: string;
   readonly status: HostCatalogStatus;
   readonly manifests: readonly PluginManifest[];
+  readonly revoked?: readonly string[];
   /** Time of the last successful fetch (ok or missing); 0 when none yet. */
   readonly fetchedAt: number;
   /** Time of the last attempt, successful or not; drives the check interval. */
@@ -95,6 +97,9 @@ export function normalizeHostCatalogCacheEntry(
     host,
     status,
     manifests: status === 'ok' ? manifests : [],
+    ...(status === 'ok' && raw.revoked !== undefined
+      ? { revoked: readCatalogRevocations(raw.revoked) }
+      : {}),
     fetchedAt: finiteNumber(raw.fetchedAt),
     lastAttemptAt: finiteNumber(raw.lastAttemptAt),
     failureCount: Math.max(0, Math.floor(finiteNumber(raw.failureCount))),
@@ -147,7 +152,7 @@ export async function saveHostCatalogCache(entry: HostCatalogCacheEntry): Promis
 
 /**
  * Stable signature of what a cached entry CONTRIBUTES to the plugin list:
- * status, writer version and manifests. Attempt timestamps and failure counts
+ * status, writer version, manifests and revocations. Attempt timestamps and failure counts
  * are excluded on purpose (see the module comment).
  */
 export function hostCatalogSignature(raw: unknown): string {
@@ -157,6 +162,7 @@ export function hostCatalogSignature(raw: unknown): string {
       status: raw.status,
       extensionVersion: raw.extensionVersion,
       manifests: raw.status === 'ok' ? raw.manifests : [],
+      revoked: raw.status === 'ok' ? readCatalogRevocations(raw.revoked) : [],
       site: raw.status === 'ok' ? (raw.site ?? null) : null,
     });
   } catch {
