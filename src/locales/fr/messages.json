@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "Export arrêté : la conversation a changé ou une réponse a commencé. Attendez la fin de la réponse, puis réessayez."
+  },
+  "export_read_history_unavailable": {
+    "message": "Impossible de lire tout l'historique de la conversation. Faites défiler vers le haut pour charger les messages précédents, puis réessayez."
   }
 }

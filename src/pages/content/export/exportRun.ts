@@ -334,6 +334,11 @@ export function createExportRunner(deps: ExportRunnerDeps): ExportRunner {
       showExportAlert(t('export_read_interrupted'), t, 'warning');
       return;
     }
+    // The empty-selection warning below promises an automatic retry that a failed read never makes.
+    if (reader.failure === 'history') {
+      showExportAlert(t('export_read_history_unavailable'), t, 'warning');
+      return;
+    }
     if (reader.completeness && reader.completeness !== 'complete') {
       showExportAlert(t('export_read_incomplete'), t, 'warning');
     }

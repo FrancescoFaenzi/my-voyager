@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "La exportación se detuvo porque cambió la conversación o comenzó una respuesta. Espera a que termine y vuelve a intentarlo."
+  },
+  "export_read_history_unavailable": {
+    "message": "No se pudo leer el historial completo de la conversación. Desplázate hacia arriba para cargar los mensajes anteriores y vuelve a intentarlo."
   }
 }

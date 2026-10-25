@@ -17,6 +17,8 @@ export interface ExportTurnReader {
   /** Catalog readers prove both boundaries and identity before claiming completeness. */
   readonly completeness?: 'complete' | 'partial' | 'unknown';
   readonly interruption?: 'generating' | 'route';
+  /** The preparation could not read the whole conversation history, so there is nothing to offer. */
+  readonly failure?: 'history';
   /** Selectable messages, in reading order. */
   readonly messages: () => ExportMessage[];
   /** Export turns for the selected messages, content already read from the page. */

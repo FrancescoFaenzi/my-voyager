@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "대화가 바뀌었거나 응답 생성이 시작되어 내보내기를 중단했습니다. 응답이 끝난 후 다시 시도하세요."
+  },
+  "export_read_history_unavailable": {
+    "message": "전체 대화 기록을 읽지 못했습니다. 위로 스크롤해 이전 메시지를 불러온 후 다시 시도하세요."
   }
 }

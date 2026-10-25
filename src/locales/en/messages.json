@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "Export stopped because the conversation changed or a response started. Wait for the response to finish, then try again."
+  },
+  "export_read_history_unavailable": {
+    "message": "Couldn't read the full conversation history. Scroll up to load earlier messages, then try again."
   }
 }

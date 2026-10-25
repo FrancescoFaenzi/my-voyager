@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "A exportação parou porque a conversa mudou ou uma resposta começou. Aguarde o fim da resposta e tente novamente."
+  },
+  "export_read_history_unavailable": {
+    "message": "Não foi possível ler o histórico completo da conversa. Role para cima para carregar as mensagens anteriores e tente novamente."
   }
 }

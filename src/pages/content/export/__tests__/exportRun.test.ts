@@ -1,14 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { chatgptAdapter } from '@/features/plugins/sites/adapters/chatgpt';
 import { confirmDriver } from '@/tests/confirmDriver';
 import { toastDriver } from '@/tests/toastDriver';
 
 import { ExportFormat } from '../../../../features/export/types/export';
 import { nativeHealthReporter } from '../../nativeHealth';
+import { makeTurns, mountThreadFixture } from '../adapter/__tests__/chatgptThreadFixture';
+import { buildChatGptAdapter } from '../adapter/platform/chatgpt';
 import type { ChatTurn, ConversationCollector, ExportMessage } from '../conversationCollector';
 import type { ExportDictionaries } from '../exportLocale';
 import type { ExportSite, ExportTurnReader, ExportTurnSession } from '../exportSite';
 import { PENDING_EXPORT_SESSION_KEY, createPendingExportState } from '../pendingExportState';
+import { createChatGptExportSite } from '../sites/chatgpt';
 
 const mocks = vi.hoisted(() => ({
   exportPendingConversation: vi.fn(),
@@ -33,6 +37,7 @@ const dict = {
     export_toast_images_omitted: '{count} images stayed as links',
     export_error_generic: 'Export failed: {error}',
     export_dialog_warning: 'Nothing to export yet',
+    export_read_history_unavailable: 'Could not read the full history; scroll up and retry',
     export_md_include_source_confirm: 'Keep search image links?',
     export_md_include_source_include: 'Include links',
     export_md_include_source_exclude: 'Leave out',
@@ -243,6 +248,35 @@ describe('createExportRunner', () => {
       { user: 'Loaded later', assistant: '', starred: false, turnId: '1' },
     ];
     expect(probe.recheck()).toBe(true);
+    expect(selectionBar()).toBeNull();
+    expect(mocks.exportPendingConversation).not.toHaveBeenCalled();
+  });
+
+  it('tells the reader the history could not be read instead of asking them to wait', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // Older history never arrives, so the crawl gives up on the whole thread (issue #1071).
+    mountThreadFixture({ turns: makeTurns(8), initiallyLoaded: 3, historyDelayMs: Infinity });
+    const chatgpt = createChatGptExportSite(buildChatGptAdapter(chatgptAdapter));
+    const fastCrawl = { pollMs: 1, settleMs: 4, historyIdleMs: 25, historyStallMs: 150 };
+    const runner = createExportRunner({
+      site: {
+        ...chatgpt,
+        turns: {
+          ...chatgpt.turns,
+          // The site passes crawl options through; its type names only the shared ones.
+          prepare: (options) => {
+            const crawl = { ...options, timing: fastCrawl };
+            return chatgpt.turns.prepare!(crawl);
+          },
+        },
+      },
+    });
+
+    await settle(runner.run({ format: ExportFormat.MARKDOWN }, { dict, lang: 'en' }));
+
+    expect(toastDriver.all()).toMatchObject([
+      { message: 'Could not read the full history; scroll up and retry', tone: 'warning' },
+    ]);
     expect(selectionBar()).toBeNull();
     expect(mocks.exportPendingConversation).not.toHaveBeenCalled();
   });

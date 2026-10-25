@@ -24,8 +24,9 @@ import type { ChatGptTurnContainer, ChatGptTurnRole, ExportSelectionOptions } fr
  * On the current DOM (`[data-turn-key]` items, virtualized whole), the export
  * crawls the thread once before selection mode opens and keeps what it
  * extracted. Selection then reads that snapshot: its ids, roles and content.
- * When the crawl cannot prove the thread complete the snapshot is empty, so
- * the export shows its existing warning instead of offering a partial list.
+ * When the crawl cannot prove the thread complete the snapshot is empty and the
+ * session reports the crawl's failure, so the export says the history could
+ * not be read instead of offering a partial list.
  * It is dropped as well once the thread changes from what was read: a turn
  * shows another branch or a regenerated reply, or a turn appears that was not
  * read. A watch that starts before the crawl sees such a change even when the
@@ -58,6 +59,8 @@ export interface ChatGptThreadSession {
     selectedIds: ReadonlySet<string>,
     options: ExportSelectionOptions,
   ): Promise<ReadonlyMap<string, ChatGptTurnRole>>;
+  /** The crawl's error code when it could not read the whole thread; null when it did. */
+  crawlFailure(): string | null;
   /** Drop the crawl and stop watching the thread. */
   release(): void;
 }
@@ -100,6 +103,7 @@ export function createChatGptThreadPreparer(): ChatGptThreadPreparer {
         throw error;
       }
       versions.stop();
+      session.fail(error);
       console.warn('[Gemini Voyager] ChatGPT export could not read the whole conversation:', error);
     }
     return session;
@@ -111,7 +115,11 @@ export function createChatGptThreadPreparer(): ChatGptThreadPreparer {
 function createThreadSession(
   route: string,
   watch: ThreadVersionWatch,
-): ChatGptThreadSession & { publish(messages: readonly ChatGptThreadMessage[]): void } {
+): ChatGptThreadSession & {
+  publish(messages: readonly ChatGptThreadMessage[]): void;
+  fail(error: unknown): void;
+} {
+  let crawlFailure: string | null = null;
   let snapshot: ThreadSnapshot | null = {
     route,
     messages: null,
@@ -150,6 +158,11 @@ function createThreadSession(
       watch.adopt(messages);
       snapshot = { route, messages, failure: '' };
     },
+    fail(error) {
+      const code = error instanceof Error ? error.message : String(error);
+      crawlFailure = code || 'chatgpt_export_thread_incomplete';
+    },
+    crawlFailure: () => crawlFailure,
     containers() {
       const messages = currentSnapshot()?.messages;
       if (!messages) return [];

@@ -30,6 +30,8 @@ function selectionMessages(containers: readonly ChatGptTurnContainer[]): ExportM
 
 function exportSession(session: ChatGptThreadSession): ExportTurnSession {
   return {
+    // A failed crawl offers nothing to select; say why instead of the empty-page warning.
+    ...(session.crawlFailure() ? { failure: 'history' as const } : {}),
     messages: () => selectionMessages(session.containers()),
     build: session.build,
     roles: session.roles,

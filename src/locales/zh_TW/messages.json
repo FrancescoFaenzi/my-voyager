@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "對話已切換或開始產生回覆，匯出已停止。請等待回覆結束後重試。"
+  },
+  "export_read_history_unavailable": {
+    "message": "無法讀取完整的對話紀錄。請向上捲動載入較早的訊息後重試。"
   }
 }

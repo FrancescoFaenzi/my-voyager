@@ -4414,5 +4414,8 @@
   },
   "export_read_interrupted": {
     "message": "对话已切换或开始生成回复，导出已停止。请等待回复结束后重试。"
+  },
+  "export_read_history_unavailable": {
+    "message": "未能读取完整的对话历史。请向上滚动加载更早的消息后重试。"
   }
 }
