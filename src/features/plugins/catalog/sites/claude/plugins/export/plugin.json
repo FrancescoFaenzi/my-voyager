@@ -49,9 +49,6 @@
   "engine": ">=1.10.0",
   "tier": "declarative",
   "matches": ["https://claude.ai/*"],
-  "requires": {
-    "formFactors": ["desktop"]
-  },
   "contributes": {
     "domOps": [
       {

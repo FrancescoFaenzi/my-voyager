@@ -49,9 +49,6 @@
   "engine": ">=1.10.0",
   "tier": "declarative",
   "matches": ["https://chat.deepseek.com/*"],
-  "requires": {
-    "formFactors": ["desktop"]
-  },
   "contributes": {
     "domOps": [
       {

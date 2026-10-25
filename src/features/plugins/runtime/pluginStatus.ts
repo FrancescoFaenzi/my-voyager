@@ -128,8 +128,13 @@ export interface PluginIncompatibility {
   readonly missingSections?: readonly string[];
 }
 
-/** What a manifest without `requires.formFactors` runs on: plugins predate phones. */
-export const DEFAULT_PLUGIN_FORM_FACTORS: readonly FormFactor[] = ['desktop'];
+/**
+ * What a manifest without `requires.formFactors` runs on: every device. Android
+ * browsers ran every plugin before phones were told apart, and a desktop-only
+ * default switched off Edge for Android users' whole setup (#1072); a plugin
+ * that cannot work on a phone says so with `["desktop"]`.
+ */
+export const DEFAULT_PLUGIN_FORM_FACTORS: readonly FormFactor[] = ['desktop', 'mobile'];
 
 /**
  * Whether the plugin runs on `formFactor`. The popup asks this directly, since

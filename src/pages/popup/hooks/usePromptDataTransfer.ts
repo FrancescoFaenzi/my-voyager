@@ -1,5 +1,6 @@
 import { type ChangeEvent, type RefObject, useCallback, useRef, useState } from 'react';
 
+import { googleDriveUnavailableOn } from '@/core/utils/googleDriveSignIn';
 import { PromptImportExportService } from '@/features/backup/services/PromptImportExportService';
 import { createRuntimePromptLibraryClient } from '@/features/prompt/library/promptLibraryMessages';
 import type { TranslationKey } from '@/utils/translations';
@@ -9,7 +10,7 @@ import { usePopupFormFactor } from './usePopupFormFactor';
 export interface PromptDataTransferController {
   status: { kind: 'ok' | 'warn' | 'err'; text: string } | null;
   busy: boolean;
-  /** True on a phone, where Google Drive cannot sign in; the cloud actions stay off. */
+  /** True where Google Drive cannot sign in (Firefox for Android); the cloud actions stay off. */
   cloudUnavailable: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
   onExport: () => Promise<void>;
@@ -33,7 +34,7 @@ export function usePromptDataTransfer(
   const [busy, setBusy] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   // Firefox for Android has no identity.launchWebAuthFlow, so Drive cannot sign in there.
-  const cloudUnavailable = usePopupFormFactor() === 'mobile';
+  const cloudUnavailable = googleDriveUnavailableOn(usePopupFormFactor());
 
   const onExport = useCallback(async () => {
     setBusy(true);

@@ -79,7 +79,8 @@ describe('MAIN-world registrations', () => {
     expect(injectOpenTabs).not.toHaveBeenCalled();
   });
 
-  it('leaves the download interceptor out on Android, where watermark removal does not run', async () => {
+  // #1072: watermark download was switched off on every Android browser.
+  it('registers the download interceptor on Android too, where watermark download now runs', async () => {
     const runtime = chrome.runtime as unknown as { getPlatformInfo?: () => Promise<unknown> };
     runtime.getPlatformInfo = async () => ({ os: 'android' });
     vi.spyOn(chrome.storage.sync, 'get').mockImplementation((async () => ({
@@ -90,9 +91,7 @@ describe('MAIN-world registrations', () => {
       vi.resetModules();
       const fresh = await import('../mainWorldRegistration');
       await fresh.createMainWorldRegistration().registerFetchInterceptor(true);
-      expect(unregisterContentScripts).toHaveBeenCalledWith({ ids: ['gv-fetch-interceptor'] });
-      expect(registerContentScripts).not.toHaveBeenCalled();
-      expect(injectOpenTabs).not.toHaveBeenCalled();
+      expect(registerContentScripts).toHaveBeenCalled();
     } finally {
       delete runtime.getPlatformInfo;
     }

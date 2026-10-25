@@ -26,7 +26,7 @@ La forma más sencilla de empezar. Las actualizaciones son automáticas.
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Ir_a_descargar-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Instalar desde Firefox Add-ons" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
-> 📱 **Firefox para Android:** en el móvil solo funcionan las líneas de tiempo de Gemini, Claude, ChatGPT y DeepSeek, la exportación de Gemini y ChatGPT, y los efectos visuales. Los demás complementos muestran **Aún no está disponible en el móvil** en el popup y conservan tu elección para el ordenador. Las carpetas y la sincronización con Google Drive no están disponibles en el móvil.
+> 📱 **Android** (Firefox para Android, Edge y otros): todos los complementos funcionan también en el móvil. La sincronización con Google Drive no está disponible en Firefox para Android, que no puede iniciar sesión en Google.
 
 ## 2. Manual (Versión más reciente)
 

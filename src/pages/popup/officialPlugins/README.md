@@ -31,7 +31,7 @@ which storage holds its switch belong to `featureOwners.ts` and the legacy bindi
   statuses the tab reports.
 - A row's name is the manifest name. The retired settings row's label and the card it sat in stay
   as search words (`searchKeys`, `formerSectionTitle`).
-- A device that cannot run a plugin (its manifest's `requires.formFactors` leaves out the phone)
+- A device that cannot run a plugin (its manifest's `requires.formFactors` is `["desktop"]` on a phone)
   shows the row off and greyed with `UNAVAILABLE_ON_THIS_DEVICE`, and keeps the stored choice for
   the user's other devices. An entry's `requires` greys the switch the same way while a
   prerequisite setting is unmet (batch delete needs folders).

@@ -59,18 +59,15 @@ describe('the official plugin list on Firefox for Android', () => {
     });
   };
 
-  it('greys a desktop-only row with why, and keeps the stored choice', async () => {
+  // #1072: 2.2.1 switched off every plugin without a device list on Android.
+  it('keeps a plugin that names no devices, such as chat width, usable and on', async () => {
     sync[StorageKeys.CHAT_WIDTH_ENABLED] = true;
     await mount();
     const { row, toggle } = popupRows(container);
 
-    const chatWidth = row(OFFICIAL_PLUGIN_IDS.geminiChatWidth)!;
-    expect(chatWidth.textContent).toContain(ON_PHONES_NOTE);
-    expect(toggle(OFFICIAL_PLUGIN_IDS.geminiChatWidth).disabled).toBe(true);
-    expect(toggle(OFFICIAL_PLUGIN_IDS.geminiChatWidth).checked).toBe(false);
-    await act(async () => toggle(OFFICIAL_PLUGIN_IDS.geminiChatWidth).click());
-    expect(extensionApi.storage.sync.set).not.toHaveBeenCalled();
-    expect(sync[StorageKeys.CHAT_WIDTH_ENABLED]).toBe(true);
+    expect(row(OFFICIAL_PLUGIN_IDS.geminiChatWidth)!.textContent).not.toContain(ON_PHONES_NOTE);
+    expect(toggle(OFFICIAL_PLUGIN_IDS.geminiChatWidth).disabled).toBe(false);
+    expect(toggle(OFFICIAL_PLUGIN_IDS.geminiChatWidth).checked).toBe(true);
   });
 
   it('leaves the timeline and export rows as on a desktop', async () => {

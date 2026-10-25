@@ -30,7 +30,7 @@ This file records the decisions and constraints of that migration that still bin
 
 **Local plugins on these sites.** A `native` op is allowed only for a public primitive an owner entry lists in `handlers` (`sites/hostPolicy.ts`), checked per target site. `folders` is never opened to local plugins (`sites/packagedFoldersPolicy.ts`). The fixed Gemini timeline opens `turnNavigator` with the shared data backend; the terms are in the [local plugin README](../local/README.md). `theme` is refused: these pages keep Voyager's accent.
 
-**Phones.** A packaged plugin runs on desktops unless its `requires.formFactors` includes `mobile`; a phone shows it disabled with `needs-form-factor`, and the popup greys its row. Start paths that serve a plugin outside `PluginHost` (Folder-as-Project, a feature's coachmark, the watermark fetch interceptor) ask `runtime/packagedFormFactor.ts`, so adding `mobile` to the manifest turns them on together.
+**Phones.** A packaged plugin runs on desktops and phones unless its `requires.formFactors` is `["desktop"]`; then a phone shows it disabled with `needs-form-factor`, and the popup greys its row. Start paths that serve a plugin outside `PluginHost` (Folder-as-Project, a feature's coachmark, the watermark fetch interceptor) ask `runtime/packagedFormFactor.ts`, so the manifest switches them together.
 
 ## Constraints
 

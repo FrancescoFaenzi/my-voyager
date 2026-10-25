@@ -81,29 +81,9 @@ describe('FolderSettingsCard on a phone', () => {
     container.remove();
   });
 
-  it('shows the folder switches with their values but off limits, and says why', async () => {
-    const { onChange, onAccountIsolationChange, input } = await renderOn('android');
-
-    expect(container.textContent).toContain('folderUnavailableOnMobile');
-    for (const id of FOLDER_SWITCHES) {
-      expect(input(id).disabled, id).toBe(true);
-    }
-    expect(input('folder-enabled').checked).toBe(true);
-    const copy = [...container.querySelectorAll('button')].find((button) =>
-      button.textContent?.includes('aiOrgCopyButton'),
-    );
-    expect(copy?.disabled).toBe(true);
-
-    act(() => input('folder-enabled').click());
-    expect(onChange).not.toHaveBeenCalled();
-    // Account isolation scopes more than the folders, so it stays usable.
-    expect(input('account-isolation-enabled').disabled).toBe(false);
-    act(() => input('account-isolation-enabled').click());
-    expect(onAccountIsolationChange).toHaveBeenCalledWith(true);
-  });
-
-  it('leaves every switch usable on a desktop', async () => {
-    const { input } = await renderOn('mac');
+  // #1072: 2.2.1 greyed the folder switches on every Android browser.
+  it.each(['mac', 'android'])('leaves every switch usable on %s', async (os) => {
+    const { input } = await renderOn(os);
 
     expect(container.textContent).not.toContain('folderUnavailableOnMobile');
     for (const id of FOLDER_SWITCHES) {

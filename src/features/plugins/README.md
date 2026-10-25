@@ -262,8 +262,10 @@ rules they keep are in [builtin/README.md](builtin/README.md).
   dynamic registration is limited — keep Safari on manifest-declared sites.
 - **Firefox**: declarative works; `userScripts` exists but differs; AMO review
   forbids remote code (declarative is the safe path).
-- **Firefox for Android** (and forks such as Waterfox): only plugins whose
-  `requires.formFactors` includes `mobile` run; the rest report
-  `needs-form-factor` ([runtime/README.md](runtime/README.md)). Google Drive sync
-  is off there, since Firefox for Android has no `identity.launchWebAuthFlow`.
+- **Android** (Firefox for Android and its forks, Edge and other Chromium
+  browsers): every plugin runs unless its `requires.formFactors` is
+  `["desktop"]`, which reports `needs-form-factor`
+  ([runtime/README.md](runtime/README.md)). Google Drive sync is off wherever the
+  browser has no identity API to sign in with, as on Firefox for Android
+  (`core/utils/googleDriveSignIn.ts`).
 - **Chrome/Edge**: full support, including the future gated `scripted` tier.

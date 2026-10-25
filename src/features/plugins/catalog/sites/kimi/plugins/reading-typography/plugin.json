@@ -257,8 +257,7 @@
   "tier": "declarative",
   "matches": ["https://www.kimi.com/*"],
   "requires": {
-    "semantic": ["assistantTurn"],
-    "formFactors": ["desktop"]
+    "semantic": ["assistantTurn"]
   },
   "contributes": {
     "settings": {

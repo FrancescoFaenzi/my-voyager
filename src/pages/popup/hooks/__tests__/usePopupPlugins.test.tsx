@@ -144,14 +144,13 @@ describe('usePopupPlugins', () => {
   it('says on a phone which plugins cannot run there, even when the tab answers nothing', async () => {
     device.formFactor = 'mobile';
     const desktopOnly = record('claude-desktop-only');
-    const everywhere = record('claude-everywhere');
-    const mobileManifest = {
-      ...everywhere.manifest,
-      requires: { formFactors: ['desktop', 'mobile'] as const },
+    const desktopManifest = {
+      ...desktopOnly.manifest,
+      requires: { formFactors: ['desktop'] as const },
     };
     vi.mocked(listPluginManifestsWithSources).mockResolvedValue([
-      desktopOnly,
-      { ...everywhere, manifest: mobileManifest },
+      { ...desktopOnly, manifest: desktopManifest },
+      record('claude-undeclared'),
     ]);
     // Firefox for Android opens the popup as its own tab: the page may not answer.
     vi.mocked(browser.tabs.sendMessage).mockRejectedValue(new Error('No receiving end'));

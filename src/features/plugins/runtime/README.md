@@ -12,8 +12,9 @@ Part of the [Plugin ecosystem overview](../README.md).
   setting's `{{key}}` token) comes from the op's params.
 - `requires.formFactors` lists the device classes the plugin runs on, `desktop`
   and `mobile` (a phone: Firefox for Android and its forks). Absent means
-  `["desktop"]`, so a plugin reaches phones only once its manifest adds
-  `"mobile"`; that one line is the whole switch. The device comes from the
+  both, as before phones were told apart (2.2.1 defaulted to `["desktop"]` and
+  switched off Edge for Android users' plugins, #1072); `["desktop"]` keeps a
+  plugin that cannot work on a phone off there. The device comes from the
   system (`runtime.getPlatformInfo().os === 'android'`, through
   `core/utils/formFactor.ts`), never from the user agent or the window width,
   because Firefox's "Desktop site" rewrites the user agent. A build older than

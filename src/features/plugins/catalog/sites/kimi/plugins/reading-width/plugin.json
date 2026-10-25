@@ -112,9 +112,6 @@
   "engine": ">=1.2.0",
   "tier": "declarative",
   "matches": ["https://www.kimi.com/*"],
-  "requires": {
-    "formFactors": ["desktop"]
-  },
   "contributes": {
     "settings": {
       "width": {

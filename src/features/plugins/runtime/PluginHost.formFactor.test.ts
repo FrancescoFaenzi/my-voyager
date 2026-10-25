@@ -28,13 +28,13 @@ function manifest(id: string, formFactors?: readonly FormFactor[]): PluginManife
   };
 }
 
-const DESKTOP_ONLY = manifest('desktop-only');
-const EVERYWHERE = manifest('everywhere', ['desktop', 'mobile']);
+const DESKTOP_ONLY = manifest('desktop-only', ['desktop']);
+const UNDECLARED = manifest('undeclared');
 
 const source: PluginSource = {
   id: 'test',
   async list() {
-    return [DESKTOP_ONLY, EVERYWHERE];
+    return [DESKTOP_ONLY, UNDECLARED];
   },
 };
 
@@ -56,7 +56,7 @@ beforeEach(() => {
   (chrome.storage.local.get as unknown as Mock).mockResolvedValue({
     gvPluginsState: {
       'desktop-only': { enabled: true, installedAt: 1 },
-      everywhere: { enabled: true, installedAt: 1 },
+      undeclared: { enabled: true, installedAt: 1 },
     },
   });
 });
@@ -71,15 +71,25 @@ describe('PluginHost on a phone', () => {
     const host = await startOn('mobile');
     try {
       expect(document.body.classList.contains('gv-desktop-only')).toBe(false);
-      expect(document.body.classList.contains('gv-everywhere')).toBe(true);
       const byId = Object.fromEntries(host.getStatuses().map((status) => [status.id, status]));
       expect(byId['desktop-only']).toMatchObject({
         kind: 'needs-form-factor',
         formFactor: 'mobile',
       });
-      expect(byId.everywhere).toMatchObject({ kind: 'mounted' });
       // The user's choice stays as stored, so the desktop it syncs to keeps running it.
       expect(chrome.storage.local.set).not.toHaveBeenCalled();
+    } finally {
+      host.stop();
+    }
+  });
+
+  // #1072: a desktop-only default switched off every plugin on Edge for Android.
+  it('keeps running an enabled plugin that names no devices on an Android phone', async () => {
+    const host = await startOn('mobile');
+    try {
+      expect(document.body.classList.contains('gv-undeclared')).toBe(true);
+      const byId = Object.fromEntries(host.getStatuses().map((status) => [status.id, status]));
+      expect(byId.undeclared).toMatchObject({ kind: 'mounted' });
     } finally {
       host.stop();
     }
@@ -89,7 +99,7 @@ describe('PluginHost on a phone', () => {
     const host = await startOn('desktop');
     try {
       expect(document.body.classList.contains('gv-desktop-only')).toBe(true);
-      expect(document.body.classList.contains('gv-everywhere')).toBe(true);
+      expect(document.body.classList.contains('gv-undeclared')).toBe(true);
       expect(host.getStatuses().map((status) => status.kind)).toEqual(['mounted', 'mounted']);
     } finally {
       host.stop();

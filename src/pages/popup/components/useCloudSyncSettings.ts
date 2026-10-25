@@ -4,6 +4,7 @@ import { StorageKeys } from '@/core/types/common';
 import type { SyncMode, SyncPlatform, SyncProvider, SyncState } from '@/core/types/sync';
 import { DEFAULT_SYNC_STATE } from '@/core/types/sync';
 import { getVoyagerBuildTarget, isSafari } from '@/core/utils/browser';
+import { googleDriveUnavailableOn } from '@/core/utils/googleDriveSignIn';
 import { deleteSafariICloudBackup } from '@/core/utils/safariICloudSync';
 import { FOLDER_PLATFORMS, getFolderPlatformForHost } from '@/features/folder/platforms';
 import { pushCatalogTimeline } from '@/features/timeline/catalogTimelineCloud';
@@ -45,7 +46,7 @@ export function useCloudSyncSettings(sourceTabId?: number) {
   const { t } = useLanguage();
   const supportsICloud = getVoyagerBuildTarget() === 'safari' || isSafari();
   // Firefox for Android has no identity.launchWebAuthFlow, so Drive cannot sign in there.
-  const googleDriveUnavailable = usePopupFormFactor() === 'mobile';
+  const googleDriveUnavailable = googleDriveUnavailableOn(usePopupFormFactor());
 
   const [syncState, setSyncState] = useState<SyncState>(DEFAULT_SYNC_STATE);
   const [statusMessage, setStatusMessage] = useState<{

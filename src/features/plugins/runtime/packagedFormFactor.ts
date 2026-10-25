@@ -22,13 +22,13 @@ async function packagedManifest(pluginId: string): Promise<PluginManifest | null
   return (await bundled).find((manifest) => manifest.id === pluginId) ?? null;
 }
 
-/** An id this build does not package runs nowhere but a desktop, as any manifest without the key. */
+/** An id this build does not package runs everywhere, as any manifest without the key. */
 export async function packagedPluginRunsOn(
   pluginId: string,
   formFactor: FormFactor,
 ): Promise<boolean> {
   const manifest = await packagedManifest(pluginId);
-  return manifest ? runsOnFormFactor(manifest, formFactor) : formFactor === 'desktop';
+  return manifest ? runsOnFormFactor(manifest, formFactor) : true;
 }
 
 /** Content scripts: the same, on the device class the background reports for this page. */

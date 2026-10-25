@@ -95,8 +95,7 @@
   "tier": "declarative",
   "matches": ["https://www.kimi.com/*"],
   "requires": {
-    "handlers": ["folders"],
-    "formFactors": ["desktop"]
+    "handlers": ["folders"]
   },
   "contributes": {
     "settings": {

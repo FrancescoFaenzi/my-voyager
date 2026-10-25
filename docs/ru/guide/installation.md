@@ -26,7 +26,7 @@
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Download-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Установить из Firefox Add-ons" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
-> 📱 **Firefox для Android:** на телефоне работают только таймлайны Gemini, Claude, ChatGPT и DeepSeek, экспорт Gemini и ChatGPT и визуальные эффекты. Остальные плагины во всплывающем окне помечены **Пока недоступно на телефоне**, а их состояние (вкл. или выкл.) сохраняется для компьютера. Папки и синхронизация с Google Диском на телефоне недоступны.
+> 📱 **Android** (Firefox для Android, Edge и другие): все плагины работают и на телефоне. Синхронизация с Google Drive недоступна в Firefox для Android: он не может войти в аккаунт Google.
 
 ## 2. Ручной способ (Новейшие функции)
 

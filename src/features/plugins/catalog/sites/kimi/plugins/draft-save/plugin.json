@@ -50,8 +50,7 @@
   "tier": "declarative",
   "matches": ["https://www.kimi.com/*"],
   "requires": {
-    "handlers": ["draftSave"],
-    "formFactors": ["desktop"]
+    "handlers": ["draftSave"]
   },
   "contributes": {
     "domOps": [

@@ -26,7 +26,7 @@ A forma mais simples de começar. As atualizações são automáticas.
 
 [<img src="https://img.shields.io/badge/Firefox_Add--ons-Download-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Instalar do Firefox Add-ons" height="40"/>](https://addons.mozilla.org/firefox/addon/gemini-voyager/)
 
-> 📱 **Firefox para Android:** no celular, só funcionam as linhas do tempo do Gemini, Claude, ChatGPT e DeepSeek, a exportação do Gemini e do ChatGPT e os efeitos visuais. Os outros plugins mostram **Ainda não está disponível no celular** no popup e mantêm sua escolha de ligado ou desligado para o computador. As pastas e a sincronização com o Google Drive não estão disponíveis no celular.
+> 📱 **Android** (Firefox para Android, Edge e outros): todos os plugins também funcionam no celular. A sincronização com o Google Drive não está disponível no Firefox para Android, que não consegue entrar na conta Google.
 
 ## 2. A Via Manual (Funcionalidades Mais Recentes)
 

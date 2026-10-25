@@ -1,12 +1,12 @@
 /**
- * Google Drive on a phone: Firefox for Android has no `identity.launchWebAuthFlow`, so a
- * sign-in there can only fail, after opening whatever the browser offers. Every cloud sync
- * message that may reach Drive is answered here with a plain error instead; reading the
- * state, choosing a mode or provider and signing out pass through, since none of them signs in.
+ * Google Drive where the browser cannot sign in (Firefox for Android has no
+ * `identity.launchWebAuthFlow`): a sign-in there can only fail, after opening whatever the
+ * browser offers. Every cloud sync message that may reach Drive is answered here with a plain
+ * error instead; reading the state, choosing a mode or provider and signing out pass through,
+ * since none of them signs in.
  */
 import { googleDriveSyncService } from '@/core/services/GoogleDriveSyncService';
-import type { FormFactor } from '@/core/types/formFactor';
-import { readPlatformFormFactor } from '@/core/utils/formFactor';
+import { canSignInToGoogleDrive } from '@/core/utils/googleDriveSignIn';
 
 /** The error a cloud sync message gets on a device where Drive cannot sign in. */
 export const GOOGLE_DRIVE_UNAVAILABLE_ON_DEVICE = 'google_drive_unavailable_on_device';
@@ -25,18 +25,19 @@ type SyncHandler = (
 ) => Promise<unknown> | null;
 
 export interface DriveDeviceGuardDeps {
-  readFormFactor?: () => Promise<FormFactor>;
+  canSignIn?: () => Promise<boolean>;
   getState?: () => Promise<unknown>;
 }
 
 /**
- * Wraps the cloud sync handler: on a phone a message outside the pass list never reaches it.
- * The list names what may pass, so a Drive message added later is refused there by default.
+ * Wraps the cloud sync handler: where Drive cannot sign in, a message outside the pass list
+ * never reaches it. The list names what may pass, so a Drive message added later is refused
+ * there by default.
  */
-export function guardDriveOnPhones(
+export function guardDriveWithoutSignIn(
   handle: SyncHandler,
   {
-    readFormFactor = readPlatformFormFactor,
+    canSignIn = canSignInToGoogleDrive,
     getState = () => googleDriveSyncService.getState(),
   }: DriveDeviceGuardDeps = {},
 ): SyncHandler {
@@ -45,7 +46,7 @@ export function guardDriveOnPhones(
       return handle(message, sender);
     }
     return (async () => {
-      if ((await readFormFactor()) !== 'mobile') return handle(message, sender);
+      if (await canSignIn()) return handle(message, sender);
       return { ok: false, error: GOOGLE_DRIVE_UNAVAILABLE_ON_DEVICE, state: await getState() };
     })();
   };
