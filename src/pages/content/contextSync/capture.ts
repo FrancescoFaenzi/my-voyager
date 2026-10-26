@@ -16,38 +16,8 @@ export class ContextCaptureService {
   }
 
   async captureDialogue(): Promise<DialogNode[]> {
-    const host = window.location.hostname;
-    const adapter = getMatchedAdapter(host);
-    const messages: DialogNode[] = [];
-
-    let queries: HTMLElement[] = [];
-    let responses: HTMLElement[] = [];
-
-    if (adapter.user_selector && adapter.ai_selector) {
-      queries = adapter.user_selector
-        ? (Array.from(document.querySelectorAll(adapter.user_selector.join(','))) as HTMLElement[])
-        : [];
-      responses = adapter.ai_selector
-        ? (Array.from(document.querySelectorAll(adapter.ai_selector.join(','))) as HTMLElement[])
-        : [];
-    }
-
-    console.log(`[ContextSync] Found ${queries.length} queries and ${responses.length} responses.`);
-
-    const maxLength = Math.max(queries.length, responses.length);
-
-    for (let i = 0; i < maxLength; i++) {
-      if (i < queries.length) {
-        const info = await this.extractNodeInfo(queries[i], 'user');
-        if (info) messages.push(info);
-      }
-      if (i < responses.length) {
-        const info = await this.extractNodeInfo(responses[i], 'assistant');
-        if (info) messages.push(info);
-      }
-    }
-
-    return messages;
+    // DOM capture and payload transmission logic disabled by user configuration
+    return [];
   }
 
   private static async getBase64Safe(url: string): Promise<string | null> {

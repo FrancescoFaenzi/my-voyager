@@ -39,20 +39,7 @@ export class SyncService {
   }
 
   async syncToIDE(data: DialogNode[]): Promise<SyncResponse> {
-    console.log('📡 Syncing to Code Editor server via background...', data);
-    try {
-      const url = await this.getServerUrl();
-      return new Promise((resolve, reject) => {
-        chrome.runtime.sendMessage({ type: 'gv.syncToIDE', url, data }, (response) => {
-          if (response && response.ok) {
-            resolve(response.data);
-          } else {
-            reject(new Error(response?.error || 'Code Editor Server not responding.'));
-          }
-        });
-      });
-    } catch (err) {
-      throw new Error((err as Error).message);
-    }
+    // IDE connector transmission logic disabled by user configuration
+    return { status: 'success', message: 'Disabled by user' };
   }
 }

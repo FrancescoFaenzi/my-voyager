@@ -283,33 +283,8 @@ export class RemoteAnnouncementBackgroundService {
       return { feed: state.cache?.feed ?? null, state };
     }
 
-    try {
-      const response = await this.fetchImpl(this.feedUrl, { cache: 'no-cache' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const feed = validateAnnouncementFeed(await response.json());
-      if (!feed) throw new Error('Invalid announcement feed');
-      const nextState: RemoteAnnouncementState = {
-        ...state,
-        lastCheckedAt: now,
-        lastSuccessAt: now,
-        failureCount: 0,
-        nextAllowedFetchAt: now + CHECK_INTERVAL_MS,
-        cache: { feed, fetchedAt: now },
-      };
-      await this.saveState(nextState);
-      return { feed, state: nextState };
-    } catch (error) {
-      const failureCount = Math.min((state.failureCount ?? 0) + 1, 10);
-      const nextState: RemoteAnnouncementState = {
-        ...state,
-        lastCheckedAt: now,
-        failureCount,
-        nextAllowedFetchAt: now + getBackoffMs(failureCount),
-      };
-      await this.saveState(nextState);
-      logger.warn('Remote announcement fetch failed', { error: String(error) });
-      return { feed: state.cache?.feed ?? null, state: nextState };
-    }
+    // Network fetch logic disabled by user configuration
+    return { feed: null, state };
   }
 
   private async presentAnnouncement(announcement: PresentedRemoteAnnouncement): Promise<void> {
