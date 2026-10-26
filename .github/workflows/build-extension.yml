@@ -1,0 +1,28 @@
+name: Build Chrome Extension
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build extension
+        run: bun run build:chrome
+
+      - name: Upload compiled extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: voyager-chrome-extension
+          path: dist-by-github/
