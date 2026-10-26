@@ -1,0 +1,6 @@
+import{b as h}from"./scheme-B5yDGcZu.js";function _(f,u){for(var c=0;c<u.length;c++){const n=u[c];if(typeof n!="string"&&!Array.isArray(n)){for(const r in n)if(r!=="default"&&!(r in f)){const e=Object.getOwnPropertyDescriptor(n,r);e&&Object.defineProperty(f,r,e.get?e:{enumerable:!0,get:()=>n[r]})}}}return Object.freeze(Object.defineProperty(f,Symbol.toStringTag,{value:"Module"}))}var y,O;function S(){if(O)return y;O=1;const f=r=>r&&Object.prototype.toString.call(r)==="[object Object]";function u(r){if(!(r>0))return t=>t;var e=" ".repeat(r);return t=>{if(typeof t!="string")return t;const a=t.split(`
+`);return a.length===1?e+t:a.map(o=>o.trim()===""?o:e+o).join(`
+`)}}const c=r=>r.split(`
+`).filter(e=>e.trim()!=="").join(`
+`);function n(r,e){const t=e>0?`
+`:"",a=u(e);function o(g){let l="",b=!0,i;return g.some((s,m,j)=>{if(m===0)return i="<"+s,j.length===1;if(m===1){if(f(s)){if(Object.keys(s).map(d=>{let p=s[d];Array.isArray(p)&&(p=p.join(" ")),i+=" "+d+'="'+p+'"'}),j.length===2)return!0;i+=">";return}i+=">"}switch(typeof s){case"string":case"number":case"boolean":case"undefined":l+=s+t;return}b=!1,l+=o(s)})?i+"/>"+t:b?i+c(l)+"</"+g[0]+">"+t:i+t+a(l)+"</"+g[0]+">"+t}return o(r)}return y=n,y}var v=S();const A=h(v),q=_({__proto__:null,default:A},[v]);export{q as s};
