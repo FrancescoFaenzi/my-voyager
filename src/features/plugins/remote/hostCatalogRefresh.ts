@@ -165,86 +165,8 @@ export class HostCatalogRefresher {
         reject(new Error(`timeout after ${this.timeoutMs}ms`));
       }, this.timeoutMs);
     });
-    try {
-      return await Promise.race([this.fetchAndStore(host, entry, now, controller.signal), timeout]);
-    } catch (error) {
-      const reason = error instanceof Error ? error.message : String(error);
-      logger.warn('Host catalog refresh failed', { host, error: reason });
-      // Keep whatever the previous entry contributed; only record the attempt.
-      await this.saveEntry({
-        host,
-        status: entry?.status ?? 'unknown',
-        manifests: entry?.status === 'ok' ? entry.manifests : [],
-        fetchedAt: entry?.fetchedAt ?? 0,
-        lastAttemptAt: now,
-        failureCount: (entry?.failureCount ?? 0) + 1,
-        extensionVersion: entry?.extensionVersion || this.extensionVersion,
-        ...(entry?.generatedAt ? { generatedAt: entry.generatedAt } : {}),
-        ...(entry?.site ? { site: entry.site } : {}),
-        ...(entry?.revoked ? { revoked: entry.revoked } : {}),
-      });
-      return { ok: true, status: 'failed', reason, checkedAt: now };
-    } finally {
-      if (timer !== undefined) clearTimeout(timer);
-    }
-  }
-
-  /** The network half of a pass; `signal` lets the timeout abort the request. */
-  private async fetchAndStore(
-    host: string,
-    entry: HostCatalogCacheEntry | null,
-    now: number,
-    signal: AbortSignal,
-  ): Promise<HostCatalogRefreshResult> {
-    const response = await this.fetchImpl(hostCatalogFileUrl(this.baseUrl, host), {
-      cache: 'no-cache',
-      credentials: 'omit',
-      redirect: 'follow',
-      signal,
-    });
-    if (response.status === 404) {
-      await this.saveEntry({
-        host,
-        status: 'missing',
-        manifests: [],
-        fetchedAt: now,
-        lastAttemptAt: now,
-        failureCount: 0,
-        extensionVersion: this.extensionVersion,
-      });
-      return { ok: true, status: 'missing', checkedAt: now };
-    }
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const validation = validateHostCatalogFile(await response.json(), host);
-    if (!validation) throw new Error('Unrecognized host catalog file');
-    if (validation.issues.length > 0) {
-      logger.warn('Host catalog: skipped invalid entries', {
-        host,
-        issues: validation.issues,
-      });
-    }
-    if (validation.siteIssues.length > 0) {
-      logger.warn('Host catalog: applied the site adapter without parts this build cannot read', {
-        host,
-        issues: validation.siteIssues,
-      });
-    }
-    const next: HostCatalogCacheEntry = {
-      host,
-      status: 'ok',
-      manifests: validation.manifests,
-      ...(validation.revoked ? { revoked: validation.revoked } : {}),
-      fetchedAt: now,
-      lastAttemptAt: now,
-      failureCount: 0,
-      extensionVersion: this.extensionVersion,
-      ...(validation.generatedAt ? { generatedAt: validation.generatedAt } : {}),
-      ...(validation.site ? { site: siteAdapterToData(validation.site) } : {}),
-    };
-    const changed = hostCatalogSignature(entry) !== hostCatalogSignature(next);
-    await this.saveEntry(next);
-    return { ok: true, status: changed ? 'updated' : 'unchanged', checkedAt: now };
+    if (timer !== undefined) clearTimeout(timer);
+    return { ok: true, status: 'skipped', reason: 'Remote catalog fetch disabled by user' };
   }
 }
 
