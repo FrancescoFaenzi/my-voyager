@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,8 +26,19 @@ jobs:
       - name: Build extension
         run: bun run build:chrome
 
-      - name: Upload compiled extension
+      - name: Package extension ZIP
+        run: cd dist_chrome && zip -r ../voyager-chrome-extension.zip .
+
+      - name: Upload compiled extension (Actions Artifact)
         uses: actions/upload-artifact@v4
         with:
           name: voyager-chrome-extension
           path: dist_chrome/
+
+      - name: Publish Public Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest Hardened Build
+          body: Automated zero-egress Chrome extension build from `main`.
+          files: voyager-chrome-extension.zip
