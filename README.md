@@ -94,20 +94,18 @@ Voyager separates three layers:
 
 ## Install (Zero Local Toolchain)
 
-You do **not** need to install Bun, Node.js, or any build tools locally. The extension is compiled directly from `main` via `.github/workflows/build-extension.yml`.
+You do **not** need to install Bun, Node.js, or any build tools locally, and **no GitHub login is required**. Every push to `main` automatically compiles the extension via `.github/workflows/build-extension.yml` and publishes a ready-to-use ZIP under GitHub Releases.
 
-1. Open the **[Actions](https://github.com/FrancescoFaenzi/my-voyager/actions)** tab in this repository.
-2. Select the **Build Chrome Extension** workflow and click the latest green (successful) run on `main`.
-3. Scroll to the **Artifacts** section at the bottom of the run summary and download **`voyager-chrome-extension`** (ZIP).
-4. Extract the ZIP archive into a permanent local folder (do not delete this folder after loading).
-5. Open Chrome and navigate to `chrome://extensions/`.
-6. Enable **Developer mode** (toggle in the top-right corner).
-7. Click **Load unpacked** (top-left) and select the extracted folder containing `manifest.json`.
+1. Open the **[Releases](https://github.com/FrancescoFaenzi/my-voyager/releases/latest)** page and download **`voyager-chrome-extension.zip`** under **Assets** *(no login required)*.
+2. Extract the ZIP archive into a permanent local folder (do not delete this folder after loading).
+3. Open Chrome and navigate to `chrome://extensions/`.
+4. Enable **Developer mode** (toggle in the top-right corner).
+5. Click **Load unpacked** (top-left) and select the extracted folder containing `manifest.json`.
 
 <details>
 <summary>Optional: Local Build Instructions (Requires Bun)</summary>
 
-If you prefer to compile locally instead of using the GitHub Actions artifact:
+If you prefer to compile locally instead of downloading the pre-built Release asset:
 
 ```bash
 # Clone with full Git history (required by vite.config.chrome.ts for catalog revision checks)
